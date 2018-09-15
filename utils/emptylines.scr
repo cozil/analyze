@@ -1,0 +1,8 @@
+_LOOP:
+cmp $linenum,0
+jle _EXIT
+$linenum -= 1
+log
+jmp _LOOP
+_EXIT:
+$linenum=0
