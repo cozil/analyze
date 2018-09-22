@@ -8,7 +8,6 @@ rule CRxApp_start
 	meta:
 		script = "log \"struct CRxApp {\""
 		script = "$offset = 0x10"
-		//script = "msg \"Parsing CRxApp\""
 	condition:
 		true
 }
@@ -32,7 +31,6 @@ rule CRxApp_zzf_type
 	meta:
 		script = "$result = [@pattern + 0x1b]"
 		script = "log \"/*{p:$offset}*/    char unused_{$offset}[0x{$result-$offset}];\""
-		script = "log"
 		script = "log \"/*{p:$result}*/    short zzf_type;\""
 		script = "$result = [@pattern + 0x12]"
 		script = "log \"/*{p:$result}*/    short rxf_type;\""
