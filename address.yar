@@ -1194,7 +1194,8 @@ rule address_end
 {
 	meta:
 		script = "$linenum = 2"
-		load = "utils/emptylines.scr"
+		script = "log"
+		script = "log"
 	condition:
 		true
 }

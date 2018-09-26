@@ -1,0 +1,35 @@
+//$offset - 取偏移处的dword
+//$compare - 与此值进行比较
+//相同时返回本次匹配的首地址 $result
+//检查失败时$result被置0
+//将会检查所有匹配，如果没有匹配或超过1个匹配成功则终止脚本
+
+__START:
+	$num = 0
+	$result1 = 0
+	//log "$compare = {$compare}"
+	
+__LOOP:
+	cmp $num,#pattern
+	je __FINISH
+	Array.get pattern,$num
+	cmp $result,0
+	jz __FAIL
+	$result2 = [$result + $offset]
+	//log "$result2 = {$result2}"
+	cmp $result2,$compare
+	jnz __NEXT
+	//之前已匹配成功一个地址，再匹配成功时表示失败
+	cmp $result1,0
+	jnz __FAIL
+	$result1 = $result
+	//log "Found value {$compare}, address is {$result1}"
+	jmp __LOOP:
+__NEXT:
+	$num += 1
+	jmp __LOOP
+__FAIL:
+	invalid
+__FINISH:
+	$result = $result1
+	//log "Searching for {$compare} result is {$result}"

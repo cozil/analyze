@@ -1,13 +1,13 @@
 
 //
-//CRxMgrLogin���ֳ�Ա����
+//CRxMgrLogin部分成员分析
 //
 
 rule CRxMgrLogin_start
 {
 	meta:
-		script = "log"
-		script = "log \"struct CRxMgrLogin {\""
+		script = "Type.as CRxMgrLogin"
+		script = "Type.aanc CRxMgrLogin,CRxMgr"
 	condition:
 		true
 }
@@ -19,17 +19,28 @@ rule CRxMgrLogin_dlg_login
 {
 	meta:
 		script = "$result = [@pattern + 0x1f]"
-		script = "log \"/*{p:$result}*/    CRxWndLogin * dlg_login;\""
-		
+		script = "Type.am CRxMgrLogin,CRxWnd*,dlg_login,0,$result"		
 		script = "$result = [@pattern + 0x94]"
-		script = "log \"/*{p:$result}*/    CRxEdit * edit_account;\""
-
+		script = "Type.am CRxMgrLogin,CRxEdit*,edit_account,0,$result"
+		script = "Type.mcomment CRxMgrLogin,edit_account,\"输入帐户框\""
 		script = "$result = [@pattern + 0x15d]"
-		script = "log \"/*{p:$result}*/    CRxEdit * edit_account;\""		
+		script = "Type.am CRxMgrLogin,CRxEdit*,edit_password,0,$result"
+		script = "Type.mcomment CRxMgrLogin,edit_password,\"输出密码框\""		
 	strings:
-		$pattern = { 6A 01 6A 01 56 68 [4] 57 51 8B C8 E8 [4] EB ?? [90] 68 C8 00 00 00 53 56 6A 0E 68 A5 00 00 00 6A 56 6A 58 8B C8 E8 [4] EB ?? 33 C0 50 6A 78 88 5D ?? 89 86 [4] E8 [158] 68 C9 00 00 00 6A 01 56 6A 0E 68 A5 00 00 00 6A 73 6A 58 8B C8 E8 [4] EB ?? 33 C0 50 6A 78 88 5D ?? 89 86 [4] E8}
+		$pattern = { 6A 01 6A 01 56 68 [4] 57 51 8B C8 E8 [4] EB ?? [90] 68 C8 00 00 00 53 56 6A 0E 68 A5 00 00 00 6A 56 6A 58 8B C8 E8 [4] EB ?? 33 C0 50 6A 78 88 5D ?? 89 86 [4] E8 [158] 68 C9 00 00 00 6A 01 56 6A 0E 68 A5 00 00 00 6A 73 6A 58 8B C8 E8 [4] EB ?? 33 C0 50 6A 78 88 5D ?? 89 86 [4] E8 }
 	condition:
 		#pattern == 1	
+}
+
+rule CRxMgrLogin_bn_login_confirm
+{
+	meta:
+		script = "$result = [@pattern + 0x28]"
+		script = "Type.am CRxMgrLogin,CRxButton*,bn_login_confirm,0,$result"
+	strings:
+		$pattern = { 6A 7B [3] B2 00 00 00 [3] 55 [2] B2 00 00 00 ?? 55 [2] E8 [4] EB [3] 8B [5] 89 86 }
+	condition:
+		#pattern == 1
 }
 
 //29c CRxWndMsgBox * dlg_msgbox;
@@ -37,11 +48,38 @@ rule CRxMgrLogin_dlg_msgbox
 {
 	meta:
 		script = "$result = [@pattern + 0x28]"
-		script = "log \"/*{p:$result}*/    CRxWndMsgBox * dlg_msgbox;\""	
+		script = "Type.am CRxMgrLogin,CRxWnd*,dlg_msgbox,0,$result"
+		script = "Type.mcomment CRxMgrLogin, dlg_msgbox, \"flag:0-正在连接, 1-登录出错\""
 	strings:
 		$pattern = { 6A 02 56 68 [4] 68 [4] 68 [4] 57 51 8B C8 E8 [4] EB ?? 33 C0 6A 01 8B C8 88 5D ?? 89 86 [4] E8 [4] 8B 8E [4] 53 E8 }
 	condition:
 		#pattern == 1	
+}
+
+rule CRxMgrLogin_msgbox_lb_text
+{
+	meta:
+		script = "Type.offset CRxMgrLogin, dlg_msgbox"
+		script = "$compare = $result"
+		script = "$offset = 0x1e"
+		load = "utils/match_dword_at.scr"
+		script = "$result = [$result + 0x24]"
+		script = "Type.am CRxMgrLogin,CRxLabelEx*,msgbox_lb_text,0,$result"
+	strings:
+		$pattern = { 6A 01 [2] 6A 73 68 03 01 00 00 6A 05 6A 3C 6A 14 8B C8 E8 [8] 8B 96 [4] 89 86 }
+	condition:
+		#pattern >= 1
+}
+
+rule CRxMgrLogin_msgbox_bn_cancel
+{
+	meta:
+		script = "$result = [@pattern + 0x28]"
+		script = "Type.am CRxMgrLogin,CRxButton*,msgbox_bn_cancel,0,$result"
+	strings:
+		$pattern = { 6A 63 56 81 C1 B2 00 00 00 51 83 C2 77 52 68 B2 00 00 00 6A 77 8B C8 E8 [8] 8B 8E [4] 89 86 }
+	condition:
+		#pattern == 1
 }
 
 //2b4 CRxWndServer * dlg_server;
@@ -49,11 +87,51 @@ rule CRxMgrLogin_dlg_server
 {
 	meta:
 		script = "$result = [@pattern + 0x1f]"
-		script = "log \"/*{p:$result}*/    CRxWndServer * dlg_server;\""	
+		script = "Type.am CRxMgrLogin,CRxWnd*,dlg_server,0,$result"
 	strings:
 		$pattern = { 6A 01 6A 01 56 68 [4] 52 57 8B C8 E8 [4] EB ?? 33 C0 53 8B C8 88 5D ?? 89 86 [4] E8 [4] 8B 8E [4] 53 E8 }
 	condition:
 		#pattern == 1	
+}
+
+//2b8 CRxButton * server_bn_svr_list[0x0a];
+rule CRxMgrLogin_server_bn_svr_list
+{
+	meta:
+		script = "$result = [@pattern + 0xe]"
+		script = "Type.am CRxMgrLogin,CRxLabel*,server_lb_svr_list,0x0a,$result-0x50"
+		script = "Type.am CRxMgrLogin,CRxLabel*,server_lb_line_list,0x0a,$result-0x28"
+		script = "Type.am CRxMgrLogin,CRxButton*,server_bn_svr_list,0x0a,$result"
+		script = "Type.am CRxMgrLogin,CRxButton*,server_bn_line_list,0x0a,$result+0x28"
+		script = "Type.am CRxMgrLogin,CRxLabel*,server_lb_status_list,0x0a,$result+0x50"
+	strings:
+		$pattern = { E8 [7] 14 00 00 00 8D BE [10] 0A 00 00 00 [14] E8 [4] 68 F0 03 00 00 E8 [4] 83 C4 04 [6] 09 }
+	condition:
+		#pattern == 1
+}
+
+//380 CRxButton * server_bn_exit;
+rule CRxMgrLogin_server_bn_exit
+{
+	meta:
+		script = "$result = [@pattern + 0x2b]"
+		script = "Type.am CRxMgrLogin,CRxButton*,server_bn_exit,0,$result"	
+	strings:
+		$pattern = { 81 C1 2F 01 00 00 51 81 C2 9F 01 00 00 52 68 2F 01 00 00 68 9F 01 00 00 8B C8 E8 [8] 8B 8E [4] 89 86 [4] 83 C1 28 }
+	condition:
+		#pattern == 1
+}
+
+//384 CRxButton * server_bn_connect;
+rule CRxMgrLogin_server_bn_connect
+{
+	meta:
+		script = "$result = [@pattern + 0x2e]"
+		script = "Type.am CRxMgrLogin,CRxButton*,server_bn_connect,0,$result"
+	strings:
+		$pattern = { 6A 01 56 81 C2 2F 01 00 00 52 81 C1 1C 01 00 00 51 68 2F 01 00 00 68 1C 01 00 00 8B C8 E8 [8] 8B 96 [4] 89 86 }
+	condition:
+		#pattern == 1
 }
 
 //388 SERVER_OBJECT * svrlist;
@@ -61,118 +139,17 @@ rule CRxMgrLogin_svrlist
 {
 	meta:
 		script = "$result = [@pattern + 0x02]"
-		script = "log \"/*{p:$result}*/    SERVER_OBJECT * svrlist;\""
+		script = "Type.am CRxMgrLogin,ServerObject*,svrlist,0,$result"
 	strings:
 		$pattern = { 8B 8E [4] 33 C0 89 45 ?? 3B C8 74 [20] 83 F8 64 0F 8F [4] 83 F8 33 7D ?? C7 45 ?? 00 00 00 00 EB ?? 33 C9 83 F8 5B }
 	condition:
 		#pattern == 1	
 }
 
-//8d4 CRxWnd * dlg_rolelist;
-//8d8 CRxListBox * lbx_roleList;
-rule CRxMgrLogin_dlg_rolelist
-{
-	meta:
-		script = "$result = [@pattern + 0x1f]"
-		script = "log \"/*{p:$result}*/    CRxWnd * dlg_rolelist;\""
-		
-		script = "$result = [@pattern + 0xd9]"
-		script = "log \"/*{p:$result}*/    CRxListBox * lbx_roleList;\""		
-	strings:
-		$pattern = { 6A 01 6A 01 56 68 [4] 52 51 8B C8 E8 [4] EB ?? 33 C0 53 8B C8 88 5D ?? 89 86 [4] E8 [4] 8B 8E [4] 53 E8 [4] 8B 8E [4] 53 E8 [4] 8B 8E [4] E8 [4] D9 05 [4] 6A 04 [90] C7 85 [4] 2B 00 00 00 C7 85 [4] 75 00 00 00 C7 85 [4] 47 00 00 00 E8 [4] 6A 01 68 [4] 89 86 [4] E8 [4] 6A 01}
-	condition:
-		#pattern == 1	
-}
-
-//8e4 int roleCount;
-//8e8 int roleMaxCount;
-rule CRxMgrLogin_roleCount
-{
-	meta:
-		script = "$result = [@pattern + 0x08]"
-		script = "log \"/*{p:$result}*/    int roleCount;\""
-		
-		script = "$result = [@pattern + 0x02]"
-		script = "log \"/*{p:$result}*/    int roleMaxCount;\""		
-	strings:
-		$pattern = { 8B BE [4] 39 BE [4] 7C ?? 6A 7F 50 8D 8D [4] 51 88 85 [4] E8 [4] 8B 0D [4] 83 C4 0C 57 68 33 11 00 00 E8}
-	condition:
-		#pattern == 1	
-}
-
-
-
-//8ec int roleUIDList[8];
-rule CRxMgrLogin_roleUIDList
-{
-	meta:
-		script = "$result = [@pattern + 0x2c]"
-		script = "log \"/*{p:$result}*/    int roleUIDList[8];\""
-			
-	strings:
-		$pattern = { 8D BE [4] BB 06 00 00 00 8B 0F 6A 00 68 [4] E8 [4] 83 C7 04 4B 75 ?? 8B 8E [4] E8 [4] 8D BE [4] BB 08 00 00 00 8B FF 81 3F FF FF 00 00}
-	condition:
-		#pattern == 1	
-}
-
-
-
-//1224 CRxButton * bn_enter;
-rule CRxMgrLogin_bn_enter
-{
-	meta:
-		script = "$result = [@pattern + 0x28]"
-		script = "log \"/*{p:$result}*/    CRxButton * bn_enter;\""	
-	strings:
-		$pattern = { 8B 8D [4] 8B 95 [4] 68 [4] 68 D1 07 00 00 56 51 52 53 53 8B C8 E8 [4] EB ?? 33 C0 89 86 [4] 8D 4E ?? 89 48}
-	condition:
-		#pattern == 1	
-}
-
-//1228 CRxButton * bn_back;
-rule CRxMgrLogin_bn_back
-{
-	meta:
-		script = "$result = [@pattern + 0x3c]"
-		script = "log \"/*{p:$result}*/    CRxButton * bn_back;\""	
-	strings:
-		$pattern = { 8B 8D [4] 8B 95 [4] 68 [4] 68 D2 07 00 00 56 81 C1 6B 01 00 00 51 83 C2 15 52 68 6B 01 00 00 6A 15 8B C8 E8 [4] EB ?? 33 C0 8B 8E [4] 89 86 [4] 83 C1 28 89 48}
-	condition:
-		#pattern == 1	
-}
-
-//122c CRxButton * bn_delete;
-rule CRxMgrLogin_bn_delete
-{
-	meta:
-		script = "$result = [@pattern + 0x3c]"
-		script = "log \"/*{p:$result}*/    CRxButton * bn_delete;\""	
-	strings:
-		$pattern = { 8B 8D [4] 8B 95 [4] 68 [4] 68 D4 07 00 00 56 81 C1 37 01 00 00 51 83 C2 15 52 68 37 01 00 00 6A 15 8B C8 E8 [4] EB ?? 33 C0 8B 8E [4] 89 86 [4] 83 C1 28 89 48}
-	condition:
-		#pattern == 1	
-}
-
-//122c CRxButton * bn_create;
-rule CRxMgrLogin_bn_create
-{
-	meta:
-		script = "$result = [@pattern + 0x3c]"
-		script = "log \"/*{p:$result}*/    CRxButton * bn_create;\""	
-	strings:
-		$pattern = { 8B 8D [4] 8B 95 [4] 68 [4] 68 D3 07 00 00 56 81 C1 03 01 00 00 51 83 C2 15 52 68 03 01 00 00 6A 15 8B C8 E8 [4] EB ?? 33 C0 8B 8E [4] 89 86 [4] 83 C1 28 89 48}
-	condition:
-		#pattern == 1	
-}
-
-
-
 rule CRxMgrLogin_end
 {
 	meta:
-		script = "log }"
-		script = "log"
-		script = "log"
+		script = "Type.print CRxMgrLogin,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN"
 	condition:
 		true
 }
