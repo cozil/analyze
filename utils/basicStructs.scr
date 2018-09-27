@@ -198,3 +198,48 @@ Type.am ServerObject,char,pad_00,0x4c4
 Type.am ServerObject,ServerItem,servers,0xa
 Type.print ServerObject,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
+
+Type.as CRxSkillItem
+Type.comment CRxSkillItem,"技能数据(static)\n目前仅使用了skill_id和attach_length两个成员\n只要结构大小不变则不需要手工重新分析"
+Type.am CRxSkillItem,int,skill_id,0,0
+Type.am CRxSkillItem,char,name,0x40,4
+Type.am CRxSkillItem,short,grade,0,0x48
+Type.am CRxSkillItem,short,job,0,0x4a
+Type.am CRxSkillItem,int,attack_length,0,0x54
+Type.am CRxSkillItem,int,cooldown_time,0,0x58
+Type.am CRxSkillItem,char,type,0,0x61
+Type.am CRxSkillItem,int,ani_id,0,0x62
+Type.am CRxSkillItem,char,desc,0x128,0x68
+
+Type.as CRxSkillList
+Type.am CRxSkillList,int,skill_id,0,0
+Type.am CRxSkillList,char,name,0x10,4
+Type.am CRxSkillList,char,group,0,0x45
+Type.am CRxSkillList,char,career,0,0x46
+Type.am CRxSkillList,char,grade,0,0x48
+Type.am CRxSkillList,char,job,0,0x4a
+Type.am CRxSkillList,CRxSkillItem,items,0x10,0x150
+Type.ad CRxSkillList,"const static int MaxSize = 0x400;"
+
+Type.as RX_GAME_NPC
+Type.am RX_GAME_NPC,int,nId,0,0
+Type.am RX_GAME_NPC,char,Name,0x40,4
+Type.am RX_GAME_NPC,uint8_t,group,0,0x44
+Type.am RX_GAME_NPC,int,nCodes,0x5,0x44c
+Type.am RX_GAME_NPC,char,pad_460,0x1a54,0x460
+Type.ad RX_GAME_NPC,"const static int MaxSize = 0x800;"
+
+Type.as RX_SHOP_ITEM
+Type.am RX_SHOP_ITEM,int,code
+Type.am RX_SHOP_ITEM,int,codeEx
+Type.am RX_SHOP_ITEM,int,s_code1
+Type.am RX_SHOP_ITEM,int,s_code2
+Type.am RX_SHOP_ITEM,short,count
+Type.am RX_SHOP_ITEM,short,id
+Type.am RX_SHOP_ITEM,__int64,price
+Type.am RX_SHOP_ITEM,int,propdata,5
+Type.am RX_SHOP_ITEM,char,pad_30,0x34
+
+log "CRxBaseStuff未实现"
+
+

@@ -6,7 +6,7 @@
 rule CRxMgrShop_start
 {
 	meta:
-		script = "log \"struct CRxMgrShop {\""
+		script = "Type.as CRxMgrShop"
 	condition:
 		true
 }
@@ -17,9 +17,9 @@ rule CRxMgrShop_dlg
 {
 	meta:
 		script = "$result = [@pattern + 0x02]"
-		script = "log \"/*{p:$result}*/    CRxWndShop * dlg;\""
+		script = "Type.am CRxMgrShop,CRxWndShop*,dlg,0,$result"
 		script = "$result = [@pattern + 0x14]"
-		script = "log \"/*{p:$result}*/    int npc_id;\""
+		script = "Type.am CRxMgrShop,int,npc_id,0,$result"
 	strings:
 		$pattern = { 8B 86 [4] 8B 0D [4] 50 E8 [4] C7 86 [4] 00 00 00 00 8B 0D [4] C7 05 [4] 00 00 00 00 C7 05 [4] 64 00 00 00 C7 05 [4] 00 00 00 00 }
 	condition:
@@ -33,7 +33,7 @@ rule CRxMgrShop_ls_shop
 {
 	meta:
 		script = "$result = [@pattern + 0x02]"
-		script = "log \"/*{p:$result}*/    CRxList * ls_shop;\""
+		script = "Type.am CRxMgrShop,CRxList*,ls_shop,0,$result"
 	strings:
 		$pattern = { 8B 89 [4] 85 C9 74 09 6A 07 6A 00 E8 [4] C3 }
 	condition:
@@ -46,9 +46,9 @@ rule CRxMgrShop_page_id
 {
 	meta:
 		script = "$result = [@pattern + 0x0a]"
-		script = "log \"/*{p:$result}*/    int page_id;\""
+		script = "Type.am CRxMgrShop,int,page_id,0,$result"
 		script = "$result = [@pattern + 0x1f]"
-		script = "log \"/*{p:$result}*/    int page_count;\""
+		script = "Type.am CRxMgrShop,int,page_count,0,$result"
 	strings:
 		$pattern = { 83 F8 65 7C ?? 83 C0 9B 89 86 [4] 8B 45 ?? 85 C0 74 ?? 33 C9 83 F8 01 0F 94 C1 89 86 [4] 51 8B 8E [4] E8 }
 	condition:
@@ -58,9 +58,7 @@ rule CRxMgrShop_page_id
 rule CRxMgrShop_end
 {
 	meta:
-		script = "log }"
-		script = "log"
-		script = "log"
+		script = "Type.print CRxMgrShop,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN"
 	condition:
 		true
 }

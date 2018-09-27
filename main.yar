@@ -4,7 +4,7 @@ rule main_start
 {
 	meta:
 		script = "log \"Start running script!\""
-		script = "yaraEx.ll 0"
+		script = "yaraEx.ll 1"
 		script = "Type.removeAll"
 		script = "Array.removeAll"
 		load = "utils/basicStructs.scr"
@@ -15,7 +15,7 @@ rule main_start
 //include "e:/rxwg/analyze/address.yar"
 
 //»ù´¡Àà·ÖÎö
-include "e:/rxwg/analyze/CRxSkillList.yar"
+include "e:/rxwg/analyze/CheckBasicStructs.yar"
 include "e:/rxwg/analyze/CRxButton.yar"
 include "e:/rxwg/analyze/CRxWnd.yar"
 include "e:/rxwg/analyze/CRxMgrLogin.yar"
@@ -23,10 +23,20 @@ include "e:/rxwg/analyze/CRxMgrRole.yar"
 include "e:/rxwg/analyze/CRxSelf.yar"
 include "E:/rxwg/analyze/CRxSocket.yar"
 include "E:/rxwg/analyze/CRxNpc.yar"
-//include "E:/rxwg/analyze/CRxPlayer.yar"
+include "E:/rxwg/analyze/CRxPlayer.yar"
+include "E:/rxwg/analyze/CRxGroundStuff.yar"
+include "E:/rxwg/analyze/CRxStuff.yar"
+include "E:/rxwg/analyze/CRxPicker.yar"
+
+
+include "e:/rxwg/analyze/CRxMgrMyShop.yar"
+
+include "e:/rxwg/analyze/CRxMgrShop.yar"
+
+
 
 //include "e:/rxwg/analyze/CRxMgrNpc.yar"
-//include "e:/rxwg/analyze/CRxMgrShop.yar"
+
 //include "E:/rxwg/analyze/CRxMgrPk.yar"
 //include "E:/rxwg/analyze/CRxMgrZd.yar"
 //include "E:/rxwg/analyze/CRxMgrThl.yar"
@@ -34,9 +44,9 @@ include "E:/rxwg/analyze/CRxNpc.yar"
 //include "E:/rxwg/analyze/CRxMgrState.yar"
 //include "E:/rxwg/analyze/CRxMgrCharm.yar"
 
-//include "E:/rxwg/analyze/CRxGroundStuff.yar"
-//include "E:/rxwg/analyze/CRxStuff.yar"
-//include "E:/rxwg/analyze/CRxPicker.yar"
+
+
+
 
 //include "e:/rxwg/analyze/CRxApp.yar"
 

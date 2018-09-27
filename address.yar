@@ -189,11 +189,13 @@ rule NP_TSK
 rule NP_NPC
 {
 	meta:
-		script = "$result = [@pattern + 0x12]"
+		script = "$result = [@pattern + 0x10]"
 		script = "log \"NP_NPC=0x{$result}\""
 		script = "lblset $result, NpcRawData"
+		script = "$result = [@pattern + 0x1f]"
+		script = "lblset $result, NpcRawDataEnd"
 	strings:
-		$pattern = { 8B 8B 98 10 00 00 89 41 2C 8B 8B 7C 07 00 00 33 D2 B8 }
+		$pattern = { BE DE 27 00 00 [3] 75 [6] B8 [6] 74 ?? 05 [4] 41 3D }
 	condition:
 		#pattern == 1	
 }
@@ -1190,10 +1192,45 @@ rule HF_FMS
 		#pattern == 1	
 }
 
+rule address_BagList
+{
+	meta:
+		script = "$result = [@pattern + 0x2]"
+		script = "log \"NP_LBG=0x{$result}\""
+		script = "lblset $result, BagList"
+	strings:
+		$pattern = { 8B 35 [4] 33 C9 8D 86 [4] BF BC CC 9A 3B 90 }
+	condition:
+		#pattern == 1	
+}
+
+rule address_MyShopList
+{
+	meta:
+		script = "$result = [@pattern + 0x16]"
+		script = "log \"NP_LMS=0x{$result}\""
+		script = "lblset $result, MyShopList"
+	strings:
+		$pattern = { 68 A7 0D 00 00 56 6A 09 6A 00 8B C8 E8 [4] EB ?? 33 C0 A3 }
+	condition:
+		#pattern == 1
+}
+
+rule address_PlayerShopList
+{
+	meta:
+		script = "$result = [@pattern + 0x30]"
+		script = "log \"NP_LPS=0x{$result}\""
+		script = "lblset $result, PlayerShopList"
+	strings:
+		$pattern = { 68 F4 23 00 00 E8 [20] 68 B4 0D 00 00 ?? 6A 08 6A 00 [2] E8 [4] EB ?? 33 C0 A3 }
+	condition:
+		#pattern == 1
+}
+
 rule address_end
 {
 	meta:
-		script = "$linenum = 2"
 		script = "log"
 		script = "log"
 	condition:
