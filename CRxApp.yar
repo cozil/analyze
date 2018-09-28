@@ -305,27 +305,6 @@ rule CRxApp_mgr_team
 		#pattern == 1		
 }
 
-//394 CRxMgrTrade * mgr_trad
-//3A8 CRxMgrTeam *	mgr_team
-//rule CRxApp_mgr_trad
-//{
-//	meta:
-//		script = "$result = [@pattern + 0x3d]"
-//		script = "log \"/*{p:$result}*/    CRxMgrTrade * mgr_trad;\""
-//		//script = "$result = [@pattern + 0x43]"
-//		//script = "log \">>>>/*{p:$result}*/    CRxApp::mgr_trad::dlg_confirm\""
-//		
-//		script = "$result = [@pattern + 0x53]"
-//		script = "log \"/*{p:$result}*/    CRxMgrTeam *	mgr_team;\""
-//		//script = "$result = [@pattern + 0x59]"
-//		//script = "log \">>>>/*{p:$result}*/    CRxApp::mgr_team::dlg_msgbox\""
-//		
-//	strings:
-//		$pattern = { 68 99 03 00 00 [6] 6A 09 E8 [4] [29] 8B 0D [4] 0F 85 [4] 8B 91 [4] 8B 82 [4] 83 78 40 00 0F 85 [4] 8B 91 [4] 8B 82 }
-//	condition:
-//		#pattern == 1		
-//}
-
 //3AC CRxMgrMyShop * mgr_myshop;
 rule CRxApp_mgr_myshop
 {
@@ -384,7 +363,7 @@ rule CRxApp_mgr_master
 	strings:
 		$pattern = { 68 8C 02 00 00 [53] E8 [4] 83 C4 04 [26] 68 80 02 00 00 C6 45 ?? 01 89 83 [4] E8 }
 	condition:
-		#pattern == 1	
+		#pattern == 1
 }
 
 
@@ -403,15 +382,15 @@ rule CRxApp_mgr_skill
 		#pattern == 1	
 }
 
-//3D4 CRxMgrMakerC * mgr_maker_ctrl;
-rule CRxApp_mgr_maker_ctrl
+//3D4 CRxMgrMakerFrame * mgr_maker_frame;
+rule CRxApp_mgr_maker_frame
 {
 	meta:
 		script = "$result = [@pattern + 0x3c]"
 		script = "log \"//制造分解窗口的框架窗口\""
-		script = "log \"/*{p:$result}*/    CRxMgrMakerC * mgr_maker_ctrl;\""
+		script = "log \"/*{p:$result}*/    CRxMgrMakerFrame * mgr_maker_frame;\""
 		script = "$result = @pattern + 0x2d + [@pattern + 0x29]"
-		script = "lblset $result, CRxMgrMakerC::create"			
+		script = "lblset $result, CRxMgrMakerFrame::create"			
 	strings:
 		$pattern = { 68 5C 02 00 00 [10] E8 [4] 83 C4 04 [26] 68 70 02 00 00 [10] E8 }
 	condition:

@@ -58,7 +58,7 @@ rule CRxWnd_flag
 rule CRxWnd_end
 {
 	meta:
-		script = "Type.print CRxWnd"
+		script = "Type.print CRxWnd,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN"
 	condition:
 		true
 }

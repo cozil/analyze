@@ -2,7 +2,7 @@ rule CRxMgrMyShop_start
 {
 	meta:
 		script = "Type.as CRxMgrMyShop"
-		script = "Type.aanc CRxMgrShop,CRxMgr"
+		script = "Type.aanc CRxMgrMyShop,CRxMgr"
 	condition:
 		true
 }
@@ -23,19 +23,19 @@ rule CRxMgrMyShop_dlg
 rule CRxMgrMyShop_dlg_ctrls
 {
 	meta:
-		script = "$result = [@pattern0 +0xe]"
+		script = "$result = [@pattern +0xe]"
 		script = "$result1 = 0x100 - byte:[@pattern + 0x4f]"
-		script = "Type.am CRxMgrShop,CRxLabel*,dlg_lb_names,8,$result-$result1"
-		script = "Type.am CRxMgrShop,CRxLabel*,dlg_lb_prices,8,$result"
-		script = "Type.am CRxMgrShop,CRxLabel*,dlg_lb_counts,8,$result+$result1"
+		script = "Type.am CRxMgrMyShop,CRxLabel*,dlg_lb_names,8,$result-$result1"
+		script = "Type.am CRxMgrMyShop,CRxLabel*,dlg_lb_prices,8,$result"
+		script = "Type.am CRxMgrMyShop,CRxLabel*,dlg_lb_counts,8,$result+$result1"
 	strings:
 		$pattern = { 6A 01 E8 [4] BB 42 00 00 00 8D BE [4] EB ?? 8D 49 00 68 7C 03 00 00 E8 [25] 6A 12 68 82 00 00 00 6A 05 53 6A 43 8B C8 E8 [4] EB ?? 33 C0 89 47 }
 	condition:
 		#pattern == 1
 }
 
-//CRxWnd * dlg2;
-rule CRxMgrMyShop_dlg
+//CRxWnd * dlg1;
+rule CRxMgrMyShop_dlg1
 {
 	meta:
 		script = "$result = [@pattern + 0x23]"
@@ -50,12 +50,12 @@ rule CRxMgrMyShop_dlg
 rule CRxMgrMyShop_dlg1_ctrls
 {
 	meta:
-		script = "$result = [@pattern0 + 0x7]"
+		script = "$result = [@pattern + 0x7]"
 		script = "$result1 = 0x100 - byte:[@pattern + 0x44]"
-		script = "Type.am CRxMgrShop,CRxLabel*,dlg_lb_names,8,$result-$result1"
-		script = "Type.am CRxMgrShop,CRxLabel*,dlg_lb_prices,8,$result"
-		script = "Type.am CRxMgrShop,CRxLabel*,dlg_lb_counts,8,$result+$result1"
-		script = "Type.am CRxMgrShop,CRxButton*,dlg_bn_buys,8,$result+$result1*2"
+		script = "Type.am CRxMgrMyShop,CRxLabel*,dlg1_lb_names,8,$result-$result1"
+		script = "Type.am CRxMgrMyShop,CRxLabel*,dlg1_lb_prices,8,$result"
+		script = "Type.am CRxMgrMyShop,CRxLabel*,dlg1_lb_counts,8,$result+$result1"
+		script = "Type.am CRxMgrMyShop,CRxButton*,dlg1_bn_buys,8,$result+$result1*2"
 	strings:
 		$pattern = { BB 42 00 00 00 8D BE [4] 90 68 7C 03 00 00 E8 [25] 6A 12 68 82 00 00 00 6A 05 53 6A 43 8B C8 E8 [4] EB [3] 89 47 }
 	condition:
@@ -83,4 +83,12 @@ rule CRxMgrMyShop_items
 		$pattern = { 40 83 C1 ?? 83 F8 08 7C ?? 5F 5E 5D C2 04 00 6B C0 ?? 8D BC 38 [4] B9 [4] F3 A5 }
 	condition:
 		#pattern == 1
+}
+
+rule CRxMgrMyShop_end
+{
+	meta:
+		script = "Type.print CRxMgrMyShop,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN"
+	condition:
+		true
 }

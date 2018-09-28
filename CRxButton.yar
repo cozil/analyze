@@ -34,9 +34,7 @@ rule CRxButton_cmdtype
 rule CRxButton_end
 {
 	meta:
-		script = "Type.print CRxButton"
-		script = "log"
-		script = "log"
+		script = "Type.print CRxButton,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN"
 	condition:
 		true
 }

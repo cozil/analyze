@@ -1228,6 +1228,43 @@ rule address_PlayerShopList
 		#pattern == 1
 }
 
+rule address_MakerMenuList
+{
+	meta:
+		script = "$result = [@pattern + 0x12]"
+		script = "log \"NP_LMM=0x{$result}\""
+		script = "lblset $result, MakerMenuList"
+	strings:
+		$pattern = { 6A 5D ?? 6A 64 ?? 8B C8 E8 [4] EB ?? 33 C0 A3 [4] 8B 8E }
+	condition:
+		#pattern == 1
+}
+
+rule address_MakerReadyList
+{
+	meta:
+		script = "$result = [@pattern + 0x13]"
+		script = "log \"NP_LMR=0x{$result}\""
+		script = "lblset $result, MakerReadyList"
+	strings:
+		$pattern = { 6A 71 56 6A 73 6A 00 8B C8 E8 [4] EB ?? 33 C0 A3 }
+	condition:
+		#pattern == 1
+}
+
+rule address_BreakerList
+{
+	meta:
+		script = "$result = [@pattern + 0x16]"
+		script = "log \"NP_LBK=0x{$result}\""
+		script = "lblset $result, BreakerList"
+	strings:
+		$pattern = { 68 85 00 00 00 56 6A 6C 6A 00 [2] E8 [4] EB ?? 33 C0 A3 }
+	condition:
+		#pattern == 1
+}
+
+
 rule address_end
 {
 	meta:

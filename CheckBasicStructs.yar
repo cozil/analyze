@@ -59,3 +59,23 @@ rule Check_RX_SHOP_ITEM
 	condition:
 		#pattern == 1
 }
+
+rule Check_RX_MAKER_ITEM
+{
+	meta:
+		script = "$result1 = [@pattern + 24]"
+		script = "Type.size RX_MAKER_ITEM"
+		script = "cmp $result,$result1"
+		script = "jnz _FAIL"
+		script = "Type.print RX_MAKER_ITEM,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN"
+		script = "jmp _EXIT"
+		script = "_FAIL:"
+		script = "log \"Size of RX_MAKER_ITEM has changed to 0x{$result1}\""
+		script = "msg \"RX_MAKER_ITEM结构发生改变\""
+		script = "_EXIT:"
+	strings:
+		$pattern = { C1 E1 04 8B 84 31 [4] 03 CE 3B 81 [4] 74 ?? 8B 55 ?? 8B 75 ?? 39 30 75 ?? 39 50 ?? 74 ?? 05 }
+	condition:
+		#pattern == 1
+}
+

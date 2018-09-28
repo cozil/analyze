@@ -7,17 +7,18 @@ rule CRxMgrShop_start
 {
 	meta:
 		script = "Type.as CRxMgrShop"
+		script = "Type.aanc CRxMgrShop,CRxMgr"
 	condition:
 		true
 }
 
-//228 CRxWndShop * dlg
+//228 CRxWnd * dlg
 //230 int npc_id
 rule CRxMgrShop_dlg
 {
 	meta:
 		script = "$result = [@pattern + 0x02]"
-		script = "Type.am CRxMgrShop,CRxWndShop*,dlg,0,$result"
+		script = "Type.am CRxMgrShop,CRxWnd*,dlg,0,$result"
 		script = "$result = [@pattern + 0x14]"
 		script = "Type.am CRxMgrShop,int,npc_id,0,$result"
 	strings:

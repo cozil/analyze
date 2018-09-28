@@ -3,10 +3,6 @@ rule CRxStuff_start
 	meta:
 		script = "Type.as CRxStuff"
 		script = "Type.aanc CRxStuff,CRxObject"
-		script = "Type.as StuffProp"
-		script = "Type.am StuffProp,int,type,0,0"
-		script = "Type.am StuffProp,int,value,0,0xc"
-		script = "Type.am StuffProp,char,pad_10,8,0x10"
 	condition:
 		true
 }
@@ -47,7 +43,6 @@ rule CRxStuff_name
 {
 	meta:
 		script = "$result = byte:[@pattern + 0x22]"
-		script = "log \"//\""
 		script = "Type.am CRxStuff,char,name,0x48,$result"
 		script = "Type.mcomment CRxStuff,name,\"物品名称\""
 	strings:
@@ -176,7 +171,6 @@ rule CRxStuff_ss_begin
 		script = "Type.am CRxStuff,uint32_t,ss_begin,0,$result"
 		script = "Type.mcomment CRxStuff,ss_begin,\"物品/技能状态起始时间\""
 		script = "$result = [@pattern + 0x41]"
-		script = "log \"//物品/技能状态结束时间\""
 		script = "Type.am CRxStuff,uint32_t,ss_end,0,$result"
 		script = "Type.mcomment CRxStuff,ss_end,\"物品/技能状态结束时间\""
 		
@@ -443,7 +437,7 @@ rule CRxStuff_lock_time
 rule CRxStuff_end
 {
 	meta:
-		script = "Type.print StuffProp"
+		script = "Type.print StuffProp,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN"
 		script = "Type.print CRxStuff,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN"
 	condition:
 		true

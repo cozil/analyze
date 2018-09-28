@@ -146,6 +146,7 @@ Type.am CRxLabelEx,uint32_t,textcolor,0,0x1068
 Type.print CRxLabelEx,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as _CBITEM
+Type.comment _CBITEM,"CRxCombo类的列表项结构(static)"
 Type.am _CBITEM,char,text,0x64
 Type.am _CBITEM,char,visible
 Type.am _CBITEM,char,enable
@@ -175,6 +176,7 @@ Type.print CRxListBox,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 //CRxMgrLogin结构中使用的服务器线路状态数据结构
 Type.as LineInfo
+Type.comment LineInfo, "登录服务器线路项数据(static)"
 Type.am LineInfo,short,lineid
 Type.am LineInfo,char,pad_02,0x0a
 Type.am LineInfo,char*,linename
@@ -182,6 +184,7 @@ Type.am LineInfo,long,onlinenum
 Type.print LineInfo,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as ServerHead
+Type.comment ServerHead, "登录服务器头部数据(static)"
 Type.am ServerHead,char,pad_00,0xc
 Type.am ServerHead,char*,servername
 Type.am ServerHead,char,pad_10,0x6
@@ -189,11 +192,13 @@ Type.am ServerHead,short,linenum
 Type.print ServerHead,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as ServerItem
+Type.comment ServerItem, "登录服务器项(static)"
 Type.am ServerItem,ServerHead,head
 Type.am ServerItem,LineInfo,lines,0xa
 Type.print ServerItem,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as ServerObject
+Type.comment ServerItem, "登录服务器完整结构(static)"
 Type.am ServerObject,char,pad_00,0x4c4
 Type.am ServerObject,ServerItem,servers,0xa
 Type.print ServerObject,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
@@ -212,6 +217,7 @@ Type.am CRxSkillItem,int,ani_id,0,0x62
 Type.am CRxSkillItem,char,desc,0x128,0x68
 
 Type.as CRxSkillList
+Type.comment CRxSkillList, "技能数据完整结构(static)"
 Type.am CRxSkillList,int,skill_id,0,0
 Type.am CRxSkillList,char,name,0x10,4
 Type.am CRxSkillList,char,group,0,0x45
@@ -222,6 +228,7 @@ Type.am CRxSkillList,CRxSkillItem,items,0x10,0x150
 Type.ad CRxSkillList,"const static int MaxSize = 0x400;"
 
 Type.as RX_GAME_NPC
+Type.comment RX_GAME_NPC, "游戏NPC信息,数据来源于ybi.cfg(static)"
 Type.am RX_GAME_NPC,int,nId,0,0
 Type.am RX_GAME_NPC,char,Name,0x40,4
 Type.am RX_GAME_NPC,uint8_t,group,0,0x44
@@ -230,6 +237,7 @@ Type.am RX_GAME_NPC,char,pad_460,0x1a54,0x460
 Type.ad RX_GAME_NPC,"const static int MaxSize = 0x800;"
 
 Type.as RX_SHOP_ITEM
+Type.comment RX_SHOP_ITEM, "开店数据,收发包相关结构(static)"
 Type.am RX_SHOP_ITEM,int,code
 Type.am RX_SHOP_ITEM,int,codeEx
 Type.am RX_SHOP_ITEM,int,s_code1
@@ -240,6 +248,31 @@ Type.am RX_SHOP_ITEM,__int64,price
 Type.am RX_SHOP_ITEM,int,propdata,5
 Type.am RX_SHOP_ITEM,char,pad_30,0x34
 
-log "CRxBaseStuff未实现"
+
+Type.as RX_ITEM_PAIR
+Type.am RX_ITEM_PAIR,int,code
+Type.am RX_ITEM_PAIR,int,codeEx
+Type.am RX_ITEM_PAIR,int,count
+Type.am RX_ITEM_PAIR,int,high_count
+
+Type.as RX_MAKER_ITEM
+Type.am RX_MAKER_ITEM,int,code,0,0
+Type.am RX_MAKER_ITEM,int,codeEx,0,4
+Type.am RX_MAKER_ITEM,char,name,0x40,8
+Type.am RX_MAKER_ITEM,RX_ITEM_PAIR,needItems,0x0a,0x1b0
+Type.am RX_MAKER_ITEM,char,pad_250,0x110,0x250
+
+Type.as StuffProp
+Type.comment StuffProp, "物品合成属性结构(static)"
+Type.am StuffProp,int,type,0,0
+Type.am StuffProp,int,value,0,0xc
+Type.am StuffProp,char,pad_10,8,0x10
+
+Type.as CRxShopInfo
+Type.comment CRxShopInfo,"玩家开店信息结构(static)"
+Type.am CRxShopInfo,int,sid,0,4
+Type.am CRxShopInfo,char,shopname,0x20,8
+		
+log "CRxBaseStuff 未实现"
 
 
