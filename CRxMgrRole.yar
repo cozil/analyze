@@ -22,9 +22,9 @@ rule CRxMgrRole_dlg_rolelist
 		script = "$result = [@pattern + 0xd9]"
 		script = "Type.am CRxMgrRole,CRxListBox*,lbx_roleList,0,$result"
 	strings:
-		$pattern = { 6A 01 6A 01 56 68 [4] 52 51 8B C8 E8 [4] EB ?? 33 C0 53 8B C8 88 5D ?? 89 86 [4] E8 [4] 8B 8E [4] 53 E8 [4] 8B 8E [4] 53 E8 [4] 8B 8E [4] E8 [4] D9 05 [4] 6A 04 [90] C7 85 [4] 2B 00 00 00 C7 85 [4] 75 00 00 00 C7 85 [4] 47 00 00 00 E8 [4] 6A 01 68 [4] 89 86 [4] E8 [4] 6A 01}
+		$pattern = { 6A 01 6A 01 56 68 [4] 52 51 8B C8 E8 [4] EB ?? 33 C0 53 8B C8 88 5D ?? 89 86 [4] E8 [4] 8B 8E [4] 53 E8 [4] 8B 8E [4] 53 E8 [4] 8B 8E [4] E8 [4] D9 05 [4] 6A 04 [90] C7 85 [4] 2B 00 00 00 C7 85 [4] 75 00 00 00 C7 85 [4] 47 00 00 00 E8 [4] 6A 01 68 [4] 89 86 [4] E8 [4] 6A 01 }
 	condition:
-		#pattern == 1	
+		#pattern == 1
 }
 
 //8e4 int roleCount;

@@ -119,60 +119,16 @@ Type.as CRxMgr
 Type.aanc CRxMgr,CRxObject
 Type.print CRxMgr,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
-
-Type.as CRxEdit
-Type.comment CRxEdit,"游戏文本输入控件 Type=0x17 (static)"
-Type.aanc CRxEdit,CRxObject
-Type.am CRxEdit,char,focused,0,0x228
-Type.am CRxEdit,char,text,0x80,0x238
-Type.am CRxEdit,uint32_t,textcolor,0,0x2b8
-Type.print CRxEdit,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
-
-
-Type.as CRxLabel
-Type.comment CRxLabel,"标签对象 Type=0x20 (static)"
-Type.aanc CRxLabel,CRxObject
-Type.am CRxLabel,int,visible,0,0x40
-Type.am CRxLabel,char,text,0x118,0x228
-Type.am CRxLabel,uint32_t,textcolor,0,0x340
-Type.print CRxLabel,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
-
-
-Type.as CRxLabelEx
-Type.comment CRxLabelEx, "多行文本对象 Type=0x55 (static)"
-Type.aanc CRxLabelEx,CRxObject
-Type.am CRxLabelEx,char,text,0x203,0x229
-Type.am CRxLabelEx,uint32_t,textcolor,0,0x1068
-Type.print CRxLabelEx,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
-
-Type.as _CBITEM
-Type.comment _CBITEM,"CRxCombo类的列表项结构(static)"
-Type.am _CBITEM,char,text,0x64
-Type.am _CBITEM,char,visible
-Type.am _CBITEM,char,enable
-Type.print _CBITEM,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
-
-Type.as CRxCombo
-Type.comment CRxCombo, "游戏组合框控件 Type=0x11 (static)"
-Type.aanc CRxCombo,CRxObject
-Type.am CRxCombo,_CBITEM,items,0x14,0x230
-Type.am CRxCombo,int,current_index,0,0xa28
-Type.print CRxCombo,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
-
-Type.as CRxLbItem
-Type.comment CRxLbItem, "listbox列表项结构 Type=0x25 (static)"
-Type.aanc CRxLbItem,CRxObject
-Type.am CRxLbItem,int,itemdata,0,0x228
-Type.am CRxLbItem,int,colcount,0,0x230
-Type.am CRxLbItem,char,texts[8],0x80,0x2fc
-Type.print CRxLbItem,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
-
-
-Type.as CRxListBox
-Type.comment CRxListBox, "ListBox控件结构 Type=0x24 (static)"
-Type.aanc CRxListBox,CRxObject
-Type.am CRxListBox,CRxLbItem*,items,0x32,0x22c
-Type.print CRxListBox,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
+//控件基础结构
+Type.as CRxCtrl
+Type.comment CRxCtrl,"控件基础结构(static)"
+Type.aanc CRxCtrl, CRxObject
+Type.am CRxCtrl,int,_Left,0,0x28
+Type.am CRxCtrl,int,_Top,0,0x2c
+Type.am CRxCtrl,int,_Height,0,0x30
+Type.am CRxCtrl,int,_Width,0,0x34
+Type.am CRxCtrl,int,visible,0x40
+Type.print CRxCtrl,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 //CRxMgrLogin结构中使用的服务器线路状态数据结构
 Type.as LineInfo

@@ -16,6 +16,11 @@ rule main_start
 
 //»ù´¡Àà·ÖÎö
 include "e:/rxwg/analyze/CheckBasicStructs.yar"
+include "e:/rxwg/analyze/CRxEdit.yar"
+include "e:/rxwg/analyze/CRxLabel.yar"
+include "e:/rxwg/analyze/CRxLabelEx.yar"
+include "e:/rxwg/analyze/CRxCombo.yar"
+include "e:/rxwg/analyze/CRxListBox.yar"
 include "e:/rxwg/analyze/CRxButton.yar"
 include "e:/rxwg/analyze/CRxWnd.yar"
 include "E:/rxwg/analyze/CRxStuff.yar"
