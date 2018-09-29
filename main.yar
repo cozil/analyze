@@ -29,6 +29,7 @@ include "e:/rxwg/analyze/CRxList.yar"
 include "e:/rxwg/analyze/CRxSelf.yar"
 include "e:/rxwg/analyze/CRxPet.yar"
 include "e:/rxwg/analyze/CRxImage.yar"
+include "e:/rxwg/analyze/CRxMgrTool.yar"
 
 //include "e:/rxwg/analyze/CRxMgrLogin.yar"
 //include "e:/rxwg/analyze/CRxMgrRole.yar"

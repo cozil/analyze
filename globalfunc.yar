@@ -43,3 +43,17 @@ rule func_CRxWnd_push_gui_object2
 	condition:
 		#pattern == 1
 }
+
+
+rule func_safe_strcpy
+{
+	meta:
+		script = "$result = @pattern + 0x19 + [@pattern + 0x15]"
+		script = "lblset $result,safe_strcpy__"
+		script = "$result = @pattern + 0xe + [@pattern + 0xa]"
+		script = "lblset $result,load_ybmsg@id"
+	strings:
+		$pattern = { 6A FF 6A 40 68 5E 05 00 00 E8 [4] 50 68 [4] E8 }
+	condition:
+		#pattern == 1
+}

@@ -1264,6 +1264,30 @@ rule address_BreakerList
 		#pattern == 1
 }
 
+rule address_BuffStatusList
+{
+	meta:
+		script = "$result = [@pattern + 0x16]"
+		script = "log \"NP_LBS=0x{$result}\""
+		script = "lblset $result, BuffStatusList"
+	strings:
+		$pattern = { 68 DE 07 00 00 56 6A 32 6A 04 8B C8 E8 [4] EB ?? 33 C0 A3 }
+	condition:
+		#pattern == 1
+}
+
+rule address_ToolbarList
+{
+	meta:
+		script = "$result = [@pattern + 0x16]"
+		script = "log \"NP_LTB=0x{$result}\""
+		script = "lblset $result, ToolbarList"
+	strings:
+		$pattern = { 68 73 04 00 00 56 6A 1E 6A 04 8B C8 E8 [8] A3 }
+	condition:
+		#pattern == 1
+}
+
 
 rule address_end
 {
