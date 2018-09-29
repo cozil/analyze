@@ -41,19 +41,17 @@ rule CRxApp_zzf_type
 		#pattern == 1	
 }
 
+
+
 //280 CRxMgrTool * mgr_tool
-//3a8 CRxMgrTeam * mgr_team
 rule CRxApp_mgr_tool
 {
 	meta:
-		script = "$result = [@pattern +0x55]"
-		script = "log \"/*{p:$result}*/    CRxMgrTool * mgr_tool;\""
-		
-		//script = "$result = [@pattern +0x1f]"
-		//script = "log \"/*{p:$result}*/    CRxMgrTeam * mgr_team;\""
-				
+		script = "$result = [@pattern +0xb]"
+		script = "Type.am CRxApp,CRxMgrTool*,mgr_tool,0,$result"
+		script = "Type.mcomment CRxApp,mgr_tool,\"快捷工具栏管理\""
 	strings:
-		$pattern = { 55 8B EC 8B 45 08 66 0F BE 48 06 [18] 83 B9 A8 03 00 00 00 [27] 83 F8 03 [17] 83 B8 80 02 00 00 00 }
+		$pattern = { 68 0C 05 00 00 [3] 01 89 83 [4] E8 [7] 89 85 [4] C6 45 ?? 09 }
 	condition:
 		#pattern == 1
 }
@@ -304,6 +302,18 @@ rule CRxApp_mgr_team
 	condition:
 		#pattern == 1		
 }
+//3a8 CRxMgrTeam * mgr_team
+//rule CRxApp_mgr_team
+//{
+//	meta:
+//		//script = "$result = [@pattern +0x1f]"
+//		//script = "log \"/*{p:$result}*/    CRxMgrTeam * mgr_team;\""				
+//	strings:
+//		$pattern = { 55 8B EC 8B 45 08 66 0F BE 48 06 [18] 83 B9 A8 03 00 00 00 [27] 83 F8 03 [17] 83 B8 80 02 00 00 00 }
+//	condition:
+//		#pattern == 1
+//}
+
 
 //3AC CRxMgrMyShop * mgr_myshop;
 rule CRxApp_mgr_myshop

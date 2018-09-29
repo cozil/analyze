@@ -12,7 +12,8 @@ rule main_start
 		true
 }
 
-//include "e:/rxwg/analyze/address.yar"
+include "e:/rxwg/analyze/globalfunc.yar"
+include "e:/rxwg/analyze/address.yar"
 
 //»ù´¡Àà·ÖÎö
 include "e:/rxwg/analyze/CheckBasicStructs.yar"
@@ -25,10 +26,13 @@ include "e:/rxwg/analyze/CRxButton.yar"
 include "e:/rxwg/analyze/CRxWnd.yar"
 include "E:/rxwg/analyze/CRxStuff.yar"
 include "e:/rxwg/analyze/CRxList.yar"
+include "e:/rxwg/analyze/CRxSelf.yar"
+include "e:/rxwg/analyze/CRxPet.yar"
+include "e:/rxwg/analyze/CRxImage.yar"
 
 //include "e:/rxwg/analyze/CRxMgrLogin.yar"
 //include "e:/rxwg/analyze/CRxMgrRole.yar"
-//include "e:/rxwg/analyze/CRxSelf.yar"
+
 //include "E:/rxwg/analyze/CRxSocket.yar"
 //include "E:/rxwg/analyze/CRxNpc.yar"
 //include "E:/rxwg/analyze/CRxPlayer.yar"

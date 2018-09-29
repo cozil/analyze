@@ -161,7 +161,7 @@ Type.print ServerObject,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 
 Type.as CRxSkillItem
-Type.comment CRxSkillItem,"技能数据(static)\n目前仅使用了skill_id和attach_length两个成员\n只要结构大小不变则不需要手工重新分析"
+Type.comment CRxSkillItem,"技能数据(static)\n目前仅使用了skill_id和attack_length两个成员\n只要结构大小不变则不需要手工重新分析"
 Type.am CRxSkillItem,int,skill_id,0,0
 Type.am CRxSkillItem,char,name,0x40,4
 Type.am CRxSkillItem,short,grade,0,0x48
@@ -171,6 +171,7 @@ Type.am CRxSkillItem,int,cooldown_time,0,0x58
 Type.am CRxSkillItem,char,type,0,0x61
 Type.am CRxSkillItem,int,ani_id,0,0x62
 Type.am CRxSkillItem,char,desc,0x128,0x68
+Type.print CRxSkillItem,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as CRxSkillList
 Type.comment CRxSkillList, "技能数据完整结构(static)"
@@ -182,6 +183,7 @@ Type.am CRxSkillList,char,grade,0,0x48
 Type.am CRxSkillList,char,job,0,0x4a
 Type.am CRxSkillList,CRxSkillItem,items,0x10,0x150
 Type.ad CRxSkillList,"const static int MaxSize = 0x400;"
+Type.print CRxSkillList,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as RX_GAME_NPC
 Type.comment RX_GAME_NPC, "游戏NPC信息,数据来源于ybi.cfg(static)"
@@ -191,6 +193,7 @@ Type.am RX_GAME_NPC,uint8_t,group,0,0x44
 Type.am RX_GAME_NPC,int,nCodes,0x5,0x44c
 Type.am RX_GAME_NPC,char,pad_460,0x1a54,0x460
 Type.ad RX_GAME_NPC,"const static int MaxSize = 0x800;"
+Type.print RX_GAME_NPC,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as RX_SHOP_ITEM
 Type.comment RX_SHOP_ITEM, "开店数据,收发包相关结构(static)"
@@ -203,13 +206,14 @@ Type.am RX_SHOP_ITEM,short,id
 Type.am RX_SHOP_ITEM,__int64,price
 Type.am RX_SHOP_ITEM,int,propdata,5
 Type.am RX_SHOP_ITEM,char,pad_30,0x34
-
+Type.print RX_SHOP_ITEM,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as RX_ITEM_PAIR
 Type.am RX_ITEM_PAIR,int,code
 Type.am RX_ITEM_PAIR,int,codeEx
 Type.am RX_ITEM_PAIR,int,count
 Type.am RX_ITEM_PAIR,int,high_count
+Type.print RX_ITEM_PAIR,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as RX_MAKER_ITEM
 Type.am RX_MAKER_ITEM,int,code,0,0
@@ -217,18 +221,36 @@ Type.am RX_MAKER_ITEM,int,codeEx,0,4
 Type.am RX_MAKER_ITEM,char,name,0x40,8
 Type.am RX_MAKER_ITEM,RX_ITEM_PAIR,needItems,0x0a,0x1b0
 Type.am RX_MAKER_ITEM,char,pad_250,0x110,0x250
+Type.print RX_MAKER_ITEM,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as StuffProp
 Type.comment StuffProp, "物品合成属性结构(static)"
 Type.am StuffProp,int,type,0,0
 Type.am StuffProp,int,value,0,0xc
 Type.am StuffProp,char,pad_10,8,0x10
+Type.print StuffProp,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as CRxShopInfo
 Type.comment CRxShopInfo,"玩家开店信息结构(static)"
 Type.am CRxShopInfo,int,sid,0,4
 Type.am CRxShopInfo,char,shopname,0x20,8
-		
-log "CRxBaseStuff 未实现"
+Type.print CRxShopInfo,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
-
+Type.as CRxBaseStuff
+Type.comment CRxBaseStuff,"物品基本信息，数据来源于ybi.cfg (static)"
+Type.am CRxBaseStuff,int,Code,0,0
+Type.am CRxBaseStuff,int,CodeEx,0,4
+Type.am CRxBaseStuff,char,Name,0x40,8
+Type.am CRxBaseStuff,uint8_t,group,0,0x49
+Type.am CRxBaseStuff,uint8_t,career,0,0x4a
+Type.am CRxBaseStuff,short,grade,0,0x4c
+Type.am CRxBaseStuff,char,job,0,0x4e
+Type.am CRxBaseStuff,char,sex,0,0x4f
+Type.am CRxBaseStuff,char,stuff_type,0,0x50
+Type.am CRxBaseStuff,short,weight,0,0x52
+Type.am CRxBaseStuff,__int64,buyprice,0,0x64
+Type.am CRxBaseStuff,__int64,sellprice,0,0x6c
+Type.am CRxBaseStuff,char,Desc,0x110,0x9c
+Type.am CRxBaseStuff,int,flag,0,0x1ac
+Type.am CRxBaseStuff,char,pad_1b0,0x1a4
+Type.print CRxBaseStuff,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN

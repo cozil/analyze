@@ -63,7 +63,7 @@ rule Check_RX_SHOP_ITEM
 rule Check_RX_MAKER_ITEM
 {
 	meta:
-		script = "$result1 = [@pattern + 24]"
+		script = "$result1 = [@pattern + 0x24]"
 		script = "Type.size RX_MAKER_ITEM"
 		script = "cmp $result,$result1"
 		script = "jnz _FAIL"
@@ -79,3 +79,31 @@ rule Check_RX_MAKER_ITEM
 		#pattern == 1
 }
 
+rule Check_CRxBaseStuff
+{
+	meta:
+		script = "$result1 = [@pattern + 0x0c]"
+		script = "Type.size CRxBaseStuff"
+		script = "cmp $result,$result1"
+		script = "jnz _FAIL"
+		script = "Type.print CRxBaseStuff,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN"
+		script = "jmp _EXIT"
+		script = "_FAIL:"
+		script = "log \"Size of CRxBaseStuff has changed to 0x{$result1}\""
+		script = "msg \"CRxBaseStuff结构发生改变\""
+		script = "_EXIT:"
+	strings:
+		$pattern = { 83 F8 07 74 ?? 83 F8 0A 75 ?? 81 EC 54 03 00 00 [2] B9 D5 00 00 00 }
+	condition:
+		#pattern == 1
+}
+
+rule Check_CRxShopInfo
+{
+	//CRxShopInfo结构长度是通过累加计算得到，以下特征码包含了累加过程
+	//只要找到特征码则表示结构大小未变化
+	strings:
+		$pattern = { 8D 3C 80 03 FF 03 FF 03 FF 89 96 [4] 83 BF [4] FF [2] 80 BF [4] 00 }
+	condition:
+		#pattern == 1
+}

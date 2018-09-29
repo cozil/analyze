@@ -66,6 +66,7 @@ rule crxMgrMaker_makerDataList
 	meta:
 		script = "$result = [@pattern + 0x18]"
 		script = "Type.am CRxMgrMaker,RX_MEMBLOCK,makerDataList,0x11,$result"
+		SCRIPT = "Type.mcomment CRxMgrMaker,makerDataList,\"RX_MAKER_ITEM结构，遇到空值结束检索\""
 		script = "lblset [@pattern + 0x6], \"RX_MEMBLOCK::destroy\""
 		script = "lblset [@pattern + 0xb], \"RX_MEMBLOCK::init\""
 	strings:
