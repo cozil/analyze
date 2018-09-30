@@ -18,13 +18,13 @@ rule CRxWnd_visible
 		script = "$result1 = byte:[@pattern + 0x11]"
 		script = "cmp $result - $result1,0"
 		script = "jz _SUCCESS"
-		script = "log \"Invalid offset for CRxWnd::visible\""
+		script = "msg \"Invalid offset for CRxWnd::visible\""
 		script = "jmp _END"
 		script = "_SUCCESS:"
 		script = "Type.am CRxWnd,int,visible,0,$result"
 		script = "_END:"
 	strings:
-		$pattern = { 55 8B EC 51 83 79 40 00 [6] 56 C7 41 40 01 00 00 00 }
+		$pattern = { 55 8B EC 51 83 79 ?? 00 [6] 56 C7 41 ?? 01 00 00 00 }
 	condition:
 		#pattern == 1
 }

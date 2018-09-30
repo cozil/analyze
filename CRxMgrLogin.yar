@@ -21,22 +21,23 @@ rule CRxMgrLogin_dlg_login
 		script = "$result = [@pattern + 0x1f]"
 		script = "Type.am CRxMgrLogin,CRxWnd*,dlg_login,0,$result"		
 		script = "$result = [@pattern + 0x94]"
-		script = "Type.am CRxMgrLogin,CRxEdit*,edit_account,0,$result"
-		script = "Type.mcomment CRxMgrLogin,edit_account,\"输入帐户框\""
+		script = "Type.am CRxMgrLogin,CRxEdit*,login_edit_account,0,$result"
+		script = "Type.mcomment CRxMgrLogin,login_edit_account,\"输入帐户框\""
 		script = "$result = [@pattern + 0x15d]"
-		script = "Type.am CRxMgrLogin,CRxEdit*,edit_password,0,$result"
-		script = "Type.mcomment CRxMgrLogin,edit_password,\"输出密码框\""		
+		script = "Type.am CRxMgrLogin,CRxEdit*,login_edit_password,0,$result"
+		script = "Type.mcomment CRxMgrLogin,login_edit_password,\"输出密码框\""		
 	strings:
 		$pattern = { 6A 01 6A 01 56 68 [4] 57 51 8B C8 E8 [4] EB ?? [90] 68 C8 00 00 00 53 56 6A 0E 68 A5 00 00 00 6A 56 6A 58 8B C8 E8 [4] EB ?? 33 C0 50 6A 78 88 5D ?? 89 86 [4] E8 [158] 68 C9 00 00 00 6A 01 56 6A 0E 68 A5 00 00 00 6A 73 6A 58 8B C8 E8 [4] EB ?? 33 C0 50 6A 78 88 5D ?? 89 86 [4] E8 }
 	condition:
 		#pattern == 1	
 }
 
-rule CRxMgrLogin_bn_login_confirm
+
+rule CRxMgrLogin_login_bn_confirm
 {
 	meta:
 		script = "$result = [@pattern + 0x28]"
-		script = "Type.am CRxMgrLogin,CRxButton*,bn_login_confirm,0,$result"
+		script = "Type.am CRxMgrLogin,CRxButton*,login_bn_confirm,0,$result"
 	strings:
 		$pattern = { 6A 7B [3] B2 00 00 00 [3] 55 [2] B2 00 00 00 ?? 55 [2] E8 [4] EB [3] 8B [5] 89 86 }
 	condition:

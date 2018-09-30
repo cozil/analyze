@@ -1195,23 +1195,25 @@ rule HF_FMS
 rule address_BagList
 {
 	meta:
-		script = "$result = [@pattern + 0x2]"
+		script = "$result = [@pattern + 0x1d]"
 		script = "log \"NP_LBG=0x{$result}\""
 		script = "lblset $result, BagList"
 	strings:
-		$pattern = { 8B 35 [4] 33 C9 8D 86 [4] BF BC CC 9A 3B 90 }
+		$pattern = { C6 45 ?? 09 [4] 68 [4] 56 6A 42 53 8B C8 E8 [4] EB ?? 33 C0 A3 }
 	condition:
 		#pattern == 1	
 }
 
+
+
 rule address_MyShopList
 {
 	meta:
-		script = "$result = [@pattern + 0x16]"
+		script = "$result = [@pattern + 0x43]"
 		script = "log \"NP_LMS=0x{$result}\""
 		script = "lblset $result, MyShopList"
 	strings:
-		$pattern = { 68 A7 0D 00 00 56 6A 09 6A 00 8B C8 E8 [4] EB ?? 33 C0 A3 }
+		$pattern = { C7 85 [4] CB 00 00 00 C7 85 [4] 41 01 00 00 [25] 68 [4] 56 6A 09 6A 00 8B C8 E8 [4] EB ?? 33 C0 A3 }
 	condition:
 		#pattern == 1
 }
@@ -1223,7 +1225,7 @@ rule address_PlayerShopList
 		script = "log \"NP_LPS=0x{$result}\""
 		script = "lblset $result, PlayerShopList"
 	strings:
-		$pattern = { 68 F4 23 00 00 E8 [20] 68 B4 0D 00 00 ?? 6A 08 6A 00 [2] E8 [4] EB ?? 33 C0 A3 }
+		$pattern = { 68 F4 23 00 00 E8 [20] 68 [4] 56 6A 08 6A 00 [2] E8 [4] EB ?? 33 C0 A3 }
 	condition:
 		#pattern == 1
 }
@@ -1231,11 +1233,11 @@ rule address_PlayerShopList
 rule address_MakerMenuList
 {
 	meta:
-		script = "$result = [@pattern + 0x12]"
+		script = "$result = [@pattern + 0x1a]"
 		script = "log \"NP_LMM=0x{$result}\""
 		script = "lblset $result, MakerMenuList"
 	strings:
-		$pattern = { 6A 5D ?? 6A 64 ?? 8B C8 E8 [4] EB ?? 33 C0 A3 [4] 8B 8E }
+		$pattern = { C6 45 ?? 04 [4] 6A ?? 56 6A 64 [3] E8 [4] EB ?? 33 C0 A3 [4] 8B 8E }
 	condition:
 		#pattern == 1
 }
@@ -1243,11 +1245,11 @@ rule address_MakerMenuList
 rule address_MakerReadyList
 {
 	meta:
-		script = "$result = [@pattern + 0x13]"
+		script = "$result = [@pattern + 0x1b]"
 		script = "log \"NP_LMR=0x{$result}\""
 		script = "lblset $result, MakerReadyList"
 	strings:
-		$pattern = { 6A 71 56 6A 73 6A 00 8B C8 E8 [4] EB ?? 33 C0 A3 }
+		$pattern = { C6 45 ?? 05 [4] 6A ?? 56 6A 73 6A 00 8B C8 E8 [4] EB ?? 33 C0 A3 }
 	condition:
 		#pattern == 1
 }
@@ -1255,11 +1257,11 @@ rule address_MakerReadyList
 rule address_BreakerList
 {
 	meta:
-		script = "$result = [@pattern + 0x16]"
+		script = "$result = [@pattern + 0x1e]"
 		script = "log \"NP_LBK=0x{$result}\""
 		script = "lblset $result, BreakerList"
 	strings:
-		$pattern = { 68 85 00 00 00 56 6A 6C 6A 00 [2] E8 [4] EB ?? 33 C0 A3 }
+		$pattern = { C6 45 ?? 06 [4] 68 [4] 56 6A 6C 6A 00 [2] E8 [4] EB ?? 33 C0 A3 }
 	condition:
 		#pattern == 1
 }
@@ -1267,11 +1269,11 @@ rule address_BreakerList
 rule address_BuffStatusList
 {
 	meta:
-		script = "$result = [@pattern + 0x16]"
+		script = "$result = [@pattern + 0x1e]"
 		script = "log \"NP_LBS=0x{$result}\""
 		script = "lblset $result, BuffStatusList"
 	strings:
-		$pattern = { 68 DE 07 00 00 56 6A 32 6A 04 8B C8 E8 [4] EB ?? 33 C0 A3 }
+		$pattern = { C6 45 ?? 33 [4] 68 [4] 56 6A 32 6A 04 8B C8 E8 [4] EB ?? 33 C0 A3 }
 	condition:
 		#pattern == 1
 }
@@ -1279,11 +1281,211 @@ rule address_BuffStatusList
 rule address_ToolbarList
 {
 	meta:
-		script = "$result = [@pattern + 0x16]"
+		script = "$result = [@pattern + 0x1e]"
 		script = "log \"NP_LTB=0x{$result}\""
 		script = "lblset $result, ToolbarList"
 	strings:
-		$pattern = { 68 73 04 00 00 56 6A 1E 6A 04 8B C8 E8 [8] A3 }
+		$pattern = { C6 45 ?? 18 [4] 68 [4] 56 6A 1E 6A 04 8B C8 E8 [8] A3 }
+	condition:
+		#pattern == 1
+}
+
+
+rule address_SxsStoneList
+{
+	meta:
+		script = "$result = [@pattern + 0x2c]"
+		script = "log \"NP_LXS=0x{$result}\""
+		script = "lblset $result, SxsStoneList"
+	strings:
+		$pattern = { C7 45 ?? 63 00 00 00 [19] 6A ?? 56 6A 01 53 8B C8 E8 [4] EB 02 33 C0 A3 }
+	condition:
+		#pattern == 1
+}
+
+rule address_SxsLuckyList
+{
+	meta:
+		script = "$result = [@pattern + 0x25]"
+		script = "log \"NP_LXL=0x{$result}\""
+		script = "lblset $result, SxsLuckyList"
+	strings:
+		$pattern = { 83 BA [4] 00 74 ?? B8 A2 00 00 00 E9 [4] B9 3E 00 00 00 66 89 8D [4] E9 [4] A1 }
+	condition:
+		#pattern == 1
+}
+
+
+
+rule address_SxsEquipList
+{
+	meta:
+		script = "$result = [@pattern + 0x2c]"
+		script = "log \"NP_LXE=0x{$result}\""
+		script = "lblset $result, SxsEquipList"
+	strings:
+		$pattern = { 83 B9 [4] 00 74 ?? B9 A3 00 00 00 66 89 8D [4] E9 [4] BA 3F 00 00 00 66 89 95 [4] E9 [4] A1 }
+	condition:
+		#pattern == 1
+}
+
+rule address_Depot1List
+{
+	meta:
+		script = "$result = [@pattern + 0x1d]"
+		script = "log \"NP_LD1=0x{$result}\""
+		script = "lblset $result, Depot1List"
+	strings:
+		$pattern = { C6 45 ?? 02 [4] 68 [4] 56 6A 3C 53 8B C8 E8 [4] EB ?? 33 C0 A3 }
+	condition:
+		#pattern == 1
+}
+
+
+rule address_Money1List
+{
+	meta:
+		script = "$result = [@pattern + 0x35]"
+		script = "log \"NP_LM1=0x{$result}\""
+		script = "lblset $result, Money1List"
+	strings:
+		$pattern = { C7 85 [4] B4 01 00 00 [14] C6 45 ?? 03 [4] 68 [4] 56 6A 01 53 8B C8 E8 [4] EB ?? 33 C0 A3 }
+	condition:
+		#pattern == 1
+}
+
+rule address_Depot2List
+{
+	meta:
+		script = "$result = [@pattern + 0x1d]"
+		script = "log \"NP_LD2=0x{$result}\""
+		script = "lblset $result, Depot2List"
+	strings:
+		$pattern = { C6 45 ?? 07 [4] 68 [4] 56 6A 3C 53 [2] E8 [8] A3 }
+	condition:
+		#pattern == 1
+}
+
+rule address_Money2List
+{
+	meta:
+		script = "$result = [@pattern + 0x1d]"
+		script = "log \"NP_LM2=0x{$result}\""
+		script = "lblset $result, Money2List"
+	strings:
+		$pattern = { C6 45 ?? 08 [4] 68 [4] 56 6A 01 53 8B C8 E8 [8] A3 }
+	condition:
+		#pattern == 1
+}
+
+rule address_UniteEquipList
+{
+	meta:
+		script = "$result = [@pattern + 0x1e]"
+		script = "log \"NP_LUE=0x{$result}\""
+		script = "lblset $result, UniteEquipList"
+	strings:
+		$pattern = { 68 6E 03 00 00 6A 0C E8 [10] E8 [4] 8B E5 5D C2 04 00 A1 }
+	condition:
+		#pattern == 1
+}
+
+rule address_UniteLuckyList
+{
+	meta:
+		script = "$result = [@pattern + 0x23]"
+		script = "log \"NP_LUL=0x{$result}\""
+		script = "lblset $result, UniteLuckyList"
+	strings:
+		$pattern = { 68 35 0F 00 00 6A 0C E8 [4] E9 [4] B9 16 00 00 00 66 89 8D [4] E9 [4] A1 }
+	condition:
+		#pattern == 1
+}
+
+
+rule address_UniteStoneList
+{
+	meta:
+		script = "$result = [@pattern + 0x20]"
+		script = "log \"NP_LUS=0x{$result}\""
+		script = "lblset $result, UniteStoneList"
+	strings:
+		$pattern = { 68 0E 01 00 00 6A 09 E8 [4] E9 [4] 80 FA 02 75 ?? 83 B8 [4] 00 75 ?? A1 }
+	condition:
+		#pattern == 1
+}
+
+
+
+rule address_StrongEquipList
+{
+	meta:
+		script = "$result = [@pattern + 0x2c]"
+		script = "log \"NP_LSE=0x{$result}\""
+		script = "lblset $result, StrongEquipList"
+	strings:
+		$pattern = { 81 F9 FE E3 14 3C [6] 81 F9 FF E3 14 3C [14] B9 F3 00 00 00 E9 [4] 8B 0D }
+	condition:
+		#pattern == 1
+}
+
+rule address_StrongLuckyList
+{
+	meta:
+		script = "$result = [@pattern + 0x5]"
+		script = "log \"NP_LSL=0x{$result}\""
+		script = "lblset $result, StrongLuckyList"
+	strings:
+		$pattern = { 6A 01 FF D2 A1 [4] 89 B8 [4] 8B 0D [4] 68 01 01 00 00 6A 0C E8 }
+	condition:
+		#pattern == 1
+}
+
+rule address_StrongStoneList
+{
+	meta:
+		script = "$result = [@pattern + 0x3f]"
+		script = "log \"NP_LSS=0x{$result}\""
+		script = "lblset $result, StrongStoneList"
+	strings:
+		$pattern = { C7 45 ?? 63 00 00 00 C7 45 ?? 28 00 00 00 89 45 ?? C7 45 ?? D2 00 00 00 89 45 [20] 57 56 6A 03 53 8B C8 E8 [4] EB ?? 33 C0 A3 }
+	condition:
+		#pattern == 1
+}
+
+rule address_RaiseEquipList
+{
+	meta:
+		script = "$result = [@pattern + 0x36]"
+		script = "log \"NP_LRE=0x{$result}\""
+		script = "lblset $result, RaiseEquipList"
+	strings:
+		$pattern = { 68 FF 00 00 00 6A 09 E8 [10] 6A 01 [7] 0A 00 00 00 [7] E8 [4] 6A 01 8D [6] 8B }
+	condition:
+		#pattern == 1
+}
+
+rule address_RaiseStuffList
+{
+	meta:
+		script = "$result = [@pattern + 0x2c]"
+		script = "log \"NP_LRS=0x{$result}\""
+		script = "lblset $result, RaiseStuffList"
+	strings:
+		$pattern = { C7 45 ?? 1D 00 00 00 E8 [10] C6 45 ?? 06 [4] 6A ?? 56 6A 01 53 [2] E8 [8] A3 }
+	condition:
+		#pattern == 1
+}
+
+
+rule address_RaiseLuckyList
+{
+	meta:
+		script = "$result = [@pattern + 0x2d]"
+		script = "log \"NP_LRL=0x{$result}\""
+		script = "lblset $result, RaiseLuckyList"
+	strings:
+		$pattern = { C0 0B 00 00 00 E8 [10] C6 45 ?? 07 [4] 68 [4] 56 6A 01 53 8B C8 E8 [8] A3 }
 	condition:
 		#pattern == 1
 }

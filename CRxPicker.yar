@@ -37,7 +37,7 @@ rule CRxPicker_a_enable
 rule CRxPicker_end
 {
 	meta:
-		script = "Type.print CRxPicker"
+		script = "Type.print CRxPicker,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN"
 	condition:
 		true
 }

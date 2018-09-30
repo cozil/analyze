@@ -57,3 +57,14 @@ rule func_safe_strcpy
 	condition:
 		#pattern == 1
 }
+
+rule func_CRxList_create
+{
+	meta:
+		script = "$result = @pattern + 0x16 + [@pattern + 0x12]"
+		script = "lblset $result,CRxList::create"
+	strings:
+		$pattern = { C6 45 ?? 05 [4] 6A ?? 56 6A 73 6A 00 8B C8 E8 [4] EB ?? 33 C0 A3 }
+	condition:
+		#pattern == 1
+}

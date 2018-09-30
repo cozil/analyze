@@ -12,14 +12,13 @@ rule CRxSocket_start
 rule CRxSocket_Socket
 {
 	meta:
-		script = "$result = byte:[@pattern + 0x02]"
+		script = "$result = byte:[@pattern + 0x13]"
 		script = "Type.am CRxSocket,int,Socket,0,$result"
 	strings:
-		$pattern = { 83 [2] FF [6] 80 [2] 01 [10] 40 9C 00 00 [6] 50 C3 00 00 }
+		$pattern = { 83 ?? ?? 00 0F 85 [4] C7 ?? ?? 01 00 00 00 83 ?? ?? FF 0F 84 [4] 80 ?? ?? 01 }
 	condition:
 		#pattern == 1
 }
-
 
 //1a058 int last_move_item;
 rule CRxSocket_last_send_time
