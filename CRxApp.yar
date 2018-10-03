@@ -88,15 +88,20 @@ rule CRxApp_mgr_state
 rule CRxApp_mgr_equip
 {
 	meta:
-		script = "$result = [@pattern + 0x20]"
+		script = "$result = [@pattern + 0x4d]"
 		script = "log \"/*{p:$result}*/    CRxMgrEquip * mgr_equip;\""
 		//script = "$result = [@pattern + 0x26]"
 		//script = "log \">>>>/*{p:$result}*/    CRxApp::mgr_equip::dlg\""
 	strings:
-		$pattern = { 55 8B EC 56 [21] A1 [4] 8B 88 [4] 8B 89 [4] E8 [4] 8B 15 [4] 8B 8A [4] E8 [4] 8B 8E [4] E8 [4] 8B 86 [4] 8B 0D [4] 50 E8 [4] 5E 5D C2 04 00 }
+		//0x20
+		//$pattern = { 55 8B EC 56 [21] A1 [4] 8B 88 [4] 8B 89 [4] E8 [4] 8B 15 [4] 8B 8A [4] E8 [4] 8B 8E [4] E8 [4] 8B 86 [4] 8B 0D [4] 50 E8 [4] 5E 5D C2 04 00 }
+		//0x4d 构造函数
+		$pattern = { C6 [2] 01 89 [5] E8 [4] 83 C4 04 89 [5] C6 [2] 0B [29] E8 [8] 68 [4] C6 [2] 01 89 }
 	condition:
-		#pattern == 1	
+		#pattern == 1
 }
+
+
 
 
 //2A0 CRxMgrConfig * mgr_config;

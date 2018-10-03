@@ -1192,14 +1192,62 @@ rule HF_FMS
 		#pattern == 1	
 }
 
-rule address_BagList
+rule address_BagStuffList
 {
 	meta:
 		script = "$result = [@pattern + 0x1d]"
-		script = "log \"NP_LBG=0x{$result}\""
-		script = "lblset $result, BagList"
+		script = "log \"NP_LGS=0x{$result}\""
+		script = "lblset $result, BagStuffList"
 	strings:
 		$pattern = { C6 45 ?? 09 [4] 68 [4] 56 6A 42 53 8B C8 E8 [4] EB ?? 33 C0 A3 }
+	condition:
+		#pattern == 1	
+}
+
+rule address_BagMoneyList
+{
+	meta:
+		script = "$result = [@pattern + 0x19]"
+		script = "log \"NP_LGM=0x{$result}\""
+		script = "lblset $result, BagMoneyList"
+	strings:
+		$pattern = { 68 77 01 00 00 6A 09 89 [5] 89 [5] E8 [4] A1 }
+	condition:
+		#pattern == 1	
+}
+
+rule address_BagEquipList
+{
+	meta:
+		script = "$result = [@pattern + 0x1]"
+		script = "log \"NP_LGE=0x{$result}\""
+		script = "lblset $result, BagEquipList"
+	strings:
+		$pattern = { A1 [8] 81 ?? 41 CA 9A 3B [8] 81 ?? 44 CA 9A 3B }
+	condition:
+		#pattern == 1	
+}
+
+rule address_BagNingshenList
+{
+	meta:
+		script = "$result = [@pattern + 0x1e]"
+		script = "log \"NP_LGN=0x{$result}\""
+		script = "lblset $result, BagNingshenList"
+	strings:
+		$pattern = { C6 [2] 0A [4] 68 [5] 6A 06 6A 11 [2] E8 [8] A3 }
+	condition:
+		#pattern == 1	
+}
+
+rule address_BagTaskitemList
+{
+	meta:
+		script = "$result = [@pattern + 0x1d]"
+		script = "log \"NP_LGT=0x{$result}\""
+		script = "lblset $result, BagTaskitemList"
+	strings:
+		$pattern = { C6 [2] 0D [4] 68 [5] 6A 24 [3] E8 [8] A3 }
 	condition:
 		#pattern == 1	
 }

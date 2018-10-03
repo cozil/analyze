@@ -86,15 +86,34 @@ include "e:/rxwg/analyze/CRxMgrPortal.yar"
 //NPC管理类
 include "e:/rxwg/analyze/CRxMgrNpc.yar"
 
+//角色属性管理类
+include "E:/rxwg/analyze/CRxMgrState.yar"
+
+//角色装备/背包管理类
+include "E:/rxwg/analyze/CRxMgrExtBag.yar"
+include "E:/rxwg/analyze/CRxMgrEquip.yar"
+
+//游戏设置管理类
+include "E:/rxwg/analyze/CRxMgrConfig.yar"
+
+//场景地图管理类
+include "E:/rxwg/analyze/CRxMgrMap.yar"
+
+//强制退出游戏管理类
+include "E:/rxwg/analyze/CRxMgrExit.yar"
+
+//任务管理类
+include "E:/rxwg/analyze/CRxMgrTask.yar"
+
 //include "E:/rxwg/analyze/CRxMgrZd.yar"
 //include "E:/rxwg/analyze/CRxMgrThl.yar"
-//include "E:/rxwg/analyze/CRxMgrConfig.yar"
-//include "E:/rxwg/analyze/CRxMgrState.yar"
+
+
 //include "E:/rxwg/analyze/CRxMgrCharm.yar"
 
 //其它
-include "E:/rxwg/analyze/CRxPicker.yar"
-include "E:/rxwg/analyze/CRxSocket.yar"
+//include "E:/rxwg/analyze/CRxPicker.yar"
+//include "E:/rxwg/analyze/CRxSocket.yar"
 
 
 

@@ -103,6 +103,30 @@ Type.am RX_REWARD_STUFF,int,codeEx
 Type.am RX_REWARD_STUFF,__int64,count
 Type.print RX_REWARD_STUFF,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
+//任务信息
+Type.as RX_GAME_TASK
+Type.comment RX_GAME_TASK,"任务信息(static)"
+Type.am RX_GAME_TASK,int,code
+Type.am RX_GAME_TASK,RX_STRING,rszName
+Type.am RX_GAME_TASK,uint8_t,grade
+Type.am RX_GAME_TASK,uint8_t,group
+Type.am RX_GAME_TASK,uint8_t,careers,0x13
+Type.mcomment RX_GAME_TASK,careers,"LocalCareerXXX位置的值为1表示限该职业.careers[0]为1时全职业通用"
+Type.am RX_GAME_TASK,uint8_t,job
+Type.am RX_GAME_TASK,uint8_t,sex
+Type.am RX_GAME_TASK,char,pad_37,2
+Type.am RX_GAME_TASK,uint8_t,sortid
+Type.am RX_GAME_TASK,char,pad_3a,2
+Type.am RX_GAME_TASK,RX_MEMBLOCK,linkReward
+Type.mcomment RX_GAME_TASK,linkReward,"RX_REWARD_STUFF结构"
+Type.am RX_GAME_TASK,RX_MEMBLOCK,linkFlow
+Type.mcomment RX_GAME_TASK,linkFlow,"RX_TASK_FLOW结构"
+Type.am RX_GAME_TASK,RX_STRING,rsz,4
+Type.am RX_GAME_TASK,int,progress
+Type.mcomment RX_GAME_TASK,progress,"完成进度,>=RX_TASK_FLOW数量时表明任务结束"
+Type.am RX_GAME_TASK,int,state
+Type.mcomment RX_GAME_TASK,state,"状态,拒绝或接任务失败时置1，下次再接时会显示其它谈话内容"
+Type.print RX_GAME_TASK,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 //定义CRxObject结构
 Type.as CRxObject
