@@ -8,6 +8,11 @@ rule CRxMgrShop_start
 	meta:
 		script = "Type.as CRxMgrShop"
 		script = "Type.aanc CRxMgrShop,CRxMgr"
+		script = "Type.comment CRxMgrShop,\"…ÃµÍπ‹¿Ì\""
+		script = "Type.ad CRxMgrShop,\"inline void click_close() {{ click(0x5b); }}\""
+		script = "Type.ad CRxMgrShop,\"inline void click_nextpage() {{ click(0x2712); }}\""
+		script = "Type.ad CRxMgrShop,\"inline void click_prevpage() {{ click(0x2711); }}\""
+		
 	condition:
 		true
 }
@@ -33,13 +38,14 @@ rule CRxMgrShop_dlg
 rule CRxMgrShop_ls_shop
 {
 	meta:
-		script = "$result = [@pattern + 0x02]"
+		script = "$result = [@pattern + 0x21]"
 		script = "Type.am CRxMgrShop,CRxList*,ls_shop,0,$result"
 	strings:
-		$pattern = { 8B 89 [4] 85 C9 74 09 6A 07 6A 00 E8 [4] C3 }
+		$pattern = { C6 [2] 02 [4] 6A 65 ?? 6A 3C [3] E8 [8] 8B [5] 89 }
 	condition:
 		#pattern == 1	
 }
+
 
 //250 int page_id
 //254 int page_count

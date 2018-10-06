@@ -9,6 +9,18 @@ rule CRxMgrPk_start
 		script = "Type.as CRxMgrPk"
 		script = "Type.aanc CRxMgrPk,CRxMgr"
 		script = "Type.comment CRxMgrPk,\"PK管理\""
+		script = "Type.ad CRxMgrPk,\"inline void click_pkquery_accept() {{ click(0x2); }}\""
+		script = "Type.ad CRxMgrPk,\"inline void click_pkquery_reject() {{ click(0x3); }}\""
+		script = "Type.ad CRxMgrPk,\"inline void click_zdinvite_accept() {{ click(0x11); }}\""
+		script = "Type.ad CRxMgrPk,\"inline void click_zdinvite_reject() {{ click(0x1c); }}\""
+		script = "Type.ad CRxMgrPk,\"inline void click_zdenter_accept() {{ click(0x14); }}\""
+		script = "Type.ad CRxMgrPk,\"inline void click_zdenter_reject() {{ click(0x15); }}\""
+		script = "Type.ad CRxMgrPk,\"inline void click_relive_dst() {{ click(0xb); }} //对立复活\""
+		script = "Type.ad CRxMgrPk,\"inline void click_relive_src() {{ click(0xa); }} //据点复活\""
+		script = "Type.ad CRxMgrPk,\"inline void click_enter_fight() {{ click(0x8); }} //进入势力战\""
+		script = "Type.ad CRxMgrPk,\"inline void click_enter_battle() {{ click(0x9); }} //进入风云大战\""
+		script = "Type.ad CRxMgrPk,\"inline void click_goback1() {{ click(0xf); }} //返回村庄1\""
+		script = "Type.ad CRxMgrPk,\"inline void click_goback2() {{ click(0x10); }} //返回村庄2\""
 	condition:
 		true
 }
@@ -45,57 +57,57 @@ rule CRxMgrPk_dlg_pkquery
 }
 
 //244 CRxButton * pkquery_bn_accept;
-rule CRxMgrPk_pkquery_bn_accept
-{
-	meta:
-		script = "$result = [@pattern + 0x35]"
-		script = "Type.am CRxMgrPk,CRxButton*,pkquery_bn_accept,0,$result"
-	strings:
-		$pattern = { D9 05 [4] 8B 96 [4] D9 9D [4] D9 05 [4] 8B 8D [4] 53 D9 9D [4] 53 6A 03 68 [4] 68 [4] 53 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrPk_pkquery_bn_accept
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x35]"
+//		script = "Type.am CRxMgrPk,CRxButton*,pkquery_bn_accept,0,$result"
+//	strings:
+//		$pattern = { D9 05 [4] 8B 96 [4] D9 9D [4] D9 05 [4] 8B 8D [4] 53 D9 9D [4] 53 6A 03 68 [4] 68 [4] 53 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //248 CRxButton * pkquery_bn_reject;
-rule CRxMgrPk_pkquery_bn_reject
-{
-	meta:
-		script = "$result = [@pattern + 0x73]"
-		script = "Type.am CRxMgrPk,CRxButton*,pkquery_bn_reject,0,$result"
-	strings:
-		$pattern = { 6A 03 [59] 6A 01 D9 9D [4] D9 05 [4] 68 00 00 00 C8 6A FF D9 9D [4] D9 05 [4] 6A 05 68 [4] D9 9D [4] 8B 95 [4] 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrPk_pkquery_bn_reject
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x73]"
+//		script = "Type.am CRxMgrPk,CRxButton*,pkquery_bn_reject,0,$result"
+//	strings:
+//		$pattern = { 6A 03 [59] 6A 01 D9 9D [4] D9 05 [4] 68 00 00 00 C8 6A FF D9 9D [4] D9 05 [4] 6A 05 68 [4] D9 9D [4] 8B 95 [4] 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 
 //260 CRxWnd * dlg_zdInvite
-rule CRxMgrPk_dlg_zdInvite
-{
-	meta:
-		script = "$result = [@pattern + 0x6]"
-		script = "Type.am CRxMgrPk,CRxWnd*,dlg_zdInvite,0,$result"
-		script = "Type.mcomment CRxMgrPk,dlg_zdInvite,\"真斗烈战邀请窗口\""
-	strings:
-		$pattern = { 6A 01 8B C8 89 86 [4] E8 [4] D9 05 [4] 8B 96 [4] D9 9D [4] D9 05 [4] 8B 8D [4] 53 D9 9D [4] 8B 85 [4] 53 6A 11 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrPk_dlg_zdInvite
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x6]"
+//		script = "Type.am CRxMgrPk,CRxWnd*,dlg_zdInvite,0,$result"
+//		script = "Type.mcomment CRxMgrPk,dlg_zdInvite,\"真斗烈战邀请窗口\""
+//	strings:
+//		$pattern = { 6A 01 8B C8 89 86 [4] E8 [4] D9 05 [4] 8B 96 [4] D9 9D [4] D9 05 [4] 8B 8D [4] 53 D9 9D [4] 8B 85 [4] 53 6A 11 }
+//	condition:
+//		#pattern == 1
+//}
 
 //264 CRxButton * zdInvite_bn_accept;
 //268 CRxButton * zdInvite_bn_reject;
-rule CRxMgrPk_zdInvite_btns
-{
-	meta:
-		script = "$result = [@pattern + 0xf]"
-		script = "Type.am CRxMgrPk,CRxButton*,zdInvite_bn_accept,0,$result"
-		script = "$result = [@pattern + 0x5c]"
-		script = "Type.am CRxMgrPk,CRxButton*,zdInvite_bn_reject,0,$result"
-	strings:
-		$pattern = { 6A 1C [11] 89 86 [4] 8B 85 [4] 50 51 52 56 E8 [4] D9 05 [4] 83 C4 50 D9 9D [4] D9 05 [4] 6A 01 68 00 00 00 C8 D9 9D [4] D9 05 [4] 6A FF D9 9D [4] 6A 05 D9 05 [4] 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrPk_zdInvite_btns
+//{
+//	meta:
+//		script = "$result = [@pattern + 0xf]"
+//		script = "Type.am CRxMgrPk,CRxButton*,zdInvite_bn_accept,0,$result"
+//		script = "$result = [@pattern + 0x5c]"
+//		script = "Type.am CRxMgrPk,CRxButton*,zdInvite_bn_reject,0,$result"
+//	strings:
+//		$pattern = { 6A 1C [11] 89 86 [4] 8B 85 [4] 50 51 52 56 E8 [4] D9 05 [4] 83 C4 50 D9 9D [4] D9 05 [4] 6A 01 68 00 00 00 C8 D9 9D [4] D9 05 [4] 6A FF D9 9D [4] 6A 05 D9 05 [4] 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 
 //270 CRxWnd * dlg_zdconfirm
@@ -113,18 +125,18 @@ rule CRxMgrPk_dlg_zdconfirm
 
 //274 CRxButton * zdconfirm_bn_accept;
 //278 CRxButton * zdconfirm_bn_reject;
-rule CRxMgrPk_zdconfirm_btns
-{
-	meta:
-		script = "$result = [@pattern + 0xf]"
-		script = "Type.am CRxMgrPk,CRxButton*,zdconfirm_bn_accept,0,$result"
-		script = "$result = [@pattern + 0x5c]"
-		script = "Type.am CRxMgrPk,CRxButton*,zdconfirm_bn_reject,0,$result"
-	strings:
-		$pattern = { 6A 15 68 [4] 68 [4] 53 89 86 [4] 8B 85 [4] 50 51 52 56 E8 [4] D9 05 [4] 83 C4 50 D9 9D [4] D9 05 [4] 6A 01 68 00 00 00 C8 D9 9D [4] D9 05 [4] 6A FF D9 9D [4] 6A 05 D9 05 [4] 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrPk_zdconfirm_btns
+//{
+//	meta:
+//		script = "$result = [@pattern + 0xf]"
+//		script = "Type.am CRxMgrPk,CRxButton*,zdconfirm_bn_accept,0,$result"
+//		script = "$result = [@pattern + 0x5c]"
+//		script = "Type.am CRxMgrPk,CRxButton*,zdconfirm_bn_reject,0,$result"
+//	strings:
+//		$pattern = { 6A 15 68 [4] 68 [4] 53 89 86 [4] 8B 85 [4] 50 51 52 56 E8 [4] D9 05 [4] 83 C4 50 D9 9D [4] D9 05 [4] 6A 01 68 00 00 00 C8 D9 9D [4] D9 05 [4] 6A FF D9 9D [4] 6A 05 D9 05 [4] 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //5B0 CRxWnd * dlg_relive
 //5B4 CRxButton * relive_bn_src;
@@ -132,20 +144,23 @@ rule CRxMgrPk_zdconfirm_btns
 rule CRxMgrPk_dlg_relive
 {
 	meta:
-		script = "$result = [@pattern + 0x2]"
+		script = "$result = [@pattern + 0x41]"
 		script = "Type.am CRxMgrPk,CRxWnd*,dlg_relive,0,$result"
 		script = "Type.mcomment CRxMgrPk,dlg_relive,\"势力战死亡复活窗口\""
-		script = "$result = [@pattern + 0x30]"
-		script = "Type.am CRxMgrPk,CRxButton*,relive_bn_dst,0,$result"
-		script = "Type.mcomment CRxMgrPk,relive_bn_dst,\"对立地区复活\""
-		script = "$result = [@pattern + 0x5c]"
-		script = "Type.am CRxMgrPk,CRxButton*,relive_bn_src,0,$result"
-		script = "Type.mcomment CRxMgrPk,relive_bn_src,\"据点地区复活\""
+		//script = "$result = [@pattern + 0x30]"
+		//script = "Type.am CRxMgrPk,CRxButton*,relive_bn_dst,0,$result"
+		//script = "Type.mcomment CRxMgrPk,relive_bn_dst,\"对立地区复活\""
+		//script = "$result = [@pattern + 0x5c]"
+		//script = "Type.am CRxMgrPk,CRxButton*,relive_bn_src,0,$result"
+		//script = "Type.mcomment CRxMgrPk,relive_bn_src,\"据点地区复活\""
 	strings:
-		$pattern = { 8B 8E [4] D9 9D [4] D9 05 [4] 53 53 D9 9D [4] 8B 95 [4] 6A 0A 68 [4] 68 [4] 53 52 89 86 [4] 8B 85 [4] 50 51 56 E8 [4] 8B 95 [4] 83 C4 50 6A 01 6A 01 53 53 53 68 [4] 57 52 56 89 86 }
+		$pattern = { C6 [2] 06 [22] 6A 01 6A 01 [3] 68 [7] C6 [2] 04 89 [5] E8 [4] 83 C4 24 6A 01 [2] 89 }
+		//$pattern = { 8B 8E [4] D9 9D [4] D9 05 [4] 53 53 D9 9D [4] 8B 95 [4] 6A 0A 68 [4] 68 [4] 53 52 89 86 [4] 8B 85 [4] 50 51 56 E8 [4] 8B 95 [4] 83 C4 50 6A 01 6A 01 53 53 53 68 [4] 57 52 56 89 86 }
 	condition:
 		#pattern == 1
 }
+
+
 
 
 //5bc int battle_start;
@@ -162,30 +177,30 @@ rule CRxMgrPk_battle_start
 }
 
 //8C8 CRxButton * bn_enterfight;
-rule CRxMgrPk_bn_enterfight
-{
-	meta:
-		script = "$result = [@pattern + 0x28]"
-		script = "Type.am CRxMgrPk,CRxButton*,bn_enterfight,0,$result"
-		script = "Type.mcomment CRxMgrPk,bn_enterfight,\"进入势力战按钮\""
-	strings:
-		$pattern = { 53 53 6A 08 68 [4] 68 [4] 68 [4] 52 50 51 56 E8 [4] 83 C4 28 68 [4] 8B C8 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrPk_bn_enterfight
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x28]"
+//		script = "Type.am CRxMgrPk,CRxButton*,bn_enterfight,0,$result"
+//		script = "Type.mcomment CRxMgrPk,bn_enterfight,\"进入势力战按钮\""
+//	strings:
+//		$pattern = { 53 53 6A 08 68 [4] 68 [4] 68 [4] 52 50 51 56 E8 [4] 83 C4 28 68 [4] 8B C8 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //8D0 CRxButton * bn_enterbattle;
-rule CRxMgrPk_bn_enterbattle
-{
-	meta:
-		script = "$result = [@pattern + 0x28]"
-		script = "Type.am CRxMgrPk,CRxButton*,bn_enterbattle,0,$result"
-		script = "Type.mcomment CRxMgrPk,bn_enterbattle,\"进入风云大战按钮\""
-	strings:
-		$pattern = { 53 53 6A 09 68 [4] 68 [4] 68 [4] 50 51 52 56 E8 [4] 83 C4 28 68 [4] 8B C8 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrPk_bn_enterbattle
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x28]"
+//		script = "Type.am CRxMgrPk,CRxButton*,bn_enterbattle,0,$result"
+//		script = "Type.mcomment CRxMgrPk,bn_enterbattle,\"进入风云大战按钮\""
+//	strings:
+//		$pattern = { 53 53 6A 09 68 [4] 68 [4] 68 [4] 50 51 52 56 E8 [4] 83 C4 28 68 [4] 8B C8 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 
 //8D4 CRxWnd * dlg_goback1
@@ -196,8 +211,8 @@ rule CRxMgrPk_dlg_goback1
 		script = "$result = [@pattern + 0x15]"
 		script = "Type.am CRxMgrPk,CRxWnd*,dlg_goback1,0,$result"
 		script = "Type.mcomment CRxMgrPk,dlg_goback1,\"回到村庄窗口，显示时表示势力战结束，有地图时显示这个\""
-		script = "$result = [@pattern + 0x20]"
-		script = "Type.am CRxMgrPk,CRxButton*,bn_goback1,0,$result"
+		//script = "$result = [@pattern + 0x20]"
+		//script = "Type.am CRxMgrPk,CRxButton*,bn_goback1,0,$result"
 	strings:
 		$pattern = { 53 53 6A 0F 68 [4] 68 [4] 53 51 52 50 56 89 86 [4] E8 [4] 89 86 [4] 8B 86 }
 	condition:
@@ -212,8 +227,8 @@ rule CRxMgrPk_dlg_goback2
 		script = "$result = [@pattern + 0x14]"
 		script = "Type.am CRxMgrPk,CRxWnd*,dlg_goback2,0,$result"
 		script = "Type.mcomment CRxMgrPk,dlg_goback2,\"关掉地图时显示这个\""
-		script = "$result = [@pattern + 0x1f]"
-		script = "Type.am CRxMgrPk,CRxButton*,bn_goback2,0,$result"
+		//script = "$result = [@pattern + 0x1f]"
+		//script = "Type.am CRxMgrPk,CRxButton*,bn_goback2,0,$result"
 	strings:
 		$pattern = { 53 6A 10 68 [4] 68 [4] 53 51 52 50 56 89 86 [4] E8 [4] 89 86 }
 	condition:

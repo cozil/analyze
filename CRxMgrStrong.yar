@@ -4,6 +4,9 @@ rule CRxMgrStrong_start
 		script = "Type.as CRxMgrStrong"
 		script = "Type.aanc CRxMgrStrong,CRxMgr"
 		script = "Type.comment CRxMgrStrong,\"强化管理\""
+		script = "Type.ad CRxMgrStrong,\"inline void click_close() {{ click(0x61); }}\""
+		script = "Type.ad CRxMgrStrong,\"inline void click_confirm() {{ click(0x62); }}\""
+		script = "Type.ad CRxMgrStrong,\"inline void click_cancel() {{ click(0x63); }}\""
 	condition:
 		true
 }
@@ -24,40 +27,40 @@ rule CRxMgrStrong_dlg
 
 
 //238 CRxButton * dlg_bn_close;
-rule CRxMgrStrong_dlg_bn_close
-{
-	meta:
-		script = "$result = [@pattern + 0x41]"
-		script = "Type.am CRxMgrStrong,CRxButton*,dlg_bn_close,0,$result"
-	strings:
-		$pattern = { C6 45 ?? 07 [20] 53 6A 61 [3] 1A [3] 02 01 00 00 ?? 6A 1A 68 02 01 00 00 [2] E8 [8] 8B 8E [4] 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrStrong_dlg_bn_close
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x41]"
+//		script = "Type.am CRxMgrStrong,CRxButton*,dlg_bn_close,0,$result"
+//	strings:
+//		$pattern = { C6 45 ?? 07 [20] 53 6A 61 [3] 1A [3] 02 01 00 00 ?? 6A 1A 68 02 01 00 00 [2] E8 [8] 8B 8E [4] 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //230 CRxButton * dlg_bn_confirm
-rule CRxMgrStrong_dlg_bn_confirm
-{
-	meta:
-		script = "$result = [@pattern + 0x41]"
-		script = "Type.am CRxMgrStrong,CRxButton*,dlg_bn_confirm,0,$result"
-	strings:
-		$pattern = { C6 45 ?? 08 [20] 53 6A 62 [3] AE 01 00 00 [3] 4C ?? 68 AE 01 00 00 6A 4C [2] E8 [8] 8B 8E [4] 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrStrong_dlg_bn_confirm
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x41]"
+//		script = "Type.am CRxMgrStrong,CRxButton*,dlg_bn_confirm,0,$result"
+//	strings:
+//		$pattern = { C6 45 ?? 08 [20] 53 6A 62 [3] AE 01 00 00 [3] 4C ?? 68 AE 01 00 00 6A 4C [2] E8 [8] 8B 8E [4] 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //234 CRxButton * dlg_bn_cancel
-rule CRxMgrStrong_dlg_bn_cancel
-{
-	meta:
-		script = "$result = [@pattern + 0x47]"
-		script = "Type.am CRxMgrStrong,CRxButton*,dlg_bn_cancel,0,$result"
-	strings:
-		$pattern = { C6 45 ?? 09 [20] 53 6A 63 [3] AE 01 00 00 [3] 93 00 00 00 ?? 68 AE 01 00 00 68 93 00 00 00 [2] E8 [8] 8B 96 [4] 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrStrong_dlg_bn_cancel
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x47]"
+//		script = "Type.am CRxMgrStrong,CRxButton*,dlg_bn_cancel,0,$result"
+//	strings:
+//		$pattern = { C6 45 ?? 09 [20] 53 6A 63 [3] AE 01 00 00 [3] 93 00 00 00 ?? 68 AE 01 00 00 68 93 00 00 00 [2] E8 [8] 8B 96 [4] 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 rule CRxMgrStrong_end
 {

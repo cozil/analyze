@@ -8,6 +8,12 @@ rule CRxMgrLogin_start
 	meta:
 		script = "Type.as CRxMgrLogin"
 		script = "Type.aanc CRxMgrLogin,CRxMgr"
+		script = "Type.ad CRxMgrLogin,\"inline void click_login_confirm() {{ click(0x7b); }}\""
+		script = "Type.ad CRxMgrLogin,\"inline void click_login_cancel() {{ click(0x7c); }}\""
+		script = "Type.ad CRxMgrLogin,\"inline void click_msgbox_confirm() {{ click(0x63); }}\""
+		script = "Type.ad CRxMgrLogin,\"inline void click_server_exit() {{ click(0x0); }}\""
+		script = "Type.ad CRxMgrLogin,\"inline void click_server_connect() {{ click(0x1); }}\""
+		script = "Type.ad CRxMgrLogin,\"inline void click_server_item(int id) {{ click(0xa+id); }} //id:[0,9] \""
 	condition:
 		true
 }

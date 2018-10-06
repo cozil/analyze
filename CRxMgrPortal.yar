@@ -4,6 +4,9 @@ rule CRxMgrPortal_start
 		script = "Type.as CRxMgrPortal"
 		script = "Type.aanc CRxMgrPortal,CRxMgr"
 		script = "Type.comment CRxMgrPortal, \"单线地图传送窗口管理\""
+		script = "Type.ad CRxMgrPortal,\"inline void click_close() {{ click(0x0); }}\""
+		script = "Type.ad CRxMgrPortal,\"inline void click_confirm() {{ click(0x1); }}\""
+		script = "Type.ad CRxMgrPortal,\"inline void click_cancel() {{ click(0x2); }}\""
 	condition:
 		true
 }

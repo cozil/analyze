@@ -12,9 +12,7 @@ rule CRxMgrState_start
 		script = "Type.as CRxMgrState"
 		script = "Type.aanc CRxMgrState,CRxMgr"
 		script = "Type.comment CRxMgrState, \"人物信息窗口管理器 基本信息/武功/气功/动作\""
-		//script = "Type.as RX_QI_PAIR"
-		//script = "Type.am RX_QI_PAIR,CRxButton*,bn_add"
-		//script = "Type.am RX_QI_PAIR,CRxLabel*,lb_value"
+		script = "Type.ad CRxMgrState,\"inline void click_item(int id) {{ click(0x12c+id); }} //id:[0,15]\""
 	condition:
 		true
 }
@@ -50,16 +48,16 @@ rule CRxMgrState_dlg_qi
 
 
 //320 CRxLabel * qi_lb_point;
-rule CRxMgrState_qi_lb_point
-{
-	meta:
-		script = "$result = [@pattern + 0x26]"
-		script = "Type.am CRxMgrState,CRxLabel*,qi_lb_point,0,$result"
-	strings:
-		$pattern = { 6A 0F 6A 3A 6A 05 6A 16 6A 34 [2] E8 [8] 8B 8E [6] C7 45 ?? FF FF FF FF 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrState_qi_lb_point
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x26]"
+//		script = "Type.am CRxMgrState,CRxLabel*,qi_lb_point,0,$result"
+//	strings:
+//		$pattern = { 6A 0F 6A 3A 6A 05 6A 16 6A 34 [2] E8 [8] 8B 8E [6] C7 45 ?? FF FF FF FF 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //3A4 CRxList * qi_ls_qigong1;
 rule CRxMgrState_qi_ls_qigong1
@@ -75,19 +73,19 @@ rule CRxMgrState_qi_ls_qigong1
 
 //324 CRxLabel * qi_lb_values[0x10];
 //3AC CRxButton * qi_bn_adds[0x10];
-rule CRxMgrState_qi_items1
-{
-	meta:
-		script = "$result = [@pattern + 0x1c]"
-		script = "Type.am CRxMgrState,CRxButton*,qi_bn_adds,0x10,$result"
-		script = "$result += [@pattern1 + 0x36]"
-		script = "Type.am CRxMgrState,CRxLabel*,qi_lb_values,0x10,$result"
-	strings:
-		$pattern = { 6A 00 E8 [4] 8B 8E [5] 6A 78 E8 [4] 83 C4 08 [2] 8D [5] 68 F0 03 00 00 E8 [4] 83 C4 04 [6] C7 [2] 02 00 00 00 }
-		$pattern1 = { C7 [2] 03 00 00 00 [19] 6A 0D 6A 0F 6A 05 [2] 24 [3] 10 [3] E8 [9] 89 }
-	condition:
-		for all of them : (# == 1)
-}
+//rule CRxMgrState_qi_items1
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x1c]"
+//		script = "Type.am CRxMgrState,CRxButton*,qi_bn_adds,0x10,$result"
+//		script = "$result += [@pattern1 + 0x36]"
+//		script = "Type.am CRxMgrState,CRxLabel*,qi_lb_values,0x10,$result"
+//	strings:
+//		$pattern = { 6A 00 E8 [4] 8B 8E [5] 6A 78 E8 [4] 83 C4 08 [2] 8D [5] 68 F0 03 00 00 E8 [4] 83 C4 04 [6] C7 [2] 02 00 00 00 }
+//		$pattern1 = { C7 [2] 03 00 00 00 [19] 6A 0D 6A 0F 6A 05 [2] 24 [3] 10 [3] E8 [9] 89 }
+//	condition:
+//		for all of them : (# == 1)
+//}
 
 //3A8 CRxList * qi_ls_qigong2;
 rule CRxMgrState_qi_ls_qigong2

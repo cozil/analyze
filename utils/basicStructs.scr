@@ -278,3 +278,22 @@ Type.am CRxBaseStuff,char,Desc,0x110,0x9c
 Type.am CRxBaseStuff,int,flag,0,0x1ac
 Type.am CRxBaseStuff,char,pad_1b0,0x1a4
 Type.print CRxBaseStuff,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
+
+Type.as RX_DRUG_ITEM
+Type.comment RX_DRUG_ITEM,"制作药品参数结构(static)"
+TYpe.am RX_DRUG_ITEM,int,code,0,4
+TYpe.am RX_DRUG_ITEM,int,codeEx
+Type.mcomment RX_DRUG_ITEM,code,"药品代码"
+TYpe.am RX_DRUG_ITEM,char,name,0x40
+Type.mcomment RX_DRUG_ITEM,name,"药品名称"
+TYpe.am RX_DRUG_ITEM,char,desc,0x100
+Type.mcomment RX_DRUG_ITEM,desc,"药品描述"
+TYpe.am RX_DRUG_ITEM,int,sort
+Type.mcomment RX_DRUG_ITEM,desc,"药品分类 1,2,3,4和页面对应"
+TYpe.am RX_DRUG_ITEM,int,dxdrawdata,4
+Type.mcomment RX_DRUG_ITEM,desc,"4个材料的绘制数据"
+TYpe.am RX_DRUG_ITEM,uint64_t,stuffcodes,4
+Type.mcomment RX_DRUG_ITEM,desc,"4个材料的物品代码"
+TYpe.am RX_DRUG_ITEM,int,counts,4
+Type.mcomment RX_DRUG_ITEM,desc,"4个材料需要的数量"
+Type.print RX_DRUG_ITEM,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN

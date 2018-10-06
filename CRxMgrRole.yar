@@ -8,6 +8,10 @@ rule CRxMgrRole_start
 	meta:
 		script = "Type.as CRxMgrRole"
 		script = "Type.aanc CRxMgrRole,CRxMgr"
+		script = "Type.ad CRxMgrRole,\"inline void click_enter() {{ click(0x7d1); }}\""
+		script = "Type.ad CRxMgrRole,\"inline void click_back() {{ click(0x7d2); }}\""
+		script = "Type.ad CRxMgrRole,\"inline void click_create() {{ click(0x7d3); }}\""
+		script = "Type.ad CRxMgrRole,\"inline void click_delete() {{ click(0x7d4); }}\""
 	condition:
 		true
 }
@@ -59,54 +63,53 @@ rule CRxMgrRole_roleUIDList
 }
 
 
-
 //1224 CRxButton * bn_enter;
-rule CRxMgrRole_bn_enter
-{
-	meta:
-		script = "$result = [@pattern + 0x28]"
-		script = "Type.am CRxMgrRole,CRxButton*,bn_enter,0,$result"
-	strings:
-		$pattern = { 8B 8D [4] 8B 95 [4] 68 [4] 68 D1 07 00 00 56 51 52 53 53 8B C8 E8 [4] EB ?? 33 C0 89 86 [4] 8D 4E ?? 89 48}
-	condition:
-		#pattern == 1	
-}
+//rule CRxMgrRole_bn_enter
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x28]"
+//		script = "Type.am CRxMgrRole,CRxButton*,bn_enter,0,$result"
+//	strings:
+//		$pattern = { 8B 8D [4] 8B 95 [4] 68 [4] 68 D1 07 00 00 56 51 52 53 53 8B C8 E8 [4] EB ?? 33 C0 89 86 [4] 8D 4E ?? 89 48}
+//	condition:
+//		#pattern == 1	
+//}
 
 //1228 CRxButton * bn_back;
-rule CRxMgrRole_bn_back
-{
-	meta:
-		script = "$result = [@pattern + 0x3c]"
-		script = "Type.am CRxMgrRole,CRxButton*,bn_back,0,$result"
-	strings:
-		$pattern = { 8B 8D [4] 8B 95 [4] 68 [4] 68 D2 07 00 00 56 81 C1 6B 01 00 00 51 83 C2 15 52 68 6B 01 00 00 6A 15 8B C8 E8 [4] EB ?? 33 C0 8B 8E [4] 89 86 [4] 83 C1 28 89 48}
-	condition:
-		#pattern == 1	
-}
+//rule CRxMgrRole_bn_back
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x3c]"
+//		script = "Type.am CRxMgrRole,CRxButton*,bn_back,0,$result"
+//	strings:
+//		$pattern = { 8B 8D [4] 8B 95 [4] 68 [4] 68 D2 07 00 00 56 81 C1 6B 01 00 00 51 83 C2 15 52 68 6B 01 00 00 6A 15 8B C8 E8 [4] EB ?? 33 C0 8B 8E [4] 89 86 [4] 83 C1 28 89 48}
+//	condition:
+//		#pattern == 1	
+//}
 
 //122c CRxButton * bn_delete;
-rule CRxMgrRole_bn_delete
-{
-	meta:
-		script = "$result = [@pattern + 0x3c]"
-		script = "Type.am CRxMgrRole,CRxButton*,bn_delete,0,$result"
-	strings:
-		$pattern = { 8B 8D [4] 8B 95 [4] 68 [4] 68 D4 07 00 00 56 81 C1 37 01 00 00 51 83 C2 15 52 68 37 01 00 00 6A 15 8B C8 E8 [4] EB ?? 33 C0 8B 8E [4] 89 86 [4] 83 C1 28 89 48}
-	condition:
-		#pattern == 1	
-}
+//rule CRxMgrRole_bn_delete
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x3c]"
+//		script = "Type.am CRxMgrRole,CRxButton*,bn_delete,0,$result"
+//	strings:
+//		$pattern = { 8B 8D [4] 8B 95 [4] 68 [4] 68 D4 07 00 00 56 81 C1 37 01 00 00 51 83 C2 15 52 68 37 01 00 00 6A 15 8B C8 E8 [4] EB ?? 33 C0 8B 8E [4] 89 86 [4] 83 C1 28 89 48}
+//	condition:
+//		#pattern == 1	
+//}
 
 //122c CRxButton * bn_create;
-rule CRxMgrRole_bn_create
-{
-	meta:
-		script = "$result = [@pattern + 0x3c]"
-		script = "Type.am CRxMgrRole,CRxButton*,bn_create,0,$result"
-	strings:
-		$pattern = { 8B 8D [4] 8B 95 [4] 68 [4] 68 D3 07 00 00 56 81 C1 03 01 00 00 51 83 C2 15 52 68 03 01 00 00 6A 15 8B C8 E8 [4] EB ?? 33 C0 8B 8E [4] 89 86 [4] 83 C1 28 89 48}
-	condition:
-		#pattern == 1	
-}
+//rule CRxMgrRole_bn_create
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x3c]"
+//		script = "Type.am CRxMgrRole,CRxButton*,bn_create,0,$result"
+//	strings:
+//		$pattern = { 8B 8D [4] 8B 95 [4] 68 [4] 68 D3 07 00 00 56 81 C1 03 01 00 00 51 83 C2 15 52 68 03 01 00 00 6A 15 8B C8 E8 [4] EB ?? 33 C0 8B 8E [4] 89 86 [4] 83 C1 28 89 48}
+//	condition:
+//		#pattern == 1	
+//}
 
 
 

@@ -5,6 +5,10 @@ rule CRxMgrDepot_start
 		script = "Type.as CRxMgrDepot"
 		script = "Type.aanc CRxMgrDepot,CRxMgr"
 		script = "Type.comment CRxMgrDepot, \"仓库管理\""
+		script = "Type.ad CRxMgrDepot,\"inline void click_open_depot1() {{ click(0x1); }}\""
+		script = "Type.ad CRxMgrDepot,\"inline void click_open_depot2() {{ click(0x2); }}\""
+		script = "Type.ad CRxMgrDepot,\"inline void click_close_depot1() {{ click(0x62); }}\""
+		script = "Type.ad CRxMgrDepot,\"inline void click_close_depot2() {{ click(0x63); }}\""
 	condition:
 		true
 }
@@ -22,28 +26,28 @@ rule CRxMgrDepot_dlg
 }
 
 //234 CRxButton * dlg_bn_close1;
-rule CRxMgrDepot_dlg_bn_close1
-{
-	meta:
-		script = "$result = [@pattern + 0x28]"
-		script = "Type.am CRxMgrDepot,CRxButton*,dlg_bn_close1,0,$result"
-	strings:
-		$pattern = { 6A 62 [3] 1A [3] 02 01 00 00 ?? 6A 1A 68 02 01 00 00 [2] E8 [8] 8B 8E [4] 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrDepot_dlg_bn_close1
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x28]"
+//		script = "Type.am CRxMgrDepot,CRxButton*,dlg_bn_close1,0,$result"
+//	strings:
+//		$pattern = { 6A 62 [3] 1A [3] 02 01 00 00 ?? 6A 1A 68 02 01 00 00 [2] E8 [8] 8B 8E [4] 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //23C CRxButton * dlg_bn_close2;
-rule CRxMgrDepot_dlg_bn_close2
-{
-	meta:
-		script = "$result = [@pattern + 0x28]"
-		script = "Type.am CRxMgrDepot,CRxButton*,dlg_bn_close2,0,$result"
-	strings:
-		$pattern = { 6A 63 [3] 1A [3] 02 01 00 00 ?? 6A 1A 68 02 01 00 00 [2] E8 [8] 8B 8E [4] 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrDepot_dlg_bn_close2
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x28]"
+//		script = "Type.am CRxMgrDepot,CRxButton*,dlg_bn_close2,0,$result"
+//	strings:
+//		$pattern = { 6A 63 [3] 1A [3] 02 01 00 00 ?? 6A 1A 68 02 01 00 00 [2] E8 [8] 8B 8E [4] 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 rule CRxMgrDepot_end
 {

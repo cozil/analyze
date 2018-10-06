@@ -3,6 +3,11 @@ rule CRxMgrTool_start
 	meta:
 		script = "Type.as CRxMgrTool"
 		script = "Type.aanc CRxMgrTool,CRxMgr"
+		script = "Type.ad CRxMgrTool,\"inline void click_toolbar_maker() {{ click(0xbb9); }}\""
+		script = "Type.ad CRxMgrTool,\"inline void click_notify_cancel() {{ click(0x12); }}\""
+		script = "Type.ad CRxMgrTool,\"inline void click_dead0_backtown() {{ click(0x63); }}\""
+		script = "Type.ad CRxMgrTool,\"inline void click_dead1_here() {{ click(0x32); }}\""
+		script = "Type.ad CRxMgrTool,\"inline void click_dead1_backtown() {{ click(0x33); }}\""
 	condition:
 		true
 }
@@ -25,17 +30,17 @@ rule CRxMgrTool_dlg_toolbar
 //524->5bc
 //528->5c0
 //528 CRxButton * toolbar_bn_maker;
-rule CRxMgrTool_toolbar_bn_maker
-{
-	meta:
-		script = "$result = [@pattern + 0x6]"
-		script = "Type.am CRxMgrTool,CRxButton*,toolbar_bn_maker,0,$result"
-		script = "Type.mcomment CRxMgrTool,dlg_toolbar,\"打开制造窗口\""
-	strings:
-		$pattern = { 6A FF 6A 40 89 86 [4] 8B 0D [4] 68 26 11 00 00 C6 45 ?? 02 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrTool_toolbar_bn_maker
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x6]"
+//		script = "Type.am CRxMgrTool,CRxButton*,toolbar_bn_maker,0,$result"
+//		script = "Type.mcomment CRxMgrTool,dlg_toolbar,\"打开制造窗口\""
+//	strings:
+//		$pattern = { 6A FF 6A 40 89 86 [4] 8B 0D [4] 68 26 11 00 00 C6 45 ?? 02 }
+//	condition:
+//		#pattern == 1
+//}
 
 //384 CRxImage * img_docbar;
 rule CRxMgrTool_img_docbar
@@ -64,17 +69,17 @@ rule CRxMgrTool_dlg_notify
 }
 
 //3B8 CRxButton * notify_bn_cancel;
-rule CRxMgrTool_notify_bn_cancel
-{
-	meta:
-		script = "$result = [@pattern + 0x29]"
-		script = "Type.am CRxMgrTool,CRxButton*,notify_bn_cancel,0,$result"
-		script = "Type.mcomment CRxMgrTool,notify_bn_cancel,\"关闭通知窗口\""
-	strings:
-		$pattern = { 6A 12 [3] B2 00 00 00 [3] 77 ?? 68 B2 00 00 00 6A 77 [2] E8 [9] 6A 78 [3] 02 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrTool_notify_bn_cancel
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x29]"
+//		script = "Type.am CRxMgrTool,CRxButton*,notify_bn_cancel,0,$result"
+//		script = "Type.mcomment CRxMgrTool,notify_bn_cancel,\"关闭通知窗口\""
+//	strings:
+//		$pattern = { 6A 12 [3] B2 00 00 00 [3] 77 ?? 68 B2 00 00 00 6A 77 [2] E8 [9] 6A 78 [3] 02 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //3E8 CRxWnd * dlg_blood;
 rule CRxMgrTool_dlg_blood
@@ -116,56 +121,56 @@ rule CRxMgrTool_dlg_dead1
 }
 
 //3F4 CRxButton * dead0_bn_relive_here;
-rule CRxMgrTool_dead0_bn_relive_here
-{
-	meta:
-		script = "$result = [@pattern + 0x2c]"
-		script = "Type.am CRxMgrTool,CRxButton*,dead0_bn_relive_here,0,$result"
-		script = "Type.mcomment CRxMgrTool,dead0_bn_relive_here,\"原地复活按钮\""
-	strings:
-		$pattern = { C6 45 ?? 37 [4] 6A 01 [2] 6A 73 68 03 01 00 00 6A 05 6A 3C 6A 14 [2] E8 [8] 8B 96 [4] 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrTool_dead0_bn_relive_here
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x2c]"
+//		script = "Type.am CRxMgrTool,CRxButton*,dead0_bn_relive_here,0,$result"
+//		script = "Type.mcomment CRxMgrTool,dead0_bn_relive_here,\"原地复活按钮\""
+//	strings:
+//		$pattern = { C6 45 ?? 37 [4] 6A 01 [2] 6A 73 68 03 01 00 00 6A 05 6A 3C 6A 14 [2] E8 [8] 8B 96 [4] 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //424 CRxButton * dead0_bn_relive_back;
-rule CRxMgrTool_dead0_bn_relive_back
-{
-	meta:
-		script = "$result = [@pattern + 0x2a]"
-		script = "Type.am CRxMgrTool,CRxButton*,dead0_bn_relive_back,0,$result"
-		script = "Type.mcomment CRxMgrTool,dead0_bn_relive_back,\"回城复活按钮\""
-	strings:
-		$pattern = { 53 6A 63 [3] B2 00 00 00 [3] 77 ?? 68 B2 00 00 00 6A 77 [2] E8 [9] 6A 78 C6 45 ?? 02 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrTool_dead0_bn_relive_back
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x2a]"
+//		script = "Type.am CRxMgrTool,CRxButton*,dead0_bn_relive_back,0,$result"
+//		script = "Type.mcomment CRxMgrTool,dead0_bn_relive_back,\"回城复活按钮\""
+//	strings:
+//		$pattern = { 53 6A 63 [3] B2 00 00 00 [3] 77 ?? 68 B2 00 00 00 6A 77 [2] E8 [9] 6A 78 C6 45 ?? 02 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //430 CRxButton * dead1_bn_relive_here;
-rule CRxMgrTool_dead1_bn_relive_here
-{
-	meta:
-		script = "$result = [@pattern + 0x29]"
-		script = "Type.am CRxMgrTool,CRxButton*,dead1_bn_relive_here,0,$result"
-		script = "Type.mcomment CRxMgrTool,dead1_bn_relive_here,\"原地复活按钮\""
-	strings:
-		$pattern = { 6A 32 [3] B2 00 00 00 [3] 55 ?? 68 B2 00 00 00 6A 55 [2] E8 [9] 6A 78 C6 45 ?? 02 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrTool_dead1_bn_relive_here
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x29]"
+//		script = "Type.am CRxMgrTool,CRxButton*,dead1_bn_relive_here,0,$result"
+//		script = "Type.mcomment CRxMgrTool,dead1_bn_relive_here,\"原地复活按钮\""
+//	strings:
+//		$pattern = { 6A 32 [3] B2 00 00 00 [3] 55 ?? 68 B2 00 00 00 6A 55 [2] E8 [9] 6A 78 C6 45 ?? 02 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //434 CRxButton * dead1_bn_relive_back;
-rule CRxMgrTool_dead1_bn_relive_back
-{
-	meta:
-		script = "$result = [@pattern + 0x2f]"
-		script = "Type.am CRxMgrTool,CRxButton*,dead1_bn_relive_back,0,$result"
-		script = "Type.mcomment CRxMgrTool,dead1_bn_relive_back,\"回城复活按钮\""
-	strings:
-		$pattern = { 6A 33 [3] B2 00 00 00 [3] 9C 00 00 00 ?? 68 B2 00 00 00 68 9C 00 00 00 [2] E8 [9] 6A 78 C6 45 ?? 02 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrTool_dead1_bn_relive_back
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x2f]"
+//		script = "Type.am CRxMgrTool,CRxButton*,dead1_bn_relive_back,0,$result"
+//		script = "Type.mcomment CRxMgrTool,dead1_bn_relive_back,\"回城复活按钮\""
+//	strings:
+//		$pattern = { 6A 33 [3] B2 00 00 00 [3] 9C 00 00 00 ?? 68 B2 00 00 00 68 9C 00 00 00 [2] E8 [9] 6A 78 C6 45 ?? 02 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //510 CRxWnd * dlg_keybar;
 rule CRxMgrTool_dlg_keybar

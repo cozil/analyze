@@ -9,6 +9,8 @@ rule CRxMgrNpc_start
 		script = "Type.as CRxMgrNpc"
 		script = "Type.aanc CRxMgrNpc,CRxMgr"
 		script = "Type.comment CRxMgrNpc,\"NPC管理\""
+		script = "Type.ad CRxMgrNpc,\"inline void click_close() {{ click(0x5a); }}\""
+		script = "Type.ad CRxMgrNpc,\"inline void click_menu_item(int id) {{ click(0x5b+id); }} //id:[0,4]\""
 	condition:
 		true
 }

@@ -68,7 +68,6 @@ include "e:/rxwg/analyze/CRxMgrShop.yar"
 include "e:/rxwg/analyze/CRxMgrSxstone.yar"
 
 //仓库管理类
-include "e:/rxwg/analyze/CRxWndDepot.yar"
 include "e:/rxwg/analyze/CRxMgrDepot.yar"
 
 //合成管理类
@@ -77,11 +76,11 @@ include "e:/rxwg/analyze/CRxMgrUnite.yar"
 //强化管理类
 include "e:/rxwg/analyze/CRxMgrStrong.yar"
 
-//提真管理类
-include "e:/rxwg/analyze/CRxMgrRaise.yar"
-
 //单线传送管理类
 include "e:/rxwg/analyze/CRxMgrPortal.yar"
+
+//提真管理类
+include "e:/rxwg/analyze/CRxMgrRaise.yar"
 
 //NPC管理类
 include "e:/rxwg/analyze/CRxMgrNpc.yar"
@@ -104,6 +103,21 @@ include "E:/rxwg/analyze/CRxMgrExit.yar"
 
 //任务管理类
 include "E:/rxwg/analyze/CRxMgrTask.yar"
+
+//情侣管理
+include "E:/rxwg/analyze/CRxMgrFlower.yar"
+include "E:/rxwg/analyze/CRxMgrSweetState.yar"
+include "E:/rxwg/analyze/CRxMgrSweet.yar"
+
+//制药管理
+include "E:/rxwg/analyze/CRxMgrDrug.yar"
+
+//死亡保护管理
+include "E:/rxwg/analyze/CRxMgrDead.yar"
+
+/交易管理
+include "E:/rxwg/analyze/CRxMgrTradeTip.yar"
+include "E:/rxwg/analyze/CRxMgrTrade.yar"
 
 //include "E:/rxwg/analyze/CRxMgrZd.yar"
 //include "E:/rxwg/analyze/CRxMgrThl.yar"

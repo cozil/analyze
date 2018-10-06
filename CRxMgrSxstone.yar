@@ -4,6 +4,9 @@ rule CRxMgrSxstone_start
 		script = "Type.as CRxMgrSxstone"
 		script = "Type.aanc CRxMgrSxstone,CRxMgr"
 		script = "Type.comment CRxMgrSxstone, \"赋予属性管理\""
+		script = "Type.ad CRxMgrSxstone,\"inline void click_close() {{ click(0x61); }}\""
+		script = "Type.ad CRxMgrSxstone,\"inline void click_confirm() {{ click(0x62); }}\""
+		script = "Type.ad CRxMgrSxstone,\"inline void click_cancel() {{ click(0x63); }}\""
 	condition:
 		true
 }
@@ -24,20 +27,20 @@ rule CRxMgrSxstone_dlg
 //23C CRxButton * dlg_bn_confirm;
 //240 CRxButton * dlg_bn_cancel;
 //244 CRxButton * dlg_bn_close;
-rule CRxMgrSxstone_dlg_ctrls
-{
-	meta:
-		script = "$result = [@pattern + 0xb9]"
-		script = "Type.am CRxMgrSxstone,CRxButton*,dlg_bn_confirm,0,$result"
-		script = "$result = [@pattern + 0xe6]"
-		script = "Type.am CRxMgrSxstone,CRxButton*,dlg_bn_cancel,0,$result"
-		script = "$result = [@pattern + 0x93]"
-		script = "Type.am CRxMgrSxstone,CRxButton*,dlg_bn_close,0,$result"
-	strings:
-		$pattern = { 6A 01 [129] 6A 62 68 [4] 68 [6] 89 86 [4] 8B 86 [7] E8 [4] D9 05 [4] D9 5D [4] D9 05 [4] 89 86 [4] D9 5D [15] 6A 63 68 [4] 68 [9] E8 [4] 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrSxstone_dlg_ctrls
+//{
+//	meta:
+//		script = "$result = [@pattern + 0xb9]"
+//		script = "Type.am CRxMgrSxstone,CRxButton*,dlg_bn_confirm,0,$result"
+//		script = "$result = [@pattern + 0xe6]"
+//		script = "Type.am CRxMgrSxstone,CRxButton*,dlg_bn_cancel,0,$result"
+//		script = "$result = [@pattern + 0x93]"
+//		script = "Type.am CRxMgrSxstone,CRxButton*,dlg_bn_close,0,$result"
+//	strings:
+//		$pattern = { 6A 01 [129] 6A 62 68 [4] 68 [6] 89 86 [4] 8B 86 [7] E8 [4] D9 05 [4] D9 5D [4] D9 05 [4] 89 86 [4] D9 5D [15] 6A 63 68 [4] 68 [9] E8 [4] 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 rule CRxMgrSxstone_end
 {

@@ -232,7 +232,7 @@ rule CRxApp_mgr_strong_c
 {
 	meta:
 		script = "$result = [@pattern + 0x3c]"
-		script = "log \"//水晶符强化管理对象\""
+		script = "log \"//水晶符强化管理\""
 		script = "log \"/*{p:$result}*/    CRxMgrStrong * mgr_strong_c;\""
 		script = "$result = @pattern + 0x2d + [@pattern + 0x29]"
 		script = "lblset $result, CRxMgrStrongC::create"

@@ -1426,6 +1426,18 @@ rule address_Money2List
 		#pattern == 1
 }
 
+rule address_UniteStoneList
+{
+	meta:
+		script = "$result = [@pattern + 0x20]"
+		script = "log \"NP_LUS=0x{$result}\""
+		script = "lblset $result, UniteStoneList"
+	strings:
+		$pattern = { 68 0E 01 00 00 6A 09 E8 [4] E9 [4] 80 FA 02 75 ?? 83 B8 [4] 00 75 ?? A1 }
+	condition:
+		#pattern == 1
+}
+
 rule address_UniteEquipList
 {
 	meta:
@@ -1450,20 +1462,17 @@ rule address_UniteLuckyList
 		#pattern == 1
 }
 
-
-rule address_UniteStoneList
+rule address_StrongStoneList
 {
 	meta:
-		script = "$result = [@pattern + 0x20]"
-		script = "log \"NP_LUS=0x{$result}\""
-		script = "lblset $result, UniteStoneList"
+		script = "$result = [@pattern + 0x3f]"
+		script = "log \"NP_LSS=0x{$result}\""
+		script = "lblset $result, StrongStoneList"
 	strings:
-		$pattern = { 68 0E 01 00 00 6A 09 E8 [4] E9 [4] 80 FA 02 75 ?? 83 B8 [4] 00 75 ?? A1 }
+		$pattern = { C7 45 ?? 63 00 00 00 C7 45 ?? 28 00 00 00 89 45 ?? C7 45 ?? D2 00 00 00 89 45 [20] 57 56 6A 03 53 8B C8 E8 [4] EB ?? 33 C0 A3 }
 	condition:
 		#pattern == 1
 }
-
-
 
 rule address_StrongEquipList
 {
@@ -1489,26 +1498,39 @@ rule address_StrongLuckyList
 		#pattern == 1
 }
 
-rule address_StrongStoneList
+rule address_StrongJstoneList
 {
 	meta:
-		script = "$result = [@pattern + 0x3f]"
-		script = "log \"NP_LSS=0x{$result}\""
-		script = "lblset $result, StrongStoneList"
+		script = "$result = [@pattern + 0x42]"
+		script = "log \"NP_LJS=0x{$result}\""
+		script = "lblset $result, StrongJstoneList"
 	strings:
-		$pattern = { C7 45 ?? 63 00 00 00 C7 45 ?? 28 00 00 00 89 45 ?? C7 45 ?? D2 00 00 00 89 45 [20] 57 56 6A 03 53 8B C8 E8 [4] EB ?? 33 C0 A3 }
+		$pattern = { C7 [5] AA 00 00 00 C7 [5] 23 01 00 00 89 [2] E8 [4] 83 C4 0C 89 [2] C6 [2] 05 [7] 01 00 00 00 [4] E8 [8] 8D [2] A3 }
 	condition:
 		#pattern == 1
 }
 
-rule address_RaiseEquipList
+rule address_StrongJequipList
 {
 	meta:
-		script = "$result = [@pattern + 0x36]"
-		script = "log \"NP_LRE=0x{$result}\""
-		script = "lblset $result, RaiseEquipList"
+		script = "$result = [@pattern + 0x43]"
+		script = "log \"NP_LJE=0x{$result}\""
+		script = "lblset $result, StrongJequipList"
 	strings:
-		$pattern = { 68 FF 00 00 00 6A 09 E8 [10] 6A 01 [7] 0A 00 00 00 [7] E8 [4] 6A 01 8D [6] 8B }
+		$pattern = { C7 [2] 63 00 00 00 C7 [2] 28 00 00 00 [3] C7 [2] D2 00 00 00 [3] E8 [10] C6 [2] 04 [4] 68 AC 00 00 00 ?? 6A 03 [3] E8 [8] A3 }
+	condition:
+		#pattern == 1
+}
+
+
+rule address_StrongJluckyList
+{
+	meta:
+		script = "$result = [@pattern + 0x2f]"
+		script = "log \"NP_LJL=0x{$result}\""
+		script = "lblset $result, StrongJluckyList"
+	strings:
+		$pattern = { C7 [2] BA 00 00 00 E8 [10] C6 [2] 02 [4] 68 85 00 00 00 ?? 6A 01 [3] E8 [8] A3 }
 	condition:
 		#pattern == 1
 }
@@ -1525,6 +1547,17 @@ rule address_RaiseStuffList
 		#pattern == 1
 }
 
+rule address_RaiseEquipList
+{
+	meta:
+		script = "$result = [@pattern + 0x36]"
+		script = "log \"NP_LRE=0x{$result}\""
+		script = "lblset $result, RaiseEquipList"
+	strings:
+		$pattern = { 68 FF 00 00 00 6A 09 E8 [10] 6A 01 [7] 0A 00 00 00 [7] E8 [4] 6A 01 8D [6] 8B }
+	condition:
+		#pattern == 1
+}
 
 rule address_RaiseLuckyList
 {
@@ -1538,6 +1571,33 @@ rule address_RaiseLuckyList
 		#pattern == 1
 }
 
+rule address_PetBagList
+{
+	meta:
+		script = "$result = [@pattern + 0x21]"
+		script = "log \"NP_LPB=0x{$result}\""
+		script = "lblset $result, PetBagList"
+	strings:
+		$pattern = { C7 [2] 02 00 00 00 [4] 68 [5] 6A 10 6A 00 [2] E8 [8] A3 [4] 8B }
+	condition:
+		#pattern == 1
+}
+
+//交易对方/我方金钱列表
+rule address_TradeBuddyMoneyList
+{
+	meta:
+		script = "$result = [@pattern + 0x2b]"
+		script = "log \"NP_LBM=0x{$result}\""
+		script = "lblset $result, TradeBuddyMoneyList"
+		script = "$result = [@pattern + 0x2b]"
+		script = "log \"NP_LSM=0x{$result+4}\""
+		script = "lblset $result, TradeSelfMoneyList"
+	strings:
+		$pattern = { C7 [5] 0F 00 00 00 8B [5] C7 [5] 10 00 00 00 8B [5] C7 [5] 11 00 00 00 A1 }
+	condition:
+		#pattern == 1
+}
 
 rule address_end
 {
