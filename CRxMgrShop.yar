@@ -1,6 +1,6 @@
 
 //
-//CRxMgrShop部分成员偏移分析
+//CRxMgrShop閮ㄥ垎鎴愬憳鍋忕Щ鍒嗘瀽
 //
 
 rule CRxMgrShop_start
@@ -8,7 +8,7 @@ rule CRxMgrShop_start
 	meta:
 		script = "Type.as CRxMgrShop"
 		script = "Type.aanc CRxMgrShop,CRxMgr"
-		script = "Type.comment CRxMgrShop,\"商店管理\""
+		script = "Type.comment CRxMgrShop,\"鍟嗗簵绠＄悊\""
 		script = "Type.ad CRxMgrShop,\"inline void click_close() {{ click(0x5b); }}\""
 		script = "Type.ad CRxMgrShop,\"inline void click_nextpage() {{ click(0x2712); }}\""
 		script = "Type.ad CRxMgrShop,\"inline void click_prevpage() {{ click(0x2711); }}\""

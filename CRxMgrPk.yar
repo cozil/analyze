@@ -82,17 +82,17 @@ rule CRxMgrPk_dlg_pkquery
 
 
 //260 CRxWnd * dlg_zdInvite
-//rule CRxMgrPk_dlg_zdInvite
-//{
-//	meta:
-//		script = "$result = [@pattern + 0x6]"
-//		script = "Type.am CRxMgrPk,CRxWnd*,dlg_zdInvite,0,$result"
-//		script = "Type.mcomment CRxMgrPk,dlg_zdInvite,\"真斗烈战邀请窗口\""
-//	strings:
-//		$pattern = { 6A 01 8B C8 89 86 [4] E8 [4] D9 05 [4] 8B 96 [4] D9 9D [4] D9 05 [4] 8B 8D [4] 53 D9 9D [4] 8B 85 [4] 53 6A 11 }
-//	condition:
-//		#pattern == 1
-//}
+rule CRxMgrPk_dlg_zdInvite
+{
+	meta:
+		script = "$result = [@pattern + 0x6]"
+		script = "Type.am CRxMgrPk,CRxWnd*,dlg_zdInvite,0,$result"
+		script = "Type.mcomment CRxMgrPk,dlg_zdInvite,\"真斗烈战邀请窗口\""
+	strings:
+		$pattern = { 6A 01 8B C8 89 86 [4] E8 [4] D9 05 [4] 8B 96 [4] D9 9D [4] D9 05 [4] 8B 8D [4] 53 D9 9D [4] 8B 85 [4] 53 6A 11 }
+	condition:
+		#pattern == 1
+}
 
 //264 CRxButton * zdInvite_bn_accept;
 //268 CRxButton * zdInvite_bn_reject;
@@ -116,7 +116,7 @@ rule CRxMgrPk_dlg_zdconfirm
 	meta:
 		script = "$result = [@pattern + 0x1f]"
 		script = "Type.am CRxMgrPk,CRxWnd*,dlg_zdconfirm,0,$result"
-		script = "Type.mcomment CRxMgrPk,dlg_zdInvite,\"真斗烈战参战窗口\""
+		script = "Type.mcomment CRxMgrPk,dlg_zdconfirm,\"真斗烈战参战窗口\""
 	strings:
 		$pattern = { 53 6A 14 68 [4] 68 [4] 53 50 51 52 56 E8 [4] D9 05 [4] 8B 96 }
 	condition:
@@ -159,9 +159,6 @@ rule CRxMgrPk_dlg_relive
 	condition:
 		#pattern == 1
 }
-
-
-
 
 //5bc int battle_start;
 rule CRxMgrPk_battle_start

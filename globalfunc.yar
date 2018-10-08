@@ -68,3 +68,14 @@ rule func_CRxList_create
 	condition:
 		#pattern == 1
 }
+
+//CRxApp¹¹Ôìº¯Êý
+rule CRxApp_create
+{
+	meta:
+		script = "lblset @pattern, \"CRxApp::create\""
+	strings:
+		$pattern = { 55 8b ec 6a [10-100] e8 [4] 8d 8b [4] 89 7d ?? c7 03 [4] e8 [4] 68 34 2d 00 00 }
+	condition:
+		#pattern == 1
+}

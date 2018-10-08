@@ -24,7 +24,7 @@ include "e:/rxwg/analyze/CRxLabel.yar"
 include "e:/rxwg/analyze/CRxLabelEx.yar"
 include "e:/rxwg/analyze/CRxCombo.yar"
 include "e:/rxwg/analyze/CRxListBox.yar"
-include "e:/rxwg/analyze/CRxButton.yar"
+//include "e:/rxwg/analyze/CRxButton.yar"
 include "e:/rxwg/analyze/CRxWnd.yar"
 include "e:/rxwg/analyze/CRxImage.yar"
 
@@ -44,6 +44,19 @@ include "e:/rxwg/analyze/CRxMgrLogin.yar"
 
 //登录选角色管理类
 include "e:/rxwg/analyze/CRxMgrRole.yar"
+
+//真斗烈战管理
+include "E:/rxwg/analyze/CRxMgrZd.yar"
+
+//谭花灵必杀管理
+include "E:/rxwg/analyze/CRxMgrThl.yar"
+
+//鼠标拾取管理
+include "E:/rxwg/analyze/CRxPicker.yar"
+
+//通讯管理
+include "E:/rxwg/analyze/CRxSocket.yar"
+
 
 //系统工具管理类
 include "e:/rxwg/analyze/CRxMgrTool.yar"
@@ -115,24 +128,29 @@ include "E:/rxwg/analyze/CRxMgrDrug.yar"
 //死亡保护管理
 include "E:/rxwg/analyze/CRxMgrDead.yar"
 
-/交易管理
+//交易管理
 include "E:/rxwg/analyze/CRxMgrTradeTip.yar"
 include "E:/rxwg/analyze/CRxMgrTrade.yar"
 
-//include "E:/rxwg/analyze/CRxMgrZd.yar"
-//include "E:/rxwg/analyze/CRxMgrThl.yar"
+//队伍管理
+include "E:/rxwg/analyze/CRxMgrMember.yar"
+include "E:/rxwg/analyze/CRxMgrTeam.yar"
+
+//土灵符管理
+include "E:/rxwg/analyze/CRxMgrTlf.yar"
+
+//热血至尊符管理
+include "E:/rxwg/analyze/CRxMgrCharm.yar"
+
+//宠物管理
+include "E:/rxwg/analyze/CRxMgrPet.yar"
+
+//师徒管理
+include "E:/rxwg/analyze/CRxMgrMaster.yar"
 
 
-//include "E:/rxwg/analyze/CRxMgrCharm.yar"
-
-//其它
-//include "E:/rxwg/analyze/CRxPicker.yar"
-//include "E:/rxwg/analyze/CRxSocket.yar"
-
-
-
-
-//include "e:/rxwg/analyze/CRxApp.yar"
+//程序管理器
+include "e:/rxwg/analyze/CRxApp.yar"
 
 rule main_finish
 {

@@ -1587,17 +1587,45 @@ rule address_PetBagList
 rule address_TradeBuddyMoneyList
 {
 	meta:
-		script = "$result = [@pattern + 0x2b]"
+		script = "$result = [@pattern + 0x3c]"
 		script = "log \"NP_LBM=0x{$result}\""
 		script = "lblset $result, TradeBuddyMoneyList"
-		script = "$result = [@pattern + 0x2b]"
-		script = "log \"NP_LSM=0x{$result+4}\""
+		script = "$result += 4"
+		script = "log \"NP_LSM=0x{$result}\""
 		script = "lblset $result, TradeSelfMoneyList"
 	strings:
-		$pattern = { C7 [5] 0F 00 00 00 8B [5] C7 [5] 10 00 00 00 8B [5] C7 [5] 11 00 00 00 A1 }
+		$pattern = { 3D [4] 0F 8C [4] 8B [5] C7 [5] 0F 00 00 00 8B [5] C7 [5] 10 00 00 00 8B [5] C7 [5] 11 00 00 00 A1 }
 	condition:
 		#pattern == 1
 }
+
+//徒弟接收的师傅传授技能列表
+rule address_PrenticeSkillList
+{
+	meta:
+		script = "$result = [@pattern + 0x29]"
+		script = "log \"NP_LTS=0x{$result}\""
+		script = "lblset $result, PrenticeSkillList"
+	strings:
+		$pattern = { C7 [2] 12 00 00 00 [4] 68 [5] 6A 03 6A 07 [2] E8 [8] 89 [2] 8B [2] 89 04 }
+	condition:
+		#pattern == 1
+}
+
+//角色可用技能列表数组
+//[0]:升天技能，[1]:普通攻击技能，[2]:辅助技能
+rule address_PlayerSkillList
+{
+	meta:
+		script = "$result = [@pattern + 0x28]"
+		script = "log \"NP_LLS=0x{$result}\""
+		script = "lblset $result, PlayerSkillList"
+	strings:
+		$pattern = { C7 [2] 01 00 00 00 [4] 68 [5] 6A 1B 6A 02 [2] E8 [8] 6A 1B 68 [4] A3 }
+	condition:
+		#pattern == 1
+}
+
 
 rule address_end
 {

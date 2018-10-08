@@ -6,6 +6,10 @@ rule CRxList_start
 		script = "Type.as SlotState"
 		script = "Type.am SlotState,char,enabled"
 		script = "Type.am SlotState,char,pad_01,0x23"
+		script = "Type.ad CRxList,\"inline void click_input_confirm() { click(0x62);}\""
+		script = "Type.ad CRxList,\"inline void click_input_cancel() { click(0x63);}\""
+		script = "Type.ad CRxList,\"inline void click_price_confirm() { click(0x60);}\""
+		script = "Type.ad CRxList,\"inline void click_price_cancel() { click(0x61);}\""	
 	condition:
 		true
 }

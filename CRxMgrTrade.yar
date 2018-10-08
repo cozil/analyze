@@ -41,12 +41,14 @@ rule CRxMgrTrade_dlg_confirm
 }
 
 //23c CRxLabel * lb_buddy_name;
+//240 CRxLabel * lb_self_name;
 rule CRxMgrTrade_lb_buddy_name
 {
 	meta:
 		script = "$offset = [@pattern + 0x2]"
 		script = "$result = 0x100 - byte:[@pattern + 0x44]"
 		script = "Type.am CRxMgrTrade,CRxLabel*,lb_buddy_name,0,$offset - $result"
+		script = "Type.am CRxMgrTrade,CRxLabel*,lb_self_name,0,$offset - $result + 4"
 	strings:
 		$pattern = { 8D [5] 68 [4] E8 [28] 6A 11 68 82 00 00 00 6A 01 [2] EC ?? 6A 50 [2] E8 [8] 89 }
 	condition:
@@ -66,7 +68,7 @@ rule CRxMgrTrade_ls_buddy_stuffs
 	strings:
 		$pattern = { C6 [2] 0F [4] 68 [5] 6A 12 [3] E8 [8] 89 }
 	condition:
-		CRxMgrTrade_dlg_lb_buddy_name && #pattern == 1
+		CRxMgrTrade_lb_buddy_name and #pattern == 1
 }
 
 //25c CRxLabel * lb_buddy_money;
@@ -80,7 +82,7 @@ rule CRxMgrTrade_lb_buddy_money
 	strings:
 		$pattern = { C6 [2] 0E [11] 6A 11 68 82 00 00 00 6A 06 [2] 85 00 00 00 ?? 6A 21 [2] E8 [8] 89 }
 	condition:
-		CRxMgrTrade_dlg_lb_buddy_name && #pattern == 1
+		CRxMgrTrade_lb_buddy_name and #pattern == 1
 }
 
 

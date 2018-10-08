@@ -6,23 +6,11 @@
 rule CRxApp_start
 {
 	meta:
-		script = "log \"struct CRxApp {\""
+		script = "Type.as CRxApp"
 		script = "$offset = 0x10"
 	condition:
 		true
 }
-
-//CRxApp构造函数
-rule CRxApp_create
-{
-	meta:
-		script = "lblset @pattern, \"CRxApp::create\""
-	strings:
-		$pattern = { 55 8b ec 6a [10-100] e8 [4] 8d 8b [4] 89 7d ?? c7 03 [4] e8 [4] 68 34 2d 00 00 }
-	condition:
-		#pattern == 1
-}
-
 
 //234 short zzf_type
 //236 short rxf_type
@@ -30,11 +18,11 @@ rule CRxApp_zzf_type
 {
 	meta:
 		script = "$result = [@pattern + 0x1b]"
-		script = "log \"/*{p:$offset}*/    char unused_{$offset}[0x{$result-$offset}];\""
-		script = "log \"/*{p:$result}*/    short zzf_type;\""
+		script = "Type.am CRxApp,short,zzf_type,0,$result"
+		script = "Type.mcomment CRxApp,zzf_type,\"0 -- 无符　1 -- 玄武符 2 -- 银符 3 -- 金符\""
 		script = "$result = [@pattern + 0x12]"
-		script = "log \"/*{p:$result}*/    short rxf_type;\""
-		
+		script = "Type.am CRxApp,short,rxf_type,0,$result"
+		script = "Type.mcomment CRxApp,rxf_type,\"至尊热血符，修改为2可以使用“/土灵符”指令作弊\""
 	strings:
 		$pattern = { 83 FF 58 0F 85 [4] 8B 0D [4] 66 39 99 [4] 7F ?? 66 39 99 [4] 75 ?? 38 1D [4] 75 ?? 68 A0 09 00 00 6A 09 }
 	condition:
@@ -72,9 +60,9 @@ rule CRxApp_mgr_state
 
 		script = "_RESULT:"
 		script = "$result = [$pattern + $offset]"
-		script = "log \"/*{p:$result}*/    CRxMgrState * mgr_state;\""
+		script = "Type.am CRxApp,CRxMgrState*,mgr_state,0,$result"
+		script = "Type.mcomment CRxApp,mgr_state,\"状态窗口管理\""
 		script = "_EXIT:"
-		script = "$offset = 0"
 	strings:
 		//对象引用位置
 		$pattern1 = { 8B 25 [4] 51 8B 8A [4] E8 [4] F7 83 [4] 00 01 00 00 0F 84 [4] 66 83 BE [4] 03 0F 8C [4] 83 BE [4] 00 0F 85 [4] 8B 0D [4] 68 E1 09 00 00 6A 09 }
@@ -89,28 +77,21 @@ rule CRxApp_mgr_equip
 {
 	meta:
 		script = "$result = [@pattern + 0x4d]"
-		script = "log \"/*{p:$result}*/    CRxMgrEquip * mgr_equip;\""
-		//script = "$result = [@pattern + 0x26]"
-		//script = "log \">>>>/*{p:$result}*/    CRxApp::mgr_equip::dlg\""
+		script = "Type.am CRxApp,CRxMgrEquip*,mgr_equip,0,$result"
+		script = "Type.mcomment CRxApp,mgr_equip,\"装备栏管理\""
 	strings:
-		//0x20
-		//$pattern = { 55 8B EC 56 [21] A1 [4] 8B 88 [4] 8B 89 [4] E8 [4] 8B 15 [4] 8B 8A [4] E8 [4] 8B 8E [4] E8 [4] 8B 86 [4] 8B 0D [4] 50 E8 [4] 5E 5D C2 04 00 }
-		//0x4d 构造函数
 		$pattern = { C6 [2] 01 89 [5] E8 [4] 83 C4 04 89 [5] C6 [2] 0B [29] E8 [8] 68 [4] C6 [2] 01 89 }
 	condition:
 		#pattern == 1
 }
-
-
-
 
 //2A0 CRxMgrConfig * mgr_config;
 rule CRxApp_mgr_config
 {
 	meta:
 		script = "$result = [@pattern + 0x3c]"
-		script = "log \"//游戏设定窗口管理器\""
-		script = "log \"/*{p:$result}*/    CRxMgrConfig * mgr_config;\""
+		script = "Type.am CRxApp,CRxMgrConfig*,mgr_config,0,$result"
+		script = "Type.mcomment CRxApp,mgr_config,\"游戏设定窗口管理器\""
 		script = "$result = @pattern + 0x36 + [@pattern + 0x32]"
 		script = "lblset $result, CRxMgrConfig::create"
 	strings:
@@ -124,8 +105,8 @@ rule CRxApp_mgr_map
 {
 	meta:
 		script = "$result = [@pattern + 0x53]"
-		script = "log \"//游戏小地图管理对象\""
-		script = "log \"/*{p:$result}*/    CRxMgrMap * mgr_map;\""
+		script = "Type.am CRxApp,CRxMgrMap*,mgr_map,0,$result"
+		script = "Type.mcomment CRxApp,mgr_map,\"游戏小地图管理对象\""
 		script = "$result = @pattern + 0x44 + [@pattern + 0x40]"
 		script = "lblset $result, CRxMgrMap::create"
 	strings:
@@ -139,7 +120,8 @@ rule CRxApp_mgr_exit
 {
 	meta:
 		script = "$result = [@pattern + 0x0e]"
-		script = "log \"/*{p:$result}*/    CRxMgrExit * mgr_exit;\""
+		script = "Type.am CRxApp,CRxMgrExit*,mgr_exit,0,$result"
+		script = "Type.mcomment CRxApp,mgr_exit,\"游戏退出管理\""
 	strings:
 		$pattern = { 6A 00 C7 05 [4] 00 00 00 00 8B 80 [4] FF 88 [4] 6A 01 68 31 04 00 00 E8 }
 	condition:
@@ -151,8 +133,8 @@ rule CRxApp_mgr_task
 {
 	meta:
 		script = "$result = [@pattern + 0x4f]"
-		script = "log \"//任务管理对象\""
-		script = "log \"/*{p:$result}*/    CRxMgrTask * mgr_task;\""
+		script = "Type.am CRxApp,CRxMgrTask*,mgr_task,0,$result"
+		script = "Type.mcomment CRxApp,mgr_task,\"任务管理对象\""
 		script = "$result = @pattern + 0x3b + [@pattern + 0x37]"
 		script = "lblset $result, CRxMgrTask::create"
 	strings:
@@ -166,14 +148,8 @@ rule CRxApp_mgr_npc
 {
 	meta:
 		script = "$result = [@pattern +0x2b]"
-		script = "log \"/*{p:$result}*/    CRxMgrNpc * mgr_npc;\""
-		
-		//script = "$result = [@pattern +0x31]"
-		//script = "log \">>>>/*{p:$result}*/    CRxApp::mgr_npc::mgr_strong\""		
-	
-		//script = "$result = [@pattern +0x37]"
-		//script = "log \">>>>>>>>/*{p:$result}*/    CRxApp::mgr_npc::mgr_strong::dlg\""		
-				
+		script = "Type.am CRxApp,CRxMgrNpc*,mgr_npc,0,$result"
+		script = "Type.mcomment CRxApp,mgr_npc,\"NPC管理\""
 	strings:
 		$pattern = { 68 A1 03 00 00 6A 09 E8 [4] 33 C0 5F 5D C2 10 00 8B 81 [4] 8B 90 [4] 83 7A 40 00 0F 85 [4] 8B 81 [4] 8B 90 [4] 8B 92 }
 	condition:
@@ -185,8 +161,8 @@ rule CRxApp_mgr_maker
 {
 	meta:
 		script = "$result = [@pattern + 0x3c]"
-		script = "log \"//制造管理对象\""
-		script = "log \"/*{p:$result}*/    CRxMgrMaker * mgr_maker;\""
+		script = "Type.am CRxApp,CRxMgrMaker*,mgr_maker,0,$result"
+		script = "Type.mcomment CRxApp,mgr_maker,\"制造管理\""
 		script = "$result = @pattern + 0x2d + [@pattern + 0x29]"
 		script = "lblset $result, CRxMgrMaker::create"
 	strings:
@@ -200,8 +176,8 @@ rule CRxApp_mgr_sweet
 {
 	meta:
 		script = "$result = [@pattern + 0x3c]"
-		script = "log \"//情侣管理对象\""
-		script = "log \"/*{p:$result}*/    CRxMgrSweet * mgr_sweet;\""
+		script = "Type.am CRxApp,CRxMgrSweet*,mgr_sweet,0,$result"
+		script = "Type.mcomment CRxApp,mgr_sweet,\"情侣管理\""
 		script = "$result = @pattern + 0x2d + [@pattern + 0x29]"
 		script = "lblset $result, CRxMgrSweet::create"
 	strings:
@@ -216,8 +192,8 @@ rule CRxApp_mgr_drug
 {
 	meta:
 		script = "$result = [@pattern + 0x3c]"
-		script = "log \"//制药管理对象\""
-		script = "log \"/*{p:$result}*/    CRxMgrDrug * mgr_drug;\""
+		script = "Type.am CRxApp,CRxMgrDrug*,mgr_drug,0,$result"
+		script = "Type.mcomment CRxApp,mgr_drug,\"制药管理对象\""
 		script = "$result = @pattern + 0x2d + [@pattern + 0x29]"
 		script = "lblset $result, CRxMgrDrug::create"
 	strings:
@@ -232,8 +208,8 @@ rule CRxApp_mgr_strong_c
 {
 	meta:
 		script = "$result = [@pattern + 0x3c]"
-		script = "log \"//水晶符强化管理\""
-		script = "log \"/*{p:$result}*/    CRxMgrStrong * mgr_strong_c;\""
+		script = "Type.am CRxApp,CRxMgrStrong*,mgr_strong_c,0,$result"
+		script = "Type.mcomment CRxApp,mgr_strong_c,\"水晶符强化管理\""
 		script = "$result = @pattern + 0x2d + [@pattern + 0x29]"
 		script = "lblset $result, CRxMgrStrongC::create"
 	strings:
@@ -242,34 +218,28 @@ rule CRxApp_mgr_strong_c
 		#pattern == 1
 }
 
-
-//340 CRxMgrDeath *	mgr_dead;
+//340 CRxMgrDead * mgr_dead;
 rule CRxApp_mgr_dead
 {
 	meta:
-		//script = "$result = [@pattern + 0x02]"
-		//script = "log \"/*{p:$result}*/    CRxMgrDeath * mgr_dead;\""
-
 		script = "$result = [@pattern + 0x3c]"
-		script = "log \"//死亡管理对象\""
-		script = "log \"/*{p:$result}*/    CRxMgrDeath * mgr_dead;;\""
+		script = "Type.am CRxApp,CRxMgrDead*,mgr_dead,0,$result"
+		script = "Type.mcomment CRxApp,mgr_dead,\"死亡管理对象\""
 		script = "$result = @pattern + 0x2d + [@pattern + 0x29]"
-		script = "lblset $result, CRxMgrDeath::create"
+		script = "lblset $result, CRxMgrDead::create"
 	strings:
-		//$pattern = { 8B [5] 6A 03 6A 01 E8 [17] 6A 02 6A 01 E8 }
 		$pattern = { 68 C0 02 00 00 [10] E8 [4] 83 C4 04 [26] 68 D0 03 00 00 [10] E8 }
 	condition:
 		#pattern == 1
 }
-
 
 //378 CRxMgrPet * mgr_pet;
 rule CRxApp_mgr_pet
 {
 	meta:
 		script = "$result = [@pattern + 0x3c]"
-		script = "log \"//宠物管理对象\""
-		script = "log \"/*{p:$result}*/    CRxMgrPet * mgr_pet;;\""
+		script = "Type.am CRxApp,CRxMgrPet*,mgr_pet,0,$result"
+		script = "Type.mcomment CRxApp,mgr_pet,\"宠物管理对象\""
 		script = "$result = @pattern + 0x2d + [@pattern + 0x29]"
 		script = "lblset $result, CRxMgrPet::create"
 	strings:
@@ -278,13 +248,29 @@ rule CRxApp_mgr_pet
 		#pattern == 1
 }
 
+//384 CRxMgrMaster * mgr_master;
+rule CRxApp_mgr_master
+{
+	meta:
+		script = "$result = [@pattern + 0x37]"
+		script = "Type.am CRxApp,CRxMgrMaster*,mgr_master,0,$result"
+		script = "Type.mcomment CRxApp,mgr_master,\"师徒管理对象\""
+		script = "$result = @pattern + 0x28 + [@pattern + 0x24]"
+		script = "lblset $result, CRxMgrMaster::create"
+	strings:
+		$pattern = { C6 [2] 01 89 [5] E8 [7] 89 [5] C6 [10] E8 [8] 68 30 03 00 00 C6 [2] 01 89 }
+	condition:
+		#pattern == 1
+}
+
+
 //394 CRxMgrTrade * mgr_trad
 rule CRxApp_mgr_trad
 {
 	meta:
 		script = "$result = [@pattern + 0x3c]"
-		script = "log \"//交易管理对象\""
-		script = "log \"/*{p:$result}*/    CRxMgrTrade * mgr_trad;\""
+		script = "Type.am CRxApp,CRxMgrTrade*,mgr_trad,0,$result"
+		script = "Type.mcomment CRxApp,mgr_trad,\"交易管理对象\""
 		script = "$result = @pattern + 0x2d + [@pattern + 0x29]"
 		script = "lblset $result, CRxMgrTrade::create"
 	strings:
@@ -298,8 +284,8 @@ rule CRxApp_mgr_team
 {
 	meta:
 		script = "$result = [@pattern + 0x3c]"
-		script = "log \"//组队管理对象\""
-		script = "log \"/*{p:$result}*/    CRxMgrTeam * mgr_team;\""
+		script = "Type.am CRxApp,CRxMgrTeam*,mgr_team,0,$result"
+		script = "Type.mcomment CRxApp,mgr_team,\"组队管理对象\""
 		script = "$result = @pattern + 0x2d + [@pattern + 0x29]"
 		script = "lblset $result, CRxMgrTeam::create"
 	strings:
@@ -307,26 +293,14 @@ rule CRxApp_mgr_team
 	condition:
 		#pattern == 1		
 }
-//3a8 CRxMgrTeam * mgr_team
-//rule CRxApp_mgr_team
-//{
-//	meta:
-//		//script = "$result = [@pattern +0x1f]"
-//		//script = "log \"/*{p:$result}*/    CRxMgrTeam * mgr_team;\""				
-//	strings:
-//		$pattern = { 55 8B EC 8B 45 08 66 0F BE 48 06 [18] 83 B9 A8 03 00 00 00 [27] 83 F8 03 [17] 83 B8 80 02 00 00 00 }
-//	condition:
-//		#pattern == 1
-//}
-
 
 //3AC CRxMgrMyShop * mgr_myshop;
 rule CRxApp_mgr_myshop
 {
 	meta:
 		script = "$result = [@pattern + 0x4a]"
-		script = "log \"//开店管理对象\""
-		script = "log \"/*{p:$result}*/    CRxMgrMyShop * mgr_myshop;\""
+		script = "Type.am CRxApp,CRxMgrMyShop*,mgr_myshop,0,$result"
+		script = "Type.mcomment CRxApp,mgr_myshop,\"开店管理对象\""
 		script = "$result = @pattern + 0x3b + [@pattern + 0x37]"
 		script = "lblset $result, CRxMgrMyShop::create"
 	strings:
@@ -340,8 +314,8 @@ rule CRxApp_mgr_tlf
 {
 	meta:
 		script = "$result = [@pattern + 0x3c]"
-		script = "log \"//土灵符管理对象\""
-		script = "log \"/*{p:$result}*/    CRxMgrTlf * mgr_tlf;\""
+		script = "Type.am CRxApp,CRxMgrTlf*,mgr_tlf,0,$result"
+		script = "Type.mcomment CRxApp,mgr_tlf,\"土灵符管理对象\""
 		script = "$result = @pattern + 0x2d + [@pattern + 0x29]"
 		script = "lblset $result, CRxMgrTlf::create"
 	strings:
@@ -350,14 +324,13 @@ rule CRxApp_mgr_tlf
 		#pattern == 1		
 }
 
-
 //3b4 CRxMgrCharm * mgr_charm;
 rule CRxApp_mgr_charm
 {
 	meta:
 		script = "$result = [@pattern + 0x3c]"
-		script = "log \"//至尊、热血符管理\""
-		script = "log \"/*{p:$result}*/    CRxMgrCharm * mgr_charm;\""
+		script = "Type.am CRxApp,CRxMgrCharm*,mgr_charm,0,$result"
+		script = "Type.mcomment CRxApp,mgr_charm,\"至尊、热血符管理\""
 		script = "$result = @pattern + 0x2d + [@pattern + 0x29]"
 		script = "lblset $result, CRxMgrCharm::create"
 	strings:
@@ -366,44 +339,28 @@ rule CRxApp_mgr_charm
 		#pattern == 1			
 }
 
-//3cc CRxMgrMaster * mgr_master;
-rule CRxApp_mgr_master
-{
-	meta:
-		script = "$result = [@pattern + 0x67]"
-		script = "log \"//师徒管理对象\""
-		script = "log \"/*{p:$result}*/    CRxMgrMaster * mgr_master;\""
-		script = "$result = @pattern + 0x58 + [@pattern + 0x54]"
-		script = "lblset $result, CRxMgrMaster::create"
-	strings:
-		$pattern = { 68 8C 02 00 00 [53] E8 [4] 83 C4 04 [26] 68 80 02 00 00 C6 45 ?? 01 89 83 [4] E8 }
-	condition:
-		#pattern == 1
-}
-
-
 //3D0 CRxMgrSkill * mgr_skill;
-rule CRxApp_mgr_skill
-{
-	meta:
-		script = "$result = [@pattern + 0x3c]"
-		script = "log \"//武功栏管理\""
-		script = "log \"/*{p:$result}*/    CRxMgrSkill * mgr_skill;\""
-		script = "$result = @pattern + 0x2d + [@pattern + 0x29]"
-		script = "lblset $result, CRxMgrSkill::create"		
-	strings:
-		$pattern = { 68 80 02 00 00 [10] E8 [4] 83 C4 04 [26] 68 5C 02 00 00 [10] E8 }
-	condition:
-		#pattern == 1	
-}
+//rule CRxApp_mgr_skill
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x3c]"
+//		script = "Type.am CRxApp,CRxMgrSkill*,mgr_skill,0,$result"
+//		script = "Type.mcomment CRxApp,mgr_skill,\"武功栏管理\""
+//		script = "$result = @pattern + 0x2d + [@pattern + 0x29]"
+//		script = "lblset $result, CRxMgrSkill::create"		
+//	strings:
+//		$pattern = { 68 80 02 00 00 [10] E8 [4] 83 C4 04 [26] 68 5C 02 00 00 [10] E8 }
+//	condition:
+//		#pattern == 1	
+//}
 
 //3D4 CRxMgrMakerFrame * mgr_maker_frame;
 rule CRxApp_mgr_maker_frame
 {
 	meta:
 		script = "$result = [@pattern + 0x3c]"
-		script = "log \"//制造分解窗口的框架窗口\""
-		script = "log \"/*{p:$result}*/    CRxMgrMakerFrame * mgr_maker_frame;\""
+		script = "Type.am CRxApp,CRxMgrMakerFrame*,mgr_maker_frame,0,$result"
+		script = "Type.mcomment CRxApp,mgr_maker_frame,\"制造分解窗口的框架窗口\""
 		script = "$result = @pattern + 0x2d + [@pattern + 0x29]"
 		script = "lblset $result, CRxMgrMakerFrame::create"			
 	strings:
@@ -417,7 +374,7 @@ rule CRxApp_busy
 {
 	meta:
 		script = "$result = [@pattern + 0x07]"
-		script = "log \"/*{p:$result}*/    int busy;\""
+		script = "Type.am CRxApp,int,busy,0,$result"
 	strings:
 		$pattern = { A1 [4] 83 B8 [4] 00 0F 85 [4] C7 80 [4] 01 00 00 00 8B 8E [4] C6 86 [4] 01 88 9E [4] E8 }
 	condition:
@@ -428,8 +385,10 @@ rule CRxApp_busy
 rule CRxApp_save_name
 {
 	meta:
+		script = "Type.as TlfName"
+		script = "Type.am TlfName,char,val,0xf"
 		script = "$result = [@pattern + 0x09]"
-		script = "log \"/*{p:$result}*/    char save_name[0x1e][0x0f];\""
+		script = "Type.am CRxApp,TlfName,save_name,0x1e,$result"
 	strings:
 		$pattern = { 8B 0D [11] 00 8B 0D [14] 68 53 05 00 00 E8 [4] ?? 68 80 00 00 00 ?? E8 [9] 68 57 04 00 00 E8 }
 	condition:
@@ -439,9 +398,8 @@ rule CRxApp_save_name
 rule CRxApp_end
 {
 	meta:
-		script = "log \"}"
-		script = "log"
-		script = "log"
+		script = "Type.print TlfName"
+		script = "Type.print CRxApp,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN"
 	condition:
 		true
 } 
