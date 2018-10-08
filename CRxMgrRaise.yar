@@ -18,8 +18,8 @@ rule CRxMgrRaise_dlg
 	meta:
 		script = "$result = [@pattern + 0x29]"
 		script = "Type.am CRxMgrRaise,CRxWnd*,dlg,0,$result"
-		script = "$result = [@pattern + 0x2f]"
-		script = "Type.am CRxMgrRaise,CRxButton*,dlg_bn_close,0,$result"
+		//script = "$result = [@pattern + 0x2f]"
+		//script = "Type.am CRxMgrRaise,CRxButton*,dlg_bn_close,0,$result"
 	strings:
 		$pattern = { 68 [4] 68 [4] 6A 61 [3] 1A [3] 1A ?? 6A 1A 68 02 01 00 00 [2] E8 [8] 8B 8E [4] 89 86 }
 	condition:

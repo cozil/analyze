@@ -6,10 +6,28 @@ rule CRxList_start
 		script = "Type.as SlotState"
 		script = "Type.am SlotState,char,enabled"
 		script = "Type.am SlotState,char,pad_01,0x23"
-		script = "Type.ad CRxList,\"inline void click_input_confirm() { click(0x62);}\""
-		script = "Type.ad CRxList,\"inline void click_input_cancel() { click(0x63);}\""
-		script = "Type.ad CRxList,\"inline void click_price_confirm() { click(0x60);}\""
+
+		script = "Type.ad CRxList,\"inline void click_price_confirm() { click(0x60);} //NPC商店购买物品输入数量确认/取消\""
 		script = "Type.ad CRxList,\"inline void click_price_cancel() { click(0x61);}\""	
+		
+		script = "Type.ad CRxList,\"inline void click_input_confirm() { click(0x62);} //仓库取物品输入数量确认/取消\""
+		script = "Type.ad CRxList,\"inline void click_input_cancel() { click(0x63);}\""		
+	
+		script = "Type.ad CRxList,\"inline void click_myshop_confirm() { click(0x5a);} //开店输入数量确认/取消\""
+		script = "Type.ad CRxList,\"inline void click_myshop_cancel() { click(0x5b);}\""	
+		
+		script = "Type.ad CRxList,\"inline void click_drop_confirm() { click(0x5c);} //扔掉属性物品确认/取消\""
+		script = "Type.ad CRxList,\"inline void click_drop_cancel() { click(0x5d);}\""	
+			
+		script = "Type.ad CRxList,\"inline void click_sell_confirm() { click(0x5e);} //属性物品卖店确认/取消\""
+		script = "Type.ad CRxList,\"inline void click_sell_cancel() { click(0x5f);}\""
+		
+		script = "Type.ad CRxList,\"inline void click_flyring_confirm() { click(0xc9);} //戒指传送确认/取消\""
+		script = "Type.ad CRxList,\"inline void click_flyring_cancel() { click(0xca);}\""	
+		
+		script = "Type.ad CRxList,\"inline void click_break_confirm() { click(0xcb);} //属性物品分解确认/取消\""
+		script = "Type.ad CRxList,\"inline void click_break_cancel() { click(0xcc);}\""	
+		
 	condition:
 		true
 }
@@ -60,18 +78,18 @@ rule CRxList_dlg_input
 
 //CRxButton * input_bn_confirm;
 //CRxButton * input_bn_cancel;
-rule CRxList_input_bn
-{
-	meta:
-		script = "$result = [@pattern + 0x17]"
-		script = "Type.am CRxList,CRxButton*,input_bn_confirm,0,$result"
-		script = "$result = [@pattern + 0x2c]"
-		script = "Type.am CRxList,CRxButton*,input_bn_cancel,0,$result"
-	strings:
-		$pattern = { 6A 00 [3] 6A 00 6A 63 68 [4] 68 [4] 6A 00 89 86 [11] E8 [4] 83 C4 50 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxList_input_bn
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x17]"
+//		script = "Type.am CRxList,CRxButton*,input_bn_confirm,0,$result"
+//		script = "$result = [@pattern + 0x2c]"
+//		script = "Type.am CRxList,CRxButton*,input_bn_cancel,0,$result"
+//	strings:
+//		$pattern = { 6A 00 [3] 6A 00 6A 63 68 [4] 68 [4] 6A 00 89 86 [11] E8 [4] 83 C4 50 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //CRxWnd * dlg_price;
 rule CRxList_dlg_price
@@ -88,18 +106,18 @@ rule CRxList_dlg_price
 
 //CRxButton * price_bn_confirm;
 //CRxButton * price_bn_cancel;
-rule CRxList_price_bn
-{
-	meta:
-		script = "$result = [@pattern + 0x1b]"
-		script = "Type.am CRxList,CRxButton*,price_bn_confirm,0,$result"
-		script = "$result = [@pattern + 0x2f]"
-		script = "Type.am CRxList,CRxButton*,price_bn_cancel,0,$result"
-	strings:
-		$pattern = { 6A 00 6A 00 D9 5D ?? 8B 55 ?? 6A 61 68 [4] 68 [4] 6A 00 52 89 86 [4] 8B 45 [4] E8 [7] 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxList_price_bn
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x1b]"
+//		script = "Type.am CRxList,CRxButton*,price_bn_confirm,0,$result"
+//		script = "$result = [@pattern + 0x2f]"
+//		script = "Type.am CRxList,CRxButton*,price_bn_cancel,0,$result"
+//	strings:
+//		$pattern = { 6A 00 6A 00 D9 5D ?? 8B 55 ?? 6A 61 68 [4] 68 [4] 6A 00 52 89 86 [4] 8B 45 [4] E8 [7] 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //CRxWnd * dlg_myshop_price;
 rule CRxList_dlg_myshop_price
@@ -115,28 +133,28 @@ rule CRxList_dlg_myshop_price
 }
 
 //CRxButton * myshop_bn_confirm;
-rule CRxList_myshop_bn_confirm
-{
-	meta:
-		script = "$result = [@pattern + 0x28]"
-		script = "Type.am CRxList,CRxButton*,myshop_bn_confirm,0,$result"
-	strings:
-		$pattern = { 6A 5A [3] B2 00 00 00 [3] 55 ?? 68 B2 00 00 00 6A 55 [2] E8 [9] 6A 78 [3] 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxList_myshop_bn_confirm
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x28]"
+//		script = "Type.am CRxList,CRxButton*,myshop_bn_confirm,0,$result"
+//	strings:
+//		$pattern = { 6A 5A [3] B2 00 00 00 [3] 55 ?? 68 B2 00 00 00 6A 55 [2] E8 [9] 6A 78 [3] 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //CRxButton * myshop_bn_cancel;
-rule CRxList_myshop_bn_cancel
-{
-	meta:
-		script = "$result = [@pattern + 0x2e]"
-		script = "Type.am CRxList,CRxButton*,myshop_bn_cancel,0,$result"
-	strings:
-		$pattern = { 6A 5B [3] B2 00 00 00 [3] 9C 00 00 00 ?? 68 B2 00 00 00 68 9C 00 00 00 [2] E8 [9] 6A 78 89 7D ?? 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxList_myshop_bn_cancel
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x2e]"
+//		script = "Type.am CRxList,CRxButton*,myshop_bn_cancel,0,$result"
+//	strings:
+//		$pattern = { 6A 5B [3] B2 00 00 00 [3] 9C 00 00 00 ?? 68 B2 00 00 00 68 9C 00 00 00 [2] E8 [9] 6A 78 89 7D ?? 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //CRxWnd * dlg_sell_confirm;
 rule CRxList_dlg_sell_confirm
@@ -152,41 +170,41 @@ rule CRxList_dlg_sell_confirm
 }
 
 //CRxLabelEx * sell_lb_text;
-rule CRxList_sell_lb_text
-{
-	meta:
-		script = "$result = [@pattern + 0x7b]"
-		script = "Type.am CRxList,CRxLabelEx*,sell_lb_text,0,$result"
-	strings:
-		$pattern = { 68 5E 01 00 00 [75] 6A 01 [2] 6A 73 68 03 01 00 00 6A 05 6A 3C 6A 14 [2] E8 [9] 8D 95 [7] 89 7D ?? 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxList_sell_lb_text
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x7b]"
+//		script = "Type.am CRxList,CRxLabelEx*,sell_lb_text,0,$result"
+//	strings:
+//		$pattern = { 68 5E 01 00 00 [75] 6A 01 [2] 6A 73 68 03 01 00 00 6A 05 6A 3C 6A 14 [2] E8 [9] 8D 95 [7] 89 7D ?? 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 
 //CRxButton * sell_bn_confirm;
-rule CRxList_sell_bn_confirm
-{
-	meta:
-		script = "$result = [@pattern + 0x28]"
-		script = "Type.am CRxList,CRxButton*,sell_bn_confirm,0,$result"
-	strings:
-		$pattern = { 6A 5E [3] B2 00 00 00 [3] 55 ?? 68 B2 00 00 00 6A 55 [2] E8 [9] 6A 78 89 7D ?? 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxList_sell_bn_confirm
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x28]"
+//		script = "Type.am CRxList,CRxButton*,sell_bn_confirm,0,$result"
+//	strings:
+//		$pattern = { 6A 5E [3] B2 00 00 00 [3] 55 ?? 68 B2 00 00 00 6A 55 [2] E8 [9] 6A 78 89 7D ?? 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //CRxButton * sell_bn_close;
-rule CRxList_sell_bn_close
-{
-	meta:
-		script = "$result = [@pattern + 0x2e]"
-		script = "Type.am CRxList,CRxButton*,sell_bn_close,0,$result"
-	strings:
-		$pattern = { 6A 5F [3] B2 00 00 00 [3] 9C 00 00 00 ?? 68 B2 00 00 00 68 9C 00 00 00 [2] E8 [9] 6A 78 89 7D ?? 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxList_sell_bn_close
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x2e]"
+//		script = "Type.am CRxList,CRxButton*,sell_bn_close,0,$result"
+//	strings:
+//		$pattern = { 6A 5F [3] B2 00 00 00 [3] 9C 00 00 00 ?? 68 B2 00 00 00 68 9C 00 00 00 [2] E8 [9] 6A 78 89 7D ?? 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //CRxWnd * dlg_break_confirm;
 rule CRxList_dlg_break_confirm
@@ -202,40 +220,40 @@ rule CRxList_dlg_break_confirm
 }
 
 //CRxLabelEx * break_lb_text;
-rule CRxList_break_lb_text
-{
-	meta:
-		script = "$result = [@pattern + 0x4d]"
-		script = "Type.am CRxList,CRxLabelEx*,break_lb_text,0,$result"
-	strings:
-		$pattern = { 68 80 00 00 00 [36] 6A 01 [2] 6A 73 68 03 01 00 00 6A 05 6A 3C 6A 14 [2] E8 [4] EB ?? 33 C0 8B 8E [4] 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxList_break_lb_text
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x4d]"
+//		script = "Type.am CRxList,CRxLabelEx*,break_lb_text,0,$result"
+//	strings:
+//		$pattern = { 68 80 00 00 00 [36] 6A 01 [2] 6A 73 68 03 01 00 00 6A 05 6A 3C 6A 14 [2] E8 [4] EB ?? 33 C0 8B 8E [4] 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //CRxButton * break_bn_confirm;
-rule CRxList_break_bn_confirm
-{
-	meta:
-		script = "$result = [@pattern + 0x2b]"
-		script = "Type.am CRxList,CRxButton*,break_bn_confirm,0,$result"
-	strings:
-		$pattern = { 68 CB 00 00 00 [3] B2 00 00 00 [3] 55 ?? 68 B2 00 00 00 6A 55 [2] E8 [4] EB ?? 33 C0 8B 8E [4] 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxList_break_bn_confirm
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x2b]"
+//		script = "Type.am CRxList,CRxButton*,break_bn_confirm,0,$result"
+//	strings:
+//		$pattern = { 68 CB 00 00 00 [3] B2 00 00 00 [3] 55 ?? 68 B2 00 00 00 6A 55 [2] E8 [4] EB ?? 33 C0 8B 8E [4] 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //CRxButton * break_bn_close;
-rule CRxList_break_bn_close
-{
-	meta:
-		script = "$result = [@pattern + 0x31]"
-		script = "Type.am CRxList,CRxButton*,break_bn_close,0,$result"
-	strings:
-		$pattern = { 68 CC 00 00 00 [3] B2 00 00 00 [3] 9C 00 00 00 ?? 68 B2 00 00 00 68 9C 00 00 00 [2] E8 [4] EB ?? 33 C0 8B 96 [4] 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxList_break_bn_close
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x31]"
+//		script = "Type.am CRxList,CRxButton*,break_bn_close,0,$result"
+//	strings:
+//		$pattern = { 68 CC 00 00 00 [3] B2 00 00 00 [3] 9C 00 00 00 ?? 68 B2 00 00 00 68 9C 00 00 00 [2] E8 [4] EB ?? 33 C0 8B 96 [4] 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //int breaker_num;
 rule CRxList_breaker_num
@@ -265,42 +283,41 @@ rule CRxList_dlg_drop_confirm
 
 
 //CRxLabelEx * drop_lb_text;
-rule CRxList_drop_lb_text
-{
-	meta:
-		script = "$result = [@pattern + 0x7b]"
-		script = "Type.am CRxList,CRxLabelEx*,drop_lb_text,0,$result"
-	strings:
-		$pattern = { 68 5C 01 00 00 [75] 6A 01 [2] 6A 73 68 03 01 00 00 6A 05 6A 3C 6A 14 [2] E8 [9] 8D 95 [10] 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxList_drop_lb_text
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x7b]"
+//		script = "Type.am CRxList,CRxLabelEx*,drop_lb_text,0,$result"
+//	strings:
+//		$pattern = { 68 5C 01 00 00 [75] 6A 01 [2] 6A 73 68 03 01 00 00 6A 05 6A 3C 6A 14 [2] E8 [9] 8D 95 [10] 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 
 //CRxButton * drop_bn_confirm;
-rule CRxList_drop_bn_confirm
-{
-	meta:
-		script = "$result = [@pattern + 0x28]"
-		script = "Type.am CRxList,CRxButton*,drop_bn_confirm,0,$result"
-	strings:
-		$pattern = { 6A 5C [3] B2 00 00 00 [3] 55 ?? 68 B2 00 00 00 6A 55 [2] E8 [9] 6A 78 89 7D ?? 89 86 }
-	condition:
-		#pattern == 1
-}
-
+//rule CRxList_drop_bn_confirm
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x28]"
+//		script = "Type.am CRxList,CRxButton*,drop_bn_confirm,0,$result"
+//	strings:
+//		$pattern = { 6A 5C [3] B2 00 00 00 [3] 55 ?? 68 B2 00 00 00 6A 55 [2] E8 [9] 6A 78 89 7D ?? 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //CRxButton * drop_bn_close;
-rule CRxList_drop_bn_close
-{
-	meta:
-		script = "$result = [@pattern + 0x2e]"
-		script = "Type.am CRxList,CRxButton*,drop_bn_close,0,$result"
-	strings:
-		$pattern = { 6A 5D [3] B2 00 00 00 [3] 9C 00 00 00 ?? 68 B2 00 00 00 68 9C 00 00 00 [2] E8 [9] 6A 78 89 7D ?? 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxList_drop_bn_close
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x2e]"
+//		script = "Type.am CRxList,CRxButton*,drop_bn_close,0,$result"
+//	strings:
+//		$pattern = { 6A 5D [3] B2 00 00 00 [3] 9C 00 00 00 ?? 68 B2 00 00 00 68 9C 00 00 00 [2] E8 [9] 6A 78 89 7D ?? 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 
 
@@ -312,8 +329,8 @@ rule CRxList_dlg_flyring_confirm
 		script = "$result = [@pattern + 0x34]"
 		script = "Type.am CRxList,CRxWnd*,dlg_flyring_confirm,0,$result"
 		script = "Type.mcomment CRxList,dlg_drop_confirm,\"使用戒指传送确认窗口(背包列表)\""
-		script = "$result = [@pattern + 0x29]"
-		script = "Type.am CRxList,CRxLabelEx*,flyring_lb_text,0,$result"
+		//script = "$result = [@pattern + 0x29]"
+		//script = "Type.am CRxList,CRxLabelEx*,flyring_lb_text,0,$result"
 	strings:
 		$pattern = { 6A 01 [2] 6A 73 68 03 01 00 00 6A 05 6A 3C 6A 14 [2] E8 [9] 68 [6] 89 7D ?? 89 86 [4] E8 [4] 8B 8E }
 	condition:
@@ -321,28 +338,28 @@ rule CRxList_dlg_flyring_confirm
 }
 
 //CRxButton * flyring_bn_confirm;
-rule CRxList_flyring_bn_confirm
-{
-	meta:
-		script = "$result = [@pattern + 0x2b]"
-		script = "Type.am CRxList,CRxButton*,flyring_bn_confirm,0,$result"
-	strings:
-		$pattern = { 68 C9 00 00 00 [3] B2 00 00 00 [3] 55 ?? 68 B2 00 00 00 6A 55 [2] E8 [9] 6A 78 89 7D ?? 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxList_flyring_bn_confirm
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x2b]"
+//		script = "Type.am CRxList,CRxButton*,flyring_bn_confirm,0,$result"
+//	strings:
+//		$pattern = { 68 C9 00 00 00 [3] B2 00 00 00 [3] 55 ?? 68 B2 00 00 00 6A 55 [2] E8 [9] 6A 78 89 7D ?? 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 //CRxButton * flyring_bn_close;
-rule CRxList_flyring_bn_close
-{
-	meta:
-		script = "$result = [@pattern + 0x31]"
-		script = "Type.am CRxList,CRxButton*,flyring_bn_close,0,$result"
-	strings:
-		$pattern = { 68 CA 00 00 00 [3] B2 00 00 00 [3] 9C 00 00 00 ?? 68 B2 00 00 00 68 9C 00 00 00 [2] E8 [9] 6A 78 89 7D ?? 89 86 }
-	condition:
-		#pattern == 1
-}
+//rule CRxList_flyring_bn_close
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x31]"
+//		script = "Type.am CRxList,CRxButton*,flyring_bn_close,0,$result"
+//	strings:
+//		$pattern = { 68 CA 00 00 00 [3] B2 00 00 00 [3] 9C 00 00 00 ?? 68 B2 00 00 00 68 9C 00 00 00 [2] E8 [9] 6A 78 89 7D ?? 89 86 }
+//	condition:
+//		#pattern == 1
+//}
 
 rule CRxList_max_size
 {

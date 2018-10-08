@@ -102,20 +102,20 @@ rule CRxMgrLogin_dlg_server
 }
 
 //2b8 CRxButton * server_bn_svr_list[0x0a];
-rule CRxMgrLogin_server_bn_svr_list
-{
-	meta:
-		script = "$result = [@pattern + 0xe]"
-		script = "Type.am CRxMgrLogin,CRxLabel*,server_lb_svr_list,0x0a,$result-0x50"
-		script = "Type.am CRxMgrLogin,CRxLabel*,server_lb_line_list,0x0a,$result-0x28"
-		script = "Type.am CRxMgrLogin,CRxButton*,server_bn_svr_list,0x0a,$result"
-		script = "Type.am CRxMgrLogin,CRxButton*,server_bn_line_list,0x0a,$result+0x28"
-		script = "Type.am CRxMgrLogin,CRxLabel*,server_lb_status_list,0x0a,$result+0x50"
-	strings:
-		$pattern = { E8 [7] 14 00 00 00 8D BE [10] 0A 00 00 00 [14] E8 [4] 68 F0 03 00 00 E8 [4] 83 C4 04 [6] 09 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrLogin_server_bn_svr_list
+//{
+//	meta:
+//		script = "$result = [@pattern + 0xe]"
+//		script = "Type.am CRxMgrLogin,CRxLabel*,server_lb_svr_list,0x0a,$result-0x50"
+//		script = "Type.am CRxMgrLogin,CRxLabel*,server_lb_line_list,0x0a,$result-0x28"
+//		script = "Type.am CRxMgrLogin,CRxButton*,server_bn_svr_list,0x0a,$result"
+//		script = "Type.am CRxMgrLogin,CRxButton*,server_bn_line_list,0x0a,$result+0x28"
+//		script = "Type.am CRxMgrLogin,CRxLabel*,server_lb_status_list,0x0a,$result+0x50"
+//	strings:
+//		$pattern = { E8 [7] 14 00 00 00 8D BE [10] 0A 00 00 00 [14] E8 [4] 68 F0 03 00 00 E8 [4] 83 C4 04 [6] 09 }
+//	condition:
+//		#pattern == 1
+//}
 
 //380 CRxButton * server_bn_exit;
 //rule CRxMgrLogin_server_bn_exit

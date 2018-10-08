@@ -173,8 +173,8 @@ rule CRxMgrNpc_dlg_npc
 		script = "$result = [@pattern + 0x22]"
 		script = "Type.am CRxMgrNpc,CRxWnd*,dlg_npc,0,$result"
 		script = "Type.mcomment CRxMgrNpc,dlg_npc,\"NPC窗口\""
-		script = "$result = [@pattern + 0x28]"
-		script = "Type.am CRxMgrNpc,CRxButton*,npc_bn_close,0,$result"
+		//script = "$result = [@pattern + 0x28]"
+		//script = "Type.am CRxMgrNpc,CRxButton*,npc_bn_close,0,$result"
 	strings:
 		$pattern = { 6A 5A [3] CC 01 00 00 [3] 1A ?? 68 CC 01 00 00 6A 1A [2] E8 [8] 8B 8E [4] 89 86 }
 	condition:
@@ -183,22 +183,22 @@ rule CRxMgrNpc_dlg_npc
 
 //2c8 CRxButton * npc_bn_events[5];
 //324 CRxLabel * npc_lb_captions[5];
-rule CRxMgrNpc_npc_bn_events
-{
-	meta:
-		script = "$result = [@pattern1 + 0x12]"
-		script = "Type.am CRxMgrNpc,CRxButton*,npc_bn_events,5,$result"
-		script = "Type.mcomment CRxMgrNpc,npc_bn_events,\"NPC菜单按钮\""
-		
-		script = "$result += byte:[@pattern2 + 0x1b]"
-		script = "Type.am CRxMgrNpc,CRxLabel*,npc_lb_captions,5,$result"
-		script = "Type.mcomment CRxMgrNpc,npc_lb_captions,\"NPC菜单标签\""
-	strings:
-		$pattern1 = { 89 9D [4] C7 85 [4] E6 00 00 00 8D BE [4] 8D 95 [4] 52 68 [4] E8 [4] 68 F0 03 00 00 E8 }
-		$pattern2 = { 56 51 8B 8D [4] 52 6A 05 51 6A 1A [2] E8 [8] 89 47 ?? 8B 96 }
-	condition:
-		for all of them : (# == 1)
-}
+//rule CRxMgrNpc_npc_bn_events
+//{
+//	meta:
+//		script = "$result = [@pattern1 + 0x12]"
+//		script = "Type.am CRxMgrNpc,CRxButton*,npc_bn_events,5,$result"
+//		script = "Type.mcomment CRxMgrNpc,npc_bn_events,\"NPC菜单按钮\""
+//		
+//		script = "$result += byte:[@pattern2 + 0x1b]"
+//		script = "Type.am CRxMgrNpc,CRxLabel*,npc_lb_captions,5,$result"
+//		script = "Type.mcomment CRxMgrNpc,npc_lb_captions,\"NPC菜单标签\""
+//	strings:
+//		$pattern1 = { 89 9D [4] C7 85 [4] E6 00 00 00 8D BE [4] 8D 95 [4] 52 68 [4] E8 [4] 68 F0 03 00 00 E8 }
+//		$pattern2 = { 56 51 8B 8D [4] 52 6A 05 51 6A 1A [2] E8 [8] 89 47 ?? 8B 96 }
+//	condition:
+//		for all of them : (# == 1)
+//}
 
 rule CRxMgrNpc_end
 {

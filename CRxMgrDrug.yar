@@ -28,20 +28,20 @@ rule CRxMgrDrug_dlg
 //22c CRxButton * dlg_bn_close;
 //230 CRxButton * dlg_bn_confirm;
 //234 CRxButton * dlg_bn_cancel;
-rule CRxMgrDrug_dlg_ctrls
-{
-	meta:
-		script = "$result = [@pattern + 0x42]"
-		script = "Type.am CRxMgrDrug,CRxButton*,dlg_bn_close,0,$result"
-		//script = "$result = [@pattern + 0x81]"
-		//script = "Type.am CRxMgrDrug,CRxButton*,dlg_bn_confirm,0,$result"
-		//script = "$result = [@pattern + 0x96]"
-		//script = "Type.am CRxMgrDrug,CRxButton*,dlg_bn_cancel,0,$result"
-	strings:
-		$pattern = { 6A 61 68 [4] 68 [9] E8 [4] D9 05 [4] 8B [5] D9 5D ?? D9 05 [4] 8B [3] D9 5D [2] 6A 62 68 [4] 68 [5] 89 [12] E8 [36] 6A 63 68 [4] 68 [18] E8 [7] 89 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrDrug_dlg_ctrls
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x42]"
+//		script = "Type.am CRxMgrDrug,CRxButton*,dlg_bn_close,0,$result"
+//		//script = "$result = [@pattern + 0x81]"
+//		//script = "Type.am CRxMgrDrug,CRxButton*,dlg_bn_confirm,0,$result"
+//		//script = "$result = [@pattern + 0x96]"
+//		//script = "Type.am CRxMgrDrug,CRxButton*,dlg_bn_cancel,0,$result"
+//	strings:
+//		$pattern = { 6A 61 68 [4] 68 [9] E8 [4] D9 05 [4] 8B [5] D9 5D ?? D9 05 [4] 8B [3] D9 5D [2] 6A 62 68 [4] 68 [5] 89 [12] E8 [36] 6A 63 68 [4] 68 [18] E8 [7] 89 }
+//	condition:
+//		#pattern == 1
+//}
 
 
 //248 CRxWnd * dlg_msg;
@@ -58,16 +58,16 @@ rule CRxMgrDrug_dlg_msg
 }
 
 //23c CRxButton * msg_bn_close;
-rule CRxMgrDrug_msg_bn_close
-{
-	meta:
-		script = "$result = [@pattern + 0x28]"
-		script = "Type.am CRxMgrDrug,CRxButton*,msg_bn_close,0,$result"
-	strings:
-		$pattern = { 6A 65 [3] B2 00 00 00 [3] 77 ?? 68 B2 00 00 00 6A 77 [2] E8 [8] 8B [5] 89 }
-	condition:
-		#pattern == 1
-}
+//rule CRxMgrDrug_msg_bn_close
+//{
+//	meta:
+//		script = "$result = [@pattern + 0x28]"
+//		script = "Type.am CRxMgrDrug,CRxButton*,msg_bn_close,0,$result"
+//	strings:
+//		$pattern = { 6A 65 [3] B2 00 00 00 [3] 77 ?? 68 B2 00 00 00 6A 77 [2] E8 [8] 8B [5] 89 }
+//	condition:
+//		#pattern == 1
+//}
 
 //2bc RX_DRUG_ITEM drugList[0x25];
 rule CRxMgrDrug_drugList
