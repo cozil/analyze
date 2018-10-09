@@ -4,10 +4,9 @@ rule main_start
 {
 	meta:
 		script = "log \"Start running script!\""
-		script = "yaraEx.ll 1"
+		script = "yaraEx.ll 0"
 		script = "Type.removeAll"
 		script = "Array.removeAll"
-		load = "utils/basicStructs.scr"
 	condition:
 		true
 }
@@ -15,7 +14,7 @@ rule main_start
 include "e:/rxwg/analyze/globalfunc.yar"
 include "e:/rxwg/analyze/address.yar"
 
-//基础类
+//基础类定义与检查
 include "e:/rxwg/analyze/CheckBasicStructs.yar"
 
 //控件类
@@ -30,7 +29,7 @@ include "e:/rxwg/analyze/CRxImage.yar"
 
 //物品类
 include "E:/rxwg/analyze/CRxStuff.yar"
-include "e:/rxwg/analyze/CRxList.yar"
+include "e:/rxwg/analyze/CRxMgrList.yar"
 include "e:/rxwg/analyze/CRxSelf.yar"
 
 //角色类

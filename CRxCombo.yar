@@ -7,12 +7,17 @@ rule CRxCombo_start
 		script = "Type.as RX_CBITEM"
 		script = "Type.comment RX_CBITEM,\"CRxCombo类的列表项结构(static)\""
 		script = "Type.am RX_CBITEM,char,text,0x64"
-		script = "Type.am RX_CBITEM,char,visible"
-		script = "Type.am RX_CBITEM,char,enable"
+		script = "Type.am RX_CBITEM,uint8_t,visible"
+		script = "Type.am RX_CBITEM,uint8_t,enable"
+		script = "Type.ad CRxCombo,\"inline void select_index(int id) {{ current_index = id; }}\""
+		script = "Type.ad CRxCombo,\"bool check_index(int id) const;\""
+		script = "Type.ad CRxCombo,\"int find_text(const char * text, bool check_state = true) const;\""
 	condition:
 		true
 }
 
+//230 RX_CBITEM items[0x14];
+//a28 int current_index;
 rule CRxCombo_members
 {
 	meta:

@@ -6,6 +6,10 @@ rule CRxMgrTeam_start
 		script = "Type.comment CRxMgrTeam, \"组队管理\""
 		script = "Type.ad CRxMgrTeam,\"inline void click_msgbox_accept() {{ click(0x62); }}\""
 		script = "Type.ad CRxMgrTeam,\"inline void click_msgbox_reject() {{ click(0x63); }}\""		
+		
+		script = "Type.ad CRxMgrTeam,\"inline bool req_activated() const {{ return (dlg_msgbox->visible != 0); }}\""
+		script = "Type.ad CRxMgrTeam,\"inline bool req_inviting() const {{ return (req_activated() && (dlg_msgbox->flag == 0)); }}\""
+		script = "Type.ad CRxMgrTeam,\"inline bool req_accepting() const {{ return (req_activated() && (dlg_msgbox->flag == 1)); }}\""
 	condition:
 		true
 }
@@ -35,7 +39,6 @@ rule CRxMgrTeam_curr_playersid
 		#pattern == 1
 }
 
-
 //280 int captain_sid;
 rule CRxMgrTeam_captain_sid
 {
@@ -62,12 +65,12 @@ rule CRxMgrTeam_selected_sid
 		#pattern == 1
 }
 
-//298 short team_level;
+//298 uint16_t team_level;
 rule CRxMgrTeam_team_level
 {
 	meta:
 		script = "$result = [@pattern + 0x18]"
-		script = "Type.am CRxMgrTeam,short,team_level,0,$result"
+		script = "Type.am CRxMgrTeam,uint16_t,team_level,0,$result"
 		script = "Type.mcomment CRxMgrTeam,team_level,\"队伍等级\""
 	strings:
 		$pattern = { 55 8B EC 83 EC 10 53 57 8B [2] 0F B7 ?? 07 8A ?? 09 89 [2] 66 89 }
@@ -75,19 +78,18 @@ rule CRxMgrTeam_team_level
 		#pattern == 1
 }
 
-//2c8 int fb_level;
+//2c8 uint32_t fb_level;
 rule CRxMgrTeam_fb_level
 {
 	meta:
 		script = "$result = [@pattern + 0x2]"
-		script = "Type.am CRxMgrTeam,int,fb_level,0,$result"
+		script = "Type.am CRxMgrTeam,uint32_t,fb_level,0,$result"
 		script = "Type.mcomment CRxMgrTeam,fb_level,\"副本难度\""
 	strings:
 		$pattern = { 89 [10] 83 [5] 00 [19] E8 [6] 03 [13] 68 E7 0D 00 00 }
 	condition:
 		#pattern == 1
 }
-
 
 rule CRxMgrTeam_end
 {

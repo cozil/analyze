@@ -7,6 +7,16 @@ $_OUT_OFFLEN = .4		//结构成员偏移地址文本长度
 $_OUT_TYPELEN = .16		//结构成员类型文本长度
 $_OUT_NAMELEN = .24		//结构成员名称文本长度
 
+//2D坐标结构
+Type.as POINT2D
+Type.am POINT2D,float,x
+Type.am POINT2D,float,y
+
+Type.as Point
+Type.am Point,int,x
+Type.am Point,int,y
+Type.print Point,0
+
 //3D坐标结构
 Type.as POINT3D
 Type.am POINT3D,float,x
@@ -27,7 +37,7 @@ Type.comment RX_MEMBLOCK,"内存块链表(static)"
 Type.am RX_MEMBLOCK, void*,start
 Type.am RX_MEMBLOCK, void*,end
 Type.am RX_MEMBLOCK, void*,max
-Type.am RX_MEMBLOCK, int,_pad
+Type.am RX_MEMBLOCK, int,__pad
 Type.print RX_MEMBLOCK,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 
@@ -43,7 +53,7 @@ Type.comment RX_STRING,"字符串对象(static)"
 Type.am RX_STRING,_SZ_VAL,u
 Type.am RX_STRING,int,length
 Type.am RX_STRING,int,bufflen
-Type.am RX_STRING,int,_pad
+Type.am RX_STRING,int,__pad
 Type.ad RX_STRING,"const char * get_text() const;"
 Type.print RX_STRING,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
@@ -55,32 +65,29 @@ Type.print RX_STRING,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 //任务NPC信息
 Type.as RX_TASK_NPC
 Type.comment RX_TASK_NPC,"任务NPC信息(static)"
-Type.am RX_TASK_NPC,int,npcid
+Type.am RX_TASK_NPC,uint32_t,npcid
 Type.mcomment RX_TASK_NPC,npcid,"交接任务的NPC代码"
-Type.am RX_TASK_NPC,int,pad_04,3
-Type.am RX_TASK_NPC,int,mapid
+Type.am RX_TASK_NPC,uint32_t,__pad_04,3
+Type.am RX_TASK_NPC,uint32_t,mapid
 Type.mcomment RX_TASK_NPC,mapid,"NPC所在地图代码"
-Type.am RX_TASK_NPC,int,posx
-Type.am RX_TASK_NPC,int,posy
-Type.mcomment RX_TASK_NPC,posx,"任务相关位置（小地图坐标）"
-Type.am RX_TASK_NPC,int,pad_1c
+Type.am RX_TASK_NPC,Point,pos
+Type.mcomment RX_TASK_NPC,pos,"任务相关位置（小地图坐标）"
+Type.am RX_TASK_NPC,uint32_t,__pad_1c
 Type.print RX_TASK_NPC,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 
 //任务需求物品
 Type.as RX_REQUIRE_STUFF
 Type.comment RX_REQUIRE_STUFF,"任务需求物品信息(static)"
-Type.am RX_REQUIRE_STUFF,int,code
-Type.am RX_REQUIRE_STUFF,int,codeEx
+Type.am RX_REQUIRE_STUFF,uint64_t,code
 Type.mcomment RX_REQUIRE_STUFF,code,"物品代码"
-Type.am RX_REQUIRE_STUFF,__int64,count
+Type.am RX_REQUIRE_STUFF,uint64_t,count
 Type.mcomment RX_REQUIRE_STUFF,count,"物品数量"
-Type.am RX_REQUIRE_STUFF,int,mapid
+Type.am RX_REQUIRE_STUFF,uint32_t,mapid
 Type.mcomment RX_REQUIRE_STUFF,mapid,"用于获取物品的地图代码"
-Type.am RX_REQUIRE_STUFF,int,posx
-Type.am RX_REQUIRE_STUFF,int,posy
-Type.mcomment RX_REQUIRE_STUFF,posx,"任务相关位置（小地图坐标）"
-Type.am RX_REQUIRE_STUFF,int,pad_1c
+Type.am RX_REQUIRE_STUFF,Point,pos
+Type.mcomment RX_REQUIRE_STUFF,pos,"任务相关位置（小地图坐标）"
+Type.am RX_REQUIRE_STUFF,uint32_t,pad_1c
 Type.print RX_REQUIRE_STUFF,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 
@@ -91,22 +98,21 @@ Type.am RX_TASK_FLOW,RX_STRING,rsz,0x0b
 Type.am RX_TASK_FLOW,RX_TASK_NPC,npc
 Type.am RX_TASK_FLOW,RX_MEMBLOCK,linkStuffs
 Type.mcomment RX_TASK_FLOW,linkStuffs,"任务需求物品内存块(RX_REQUIRE_STUFF结构)"
-Type.ad RX_TASK_FLOW,"inline int get_stuff_count() const;"
+Type.ad RX_TASK_FLOW,"inline uint32_t get_stuff_count() const;"
 Type.print RX_TASK_FLOW,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 
 //任务奖励物品信息
-Type.as RX_REWARD_STUFF
-Type.comment RX_REWARD_STUFF,"任务奖励物品信息(static)"
-Type.am RX_REWARD_STUFF,int,code
-Type.am RX_REWARD_STUFF,int,codeEx
-Type.am RX_REWARD_STUFF,__int64,count
-Type.print RX_REWARD_STUFF,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
+Type.as RX_STUFF_PAIR
+Type.comment RX_STUFF_PAIR,"任务奖励物品信息(static)"
+Type.am RX_STUFF_PAIR,uint64_t,code
+Type.am RX_STUFF_PAIR,uint64_t,count
+Type.print RX_STUFF_PAIR,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 //任务信息
 Type.as RX_GAME_TASK
 Type.comment RX_GAME_TASK,"任务信息(static)"
-Type.am RX_GAME_TASK,int,code
+Type.am RX_GAME_TASK,uint32_t,code
 Type.am RX_GAME_TASK,RX_STRING,rszName
 Type.am RX_GAME_TASK,uint8_t,grade
 Type.am RX_GAME_TASK,uint8_t,group
@@ -122,25 +128,40 @@ Type.mcomment RX_GAME_TASK,linkReward,"RX_REWARD_STUFF结构"
 Type.am RX_GAME_TASK,RX_MEMBLOCK,linkFlow
 Type.mcomment RX_GAME_TASK,linkFlow,"RX_TASK_FLOW结构"
 Type.am RX_GAME_TASK,RX_STRING,rsz,4
-Type.am RX_GAME_TASK,int,progress
+Type.am RX_GAME_TASK,uint32_t,progress
 Type.mcomment RX_GAME_TASK,progress,"完成进度,>=RX_TASK_FLOW数量时表明任务结束"
-Type.am RX_GAME_TASK,int,state
+Type.am RX_GAME_TASK,uint32_t,state
 Type.mcomment RX_GAME_TASK,state,"状态,拒绝或接任务失败时置1，下次再接时会显示其它谈话内容"
 Type.print RX_GAME_TASK,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 //定义CRxObject结构
 Type.as CRxObject
 Type.comment CRxObject,"基础对象结构(static)"
-Type.am CRxObject,int,vftable
+Type.am CRxObject,void*,vftable
 Type.am CRxObject,CRxObject*,parent
-Type.am CRxObject,int,objType
-Type.am CRxObject,short,index
-Type.am CRxObject,short,pad_000e
+Type.am CRxObject,uint32_t,objType
+Type.am CRxObject,int16_t,index
+Type.am CRxObject,int16_t,pad_000e
+Type.ad CRxObject,"inline bool is_dialog() const {{ return (GO_DIALOG == objType); }}"
+Type.ad CRxObject,"inline bool is_manager() const {{ return (GO_MANAGE == objType); }}"
+Type.ad CRxObject,"inline bool is_button() const {{ return (GO_BUTTON == objType); }}"
+Type.ad CRxObject,"inline bool is_label() const {{ return (GO_LABEL == objType); }}"
+Type.ad CRxObject,"inline bool is_npc() const {{ return (GO_MONSTER == objType); }}"
+Type.ad CRxObject,"inline bool is_player() const {{ return (GO_PLAYER == objType); }}"
+Type.ad CRxObject,"inline bool is_ground_stuff() const {{ return (GO_STUFF == objType); }}"
+Type.ad CRxObject,"inline bool is_list() const {{ return (GO_LIST == objType); }}"
+Type.ad CRxObject,"inline bool is_listbox() const {{ return (GO_LISTBOX == objType); }}"
+Type.ad CRxObject,"inline bool is_package_stuff() const {{ return (GO_STUFF_PACKAGE == objType); }}"
+Type.ad CRxObject,"inline bool is_toolbar_stuff() const {{ return (GO_STUFF_TOOLBAR == objType); }}"
+Type.ad CRxObject,"inline bool is_skill_class() const {{ return (GO_STUFF_SKILLCLASS == objType); }}"
+Type.ad CRxObject,"inline bool is_skill_item() const {{ return (GO_STUFF_SKILL == objType); }}"
+
 Type.print CRxObject,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 //定义CRxMgr结构
 Type.as CRxMgr
 Type.aanc CRxMgr,CRxObject
+Type.ad CRxMgr,"void click(int cmdtype);"
 Type.print CRxMgr,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 //控件基础结构
@@ -151,24 +172,24 @@ Type.am CRxCtrl,int,_Left,0,0x28
 Type.am CRxCtrl,int,_Top,0,0x2c
 Type.am CRxCtrl,int,_Height,0,0x30
 Type.am CRxCtrl,int,_Width,0,0x34
-Type.am CRxCtrl,int,visible,0x40
+Type.am CRxCtrl,uint32_t,visible,0,0x40
 Type.print CRxCtrl,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 //CRxMgrLogin结构中使用的服务器线路状态数据结构
 Type.as LineInfo
 Type.comment LineInfo, "登录服务器线路项数据(static)"
-Type.am LineInfo,short,lineid
-Type.am LineInfo,char,pad_02,0x0a
+Type.am LineInfo,uint16_t,lineid
+Type.am LineInfo,uint16_t,__pad_02
 Type.am LineInfo,char*,linename
-Type.am LineInfo,long,onlinenum
+Type.am LineInfo,int,onlinenum
 Type.print LineInfo,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as ServerHead
 Type.comment ServerHead, "登录服务器头部数据(static)"
-Type.am ServerHead,char,pad_00,0xc
+Type.am ServerHead,char,__pad_00,0xc
 Type.am ServerHead,char*,servername
-Type.am ServerHead,char,pad_10,0x6
-Type.am ServerHead,short,linenum
+Type.am ServerHead,char,__pad_10,0x6
+Type.am ServerHead,uint16_t,linenum
 Type.print ServerHead,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as ServerItem
@@ -179,121 +200,108 @@ Type.print ServerItem,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as ServerObject
 Type.comment ServerItem, "登录服务器完整结构(static)"
-Type.am ServerObject,char,pad_00,0x4c4
-Type.am ServerObject,ServerItem,servers,0xa
+Type.am ServerObject,ServerItem,servers,0xa,0x4c4
 Type.print ServerObject,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 
 Type.as CRxSkillItem
 Type.comment CRxSkillItem,"技能数据(static)\n目前仅使用了skill_id和attack_length两个成员\n只要结构大小不变则不需要手工重新分析"
-Type.am CRxSkillItem,int,skill_id,0,0
+Type.am CRxSkillItem,uint32_t,skill_id,0,0
 Type.am CRxSkillItem,char,name,0x40,4
-Type.am CRxSkillItem,short,grade,0,0x48
-Type.am CRxSkillItem,short,job,0,0x4a
-Type.am CRxSkillItem,int,attack_length,0,0x54
-Type.am CRxSkillItem,int,cooldown_time,0,0x58
-Type.am CRxSkillItem,char,type,0,0x61
-Type.am CRxSkillItem,int,ani_id,0,0x62
+Type.am CRxSkillItem,uint8_t,grade,0,0x48
+Type.am CRxSkillItem,uint8_t,job,0,0x4a
+Type.am CRxSkillItem,uint32_t,attack_length,0,0x54
+Type.am CRxSkillItem,uint32_t,cooldown_time,0,0x58
+Type.am CRxSkillItem,uint8_t,type,0,0x61
+Type.am CRxSkillItem,uint32_t,ani_id,0,0x62
 Type.am CRxSkillItem,char,desc,0x128,0x68
 Type.print CRxSkillItem,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as CRxSkillList
 Type.comment CRxSkillList, "技能数据完整结构(static)"
-Type.am CRxSkillList,int,skill_id,0,0
+Type.am CRxSkillList,uint32_t,skill_id,0,0
 Type.am CRxSkillList,char,name,0x10,4
-Type.am CRxSkillList,char,group,0,0x45
-Type.am CRxSkillList,char,career,0,0x46
-Type.am CRxSkillList,char,grade,0,0x48
-Type.am CRxSkillList,char,job,0,0x4a
+Type.am CRxSkillList,uint8_t,group,0,0x45
+Type.am CRxSkillList,uint8_t,career,0,0x46
+Type.am CRxSkillList,uint8_t,grade,0,0x48
+Type.am CRxSkillList,uint8_t,job,0,0x4a
 Type.am CRxSkillList,CRxSkillItem,items,0x10,0x150
 Type.ad CRxSkillList,"const static int MaxSize = 0x400;"
 Type.print CRxSkillList,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as RX_GAME_NPC
 Type.comment RX_GAME_NPC, "游戏NPC信息,数据来源于ybi.cfg(static)"
-Type.am RX_GAME_NPC,int,nId,0,0
+Type.am RX_GAME_NPC,uint32_t,nId,0,0
 Type.am RX_GAME_NPC,char,Name,0x40,4
 Type.am RX_GAME_NPC,uint8_t,group,0,0x44
-Type.am RX_GAME_NPC,int,nCodes,0x5,0x44c
+Type.am RX_GAME_NPC,uint32_t,nCodes,0x5,0x44c
 Type.am RX_GAME_NPC,char,pad_460,0x1a54,0x460
 Type.ad RX_GAME_NPC,"const static int MaxSize = 0x800;"
 Type.print RX_GAME_NPC,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as RX_SHOP_ITEM
 Type.comment RX_SHOP_ITEM, "开店数据,收发包相关结构(static)"
-Type.am RX_SHOP_ITEM,int,code
-Type.am RX_SHOP_ITEM,int,codeEx
-Type.am RX_SHOP_ITEM,int,s_code1
-Type.am RX_SHOP_ITEM,int,s_code2
-Type.am RX_SHOP_ITEM,short,count
-Type.am RX_SHOP_ITEM,short,id
-Type.am RX_SHOP_ITEM,__int64,price
-Type.am RX_SHOP_ITEM,int,propdata,5
-Type.am RX_SHOP_ITEM,char,pad_30,0x34
+Type.am RX_SHOP_ITEM,uint64_t,code
+Type.am RX_SHOP_ITEM,uint64_t,s_code
+Type.am RX_SHOP_ITEM,uint16_t,count
+Type.am RX_SHOP_ITEM,uint16_t,id
+Type.am RX_SHOP_ITEM,uint64_t,price
+Type.am RX_SHOP_ITEM,uint32_t,propdata,5
+Type.am RX_SHOP_ITEM,char,__pad_30,0x34
 Type.print RX_SHOP_ITEM,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
-Type.as RX_ITEM_PAIR
-Type.am RX_ITEM_PAIR,int,code
-Type.am RX_ITEM_PAIR,int,codeEx
-Type.am RX_ITEM_PAIR,int,count
-Type.am RX_ITEM_PAIR,int,high_count
-Type.print RX_ITEM_PAIR,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
-
 Type.as RX_MAKER_ITEM
-Type.am RX_MAKER_ITEM,int,code,0,0
-Type.am RX_MAKER_ITEM,int,codeEx,0,4
+Type.am RX_MAKER_ITEM,uint64_t,code,0,0
 Type.am RX_MAKER_ITEM,char,name,0x40,8
-Type.am RX_MAKER_ITEM,RX_ITEM_PAIR,needItems,0x0a,0x1b0
-Type.am RX_MAKER_ITEM,char,pad_250,0x110,0x250
+Type.am RX_MAKER_ITEM,RX_STUFF_PAIR,needItems,0x0a,0x1b0
+Type.am RX_MAKER_ITEM,char,__pad_250,0x110,0x250
 Type.print RX_MAKER_ITEM,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as StuffProp
 Type.comment StuffProp, "物品合成属性结构(static)"
-Type.am StuffProp,int,type,0,0
-Type.am StuffProp,int,value,0,0xc
+Type.am StuffProp,uint32_t,type,0,0
+Type.am StuffProp,uint32_t,value,0,0xc
 Type.am StuffProp,char,pad_10,8,0x10
 Type.print StuffProp,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as CRxShopInfo
 Type.comment CRxShopInfo,"玩家开店信息结构(static)"
-Type.am CRxShopInfo,int,sid,0,4
+Type.am CRxShopInfo,uint32_t,sid,0,4
 Type.am CRxShopInfo,char,shopname,0x20,8
 Type.print CRxShopInfo,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as CRxBaseStuff
 Type.comment CRxBaseStuff,"物品基本信息，数据来源于ybi.cfg (static)"
-Type.am CRxBaseStuff,int,Code,0,0
-Type.am CRxBaseStuff,int,CodeEx,0,4
-Type.am CRxBaseStuff,char,Name,0x40,8
+Type.am CRxBaseStuff,uint64_t,code,0,0
+Type.am CRxBaseStuff,char,name,0x40,8
 Type.am CRxBaseStuff,uint8_t,group,0,0x49
 Type.am CRxBaseStuff,uint8_t,career,0,0x4a
-Type.am CRxBaseStuff,short,grade,0,0x4c
-Type.am CRxBaseStuff,char,job,0,0x4e
-Type.am CRxBaseStuff,char,sex,0,0x4f
-Type.am CRxBaseStuff,char,stuff_type,0,0x50
-Type.am CRxBaseStuff,short,weight,0,0x52
-Type.am CRxBaseStuff,__int64,buyprice,0,0x64
-Type.am CRxBaseStuff,__int64,sellprice,0,0x6c
-Type.am CRxBaseStuff,char,Desc,0x110,0x9c
-Type.am CRxBaseStuff,int,flag,0,0x1ac
-Type.am CRxBaseStuff,char,pad_1b0,0x1a4
+Type.am CRxBaseStuff,uint8_t,grade,0,0x4c
+Type.am CRxBaseStuff,uint8_t,job,0,0x4e
+Type.am CRxBaseStuff,uint8_t,sex,0,0x4f
+Type.am CRxBaseStuff,uint8_t,stuff_type,0,0x50
+Type.am CRxBaseStuff,uint16_t,weight,0,0x52
+Type.am CRxBaseStuff,uint64_t,buyprice,0,0x64
+Type.am CRxBaseStuff,uint64_t,sellprice,0,0x6c
+Type.am CRxBaseStuff,char,desc,0x110,0x9c
+Type.am CRxBaseStuff,uint32_t,flag,0,0x1ac
+Type.am CRxBaseStuff,char,__pad_1b0,0x1a4
 Type.print CRxBaseStuff,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as RX_DRUG_ITEM
 Type.comment RX_DRUG_ITEM,"制作药品参数结构(static)"
-TYpe.am RX_DRUG_ITEM,int,code,0,4
-TYpe.am RX_DRUG_ITEM,int,codeEx
+TYpe.am RX_DRUG_ITEM,uint64_t,code,0,4
 Type.mcomment RX_DRUG_ITEM,code,"药品代码"
 TYpe.am RX_DRUG_ITEM,char,name,0x40
 Type.mcomment RX_DRUG_ITEM,name,"药品名称"
 TYpe.am RX_DRUG_ITEM,char,desc,0x100
 Type.mcomment RX_DRUG_ITEM,desc,"药品描述"
-TYpe.am RX_DRUG_ITEM,int,sort
+TYpe.am RX_DRUG_ITEM,uint32_t,sort
 Type.mcomment RX_DRUG_ITEM,desc,"药品分类 1,2,3,4和页面对应"
-TYpe.am RX_DRUG_ITEM,int,dxdrawdata,4
+TYpe.am RX_DRUG_ITEM,uint32_t,dxdrawdata,4
 Type.mcomment RX_DRUG_ITEM,desc,"4个材料的绘制数据"
 TYpe.am RX_DRUG_ITEM,uint64_t,stuffcodes,4
 Type.mcomment RX_DRUG_ITEM,desc,"4个材料的物品代码"
-TYpe.am RX_DRUG_ITEM,int,counts,4
+TYpe.am RX_DRUG_ITEM,uint32_t,counts,4
 Type.mcomment RX_DRUG_ITEM,desc,"4个材料需要的数量"
 Type.print RX_DRUG_ITEM,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN

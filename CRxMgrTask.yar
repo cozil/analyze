@@ -2,6 +2,7 @@ rule CRxMgrTask_start
 {
 	meta:
 		script = "Type.as CRxMgrTask"
+		script = "Type.aanc CRxMgrTask,CRxMgr"
 		script = "Type.comment CRxMgrTask,\"任务管理\""
 		script = "Type.ad CRxMgrTask,\"inline void click_tasklist_close() {{ click(0x3eb); }}\""
 		script = "Type.ad CRxMgrTask,\"inline void click_taskdetail_reject() {{ click(0x3e9); }}\""
@@ -65,12 +66,12 @@ rule CRxMgrTask_currentTask
 		#pattern == 1
 }
 
-//4d0 int npc_index;
+//4d0 uint32_t npc_index;
 rule CRxMgrTask_npc_index
 {
 	meta:
 		script = "$result = [@pattern + 0x2]"
-		script = "Type.am CRxMgrTask,int,npc_index,0,$result"
+		script = "Type.am CRxMgrTask,uint32_t,npc_index,0,$result"
 		script = "Type.mcomment CRxMgrTask,npc_index,\"当前打开的任务窗口所属NPC序号，只有打开任务窗口时才会设置此值\""
 	strings:
 		$pattern = { 8B [5] 8B [6] 6A 04 6A 00 [2] 89 [5] E8 [4] 6A 00 6A 02 6A 01 }
@@ -91,46 +92,6 @@ rule CRxMgrTask_dlg_taskdetail
 		#pattern == 1
 }
 
-//278 CRxButton * taskdetail_bn_reject;
-//rule CRxMgrTask_taskdetail_bn_reject
-//{
-//	meta:
-//		script = "$result = [@pattern + 0x1f]"
-//		script = "Type.am CRxMgrTask,CRxButton*,taskdetail_bn_reject,0,$result"
-//		script = "Type.mcomment CRxMgrTask,taskdetail_bn_reject,\"“拒绝”按钮\""
-//	strings:
-//		$pattern = { 68 E9 03 00 00 68 [8] E8 [4] 83 C4 38 68 [6] 89 [5] E8 [10] 6A 01 }
-//	condition:
-//		#pattern == 1
-//}
-
-//280 CRxButton * taskdetail_bn_close;
-//rule CRxMgrTask_taskdetail_bn_close
-//{
-//	meta:
-//		script = "$result = [@pattern + 0x25]"
-//		script = "Type.am CRxMgrTask,CRxButton*,taskdetail_bn_close,0,$result"
-//		script = "Type.mcomment CRxMgrTask,taskdetail_bn_reject,\"“确认”按钮\""
-//	strings:
-//		$pattern = { 68 E9 03 00 00 68 [8] 89 [5] E8 [4] 83 C4 20 68 [6] 89 [5] E8 [4] 8B [5] 6A 01 }
-//	condition:
-//		#pattern == 1
-//}
-
-
-//284 CRxButton * taskdetail_bn_accept;
-//rule CRxMgrTask_taskdetail_bn_accept
-//{
-//	meta:
-//		script = "$result = [@pattern + 0x1f]"
-//		script = "Type.am CRxMgrTask,CRxButton*,taskdetail_bn_accept,0,$result"
-//		script = "Type.mcomment CRxMgrTask,taskdetail_bn_accept,\"“接受”按钮\""
-//	strings:
-//		$pattern = { 68 ED 03 00 00 68 [8] E8 [4] 83 C4 20 68 [6] 89 [5] E8 [4] 8B [5] 6A 01 }
-//	condition:
-//		#pattern == 1
-//}
-
 //624 CRxLabel * taskdetail_lb_accept;
 rule CRxMgrTask_taskdetail_lb_accept
 {
@@ -143,35 +104,6 @@ rule CRxMgrTask_taskdetail_lb_accept
 	condition:
 		#pattern == 1
 }
-
-//628 CRxLabel * taskdetail_lb_reject;
-//rule CRxMgrTask_dlg_lb_reject
-//{
-//	meta:
-//		script = "$result = [@pattern + 0x17]"
-//		script = "Type.am CRxMgrTask,CRxLabel*,taskdetail_lb_reject,0,$result"
-//		script = "Type.mcomment CRxMgrTask,taskdetail_lb_reject,\"“拒绝”按钮的标签，visible=1表示按钮可视\""
-//	strings:
-//		$pattern = { 6A 05 68 1D 01 00 00 6A 1A [2] E8 [9] 89 [5] 8B [5] 68 1C 11 00 00 C6 [2] 09 }
-//	condition:
-//		#pattern == 1
-//}
-
-//630 CRxLabel * taskdetail_lb_close;
-//rule CRxMgrTask_taskdetail_lb_close
-//{
-//	meta:
-//		script = "$result = [@pattern + 0x17]"
-//		script = "Type.am CRxMgrTask,CRxLabel*,taskdetail_lb_close,0,$result"
-//		script = "Type.mcomment CRxMgrTask,taskdetail_lb_close,\"“确认”按钮的标签，visible=1表示按钮可视\""
-//	strings:
-//		$pattern = { 6A 05 68 1D 01 00 00 6A 1A [2] E8 [9] 89 [5] 8B [5] 68 1E 11 00 00 }
-//	condition:
-//		#pattern == 1
-//}
-
-
-
 
 rule CRxMgrTask_end
 {

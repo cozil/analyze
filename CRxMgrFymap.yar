@@ -20,22 +20,18 @@ rule CRxMgrFymap_dlg_map
 		#pattern == 1
 }
 
-//2F0 int image_offset_x;
-//2F4 int image_offset_y;
+//2F0 Point image_offset;
 rule CRxMgrFymap_offset
 {
 	meta:
 		script = "$result = [@pattern + 0x13]"
-		script = "Type.am CRxMgrFymap,int,image_offset_x,0,$result"
-		script = "$result = [@pattern + 0x26]"
-		script = "Type.am CRxMgrFymap,int,image_offset_y,0,$result"	
-		script = "Type.mcomment CRxMgrFymap,image_offset_x,\"小地图在游戏窗口客户区的像素偏移值x,y，左上角原点\""
+		script = "Type.am CRxMgrFymap,Point,image_offset,0,$result"
+		script = "Type.mcomment CRxMgrFymap,image_offset,\"小地图在游戏窗口客户区的像素偏移值x,y，左上角原点\""
 	strings:
 		$pattern = { E8 [4] 8B 86 [4] 8B 48 ?? 83 C1 05 89 8E [4] 8B 50 ?? 83 C2 15 6A 01 68 [4] 89 96 }
 	condition:
 		#pattern == 1
 }
-
 
 rule CRxMgrFymap_end
 {

@@ -11,7 +11,6 @@ rule CRxMgrUnite_start
 		true
 }
 
-
 //228 CRxWnd * dlg;
 rule CRxMgrUnite_dlg
 {
@@ -23,33 +22,6 @@ rule CRxMgrUnite_dlg
 	condition:
 		#pattern == 1
 }
-
-//238 CRxButton * dlg_bn_close;
-//rule CRxMgrUnite_dlg_bn_close
-//{
-//	meta:
-//		script = "$result = [@pattern + 0x10]"
-//		script = "Type.am CRxMgrUnite,CRxButton*,dlg_bn_close,0,$result"
-//	strings:
-//		$pattern = { 53 6A 62 68 [4] 68 [4] 53 89 86 [4] 8B 45 ?? 50 51 52 56 E8 }
-//	condition:
-//		#pattern == 1
-//}
-
-//230 CRxButton * dlg_bn_confirm
-//234 CRxButton * dlg_bn_cancel
-//rule CRxMgrUnite_dlg_bn_confirm
-//{
-//	meta:
-//		script = "$result = [@pattern + 0x11]"
-//		script = "Type.am CRxMgrUnite,CRxButton*,dlg_bn_confirm,0,$result"
-//		script = "$result = [@pattern + 0x23]"
-//		script = "Type.am CRxMgrUnite,CRxButton*,dlg_bn_cancel,0,$result"
-//	strings:
-//		$pattern = { 53 53 6A 63 68 [4] 68 [4] 53 89 86 [4] 8B 45 ?? 50 51 52 56 E8 [4] 89 86 }
-//	condition:
-//		#pattern == 1
-//}
 
 rule CRxMgrUnite_end
 {

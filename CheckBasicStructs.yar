@@ -1,4 +1,12 @@
- rule Check_CRxSkillList
+rule CheckBasicStructs_start
+{
+	meta:
+		load = "utils/basicStructs.scr"
+	condition:
+		true
+}
+
+rule Check_CRxSkillList
 {
 	meta:
 		script = "$result = [@pattern + 0x2]"

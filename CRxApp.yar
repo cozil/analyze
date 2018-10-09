@@ -8,28 +8,31 @@ rule CRxApp_start
 	meta:
 		script = "Type.as CRxApp"
 		script = "$offset = 0x10"
+		script = "Type.ad CRxApp,\"inline bool is_valid_tlf_id(uint32_t id) const {{ return (id < _countof(save_name) && save_name[id].val[0]); }}\""
+		script = "Type.ad CRxApp,\"inline bool is_rxf_exist() const {{ return (rxf_type == 2); }}\""
+		script = "Type.ad CRxApp,\"inline bool has_charm() const {{ return (zzf_type != 0 || rxf_type != 0); }}\""
+		script = "Type.ad CRxApp,\"bool is_dlg_blood(short gid) const;\""
+		script = "Type.ad CRxApp,\"bool is_dlg_map(short gid) const;\""
 	condition:
 		true
 }
 
-//234 short zzf_type
-//236 short rxf_type
+//234 uint16_t zzf_type
+//236 uint16_t rxf_type
 rule CRxApp_zzf_type
 {
 	meta:
 		script = "$result = [@pattern + 0x1b]"
-		script = "Type.am CRxApp,short,zzf_type,0,$result"
+		script = "Type.am CRxApp,uint16_t,zzf_type,0,$result"
 		script = "Type.mcomment CRxApp,zzf_type,\"0 -- 无符　1 -- 玄武符 2 -- 银符 3 -- 金符\""
 		script = "$result = [@pattern + 0x12]"
-		script = "Type.am CRxApp,short,rxf_type,0,$result"
+		script = "Type.am CRxApp,uint16_t,rxf_type,0,$result"
 		script = "Type.mcomment CRxApp,rxf_type,\"至尊热血符，修改为2可以使用“/土灵符”指令作弊\""
 	strings:
 		$pattern = { 83 FF 58 0F 85 [4] 8B 0D [4] 66 39 99 [4] 7F ?? 66 39 99 [4] 75 ?? 38 1D [4] 75 ?? 68 A0 09 00 00 6A 09 }
 	condition:
 		#pattern == 1	
 }
-
-
 
 //280 CRxMgrTool * mgr_tool
 rule CRxApp_mgr_tool
@@ -339,21 +342,6 @@ rule CRxApp_mgr_charm
 		#pattern == 1			
 }
 
-//3D0 CRxMgrSkill * mgr_skill;
-//rule CRxApp_mgr_skill
-//{
-//	meta:
-//		script = "$result = [@pattern + 0x3c]"
-//		script = "Type.am CRxApp,CRxMgrSkill*,mgr_skill,0,$result"
-//		script = "Type.mcomment CRxApp,mgr_skill,\"武功栏管理\""
-//		script = "$result = @pattern + 0x2d + [@pattern + 0x29]"
-//		script = "lblset $result, CRxMgrSkill::create"		
-//	strings:
-//		$pattern = { 68 80 02 00 00 [10] E8 [4] 83 C4 04 [26] 68 5C 02 00 00 [10] E8 }
-//	condition:
-//		#pattern == 1	
-//}
-
 //3D4 CRxMgrMakerFrame * mgr_maker_frame;
 rule CRxApp_mgr_maker_frame
 {
@@ -398,7 +386,7 @@ rule CRxApp_save_name
 rule CRxApp_end
 {
 	meta:
-		script = "Type.print TlfName"
+		script = "Type.print TlfName,0"
 		script = "Type.print CRxApp,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN"
 	condition:
 		true

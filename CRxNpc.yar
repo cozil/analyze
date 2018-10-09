@@ -3,7 +3,21 @@ rule CRxNpc_start
 	meta:
 		script = "Type.as CRxNpc"
 		script = "Type.aanc CRxNpc,CRxObject"
+		script = "Type.comment CRxNpc,\"游戏NPC/怪物对象管理\""
 		script = "$offset = 0"
+		script = "Type.ad CRxNpc,\"bool attack_state_intime(uint32_t dwIntvl = 5000) const;\""
+		script = "Type.ad CRxNpc,\"bool attack_not_me() const;\""
+		script = "Type.ad CRxNpc,\"bool attack_me() const;\""
+		script = "Type.ad CRxNpc,\"bool attack_teamate() const;\""
+		script = "Type.ad CRxNpc,\"void clear_my_flags();\""
+		
+		script = "Type.ad CRxNpc,\"bool is_valid_npc() const;\""
+		script = "Type.ad CRxNpc,\"bool is_valid_monster() const;\""
+		script = "Type.ad CRxNpc,\"bool is_super_monster() const;\""
+		script = "Type.ad CRxNpc,\"bool is_valid_herb() const;\""
+		script = "Type.ad CRxNpc,\"bool is_fy_monster() const;\""
+		script = "Type.ad CRxNpc,\"uint32_t get_xlife_ratio() const;\""
+		script = "Type.ad CRxNpc,\"bool check_monster_pos() const;\""
 	condition:
 		true
 }
@@ -34,14 +48,12 @@ rule CRxNpc_sessionid
 		#pattern == 1	
 }
 
-
-
-//354 int x_showblood;
+//354 uint32_t x_showblood;
 rule CRxNpc_x_showblood
 {
 	meta:
 		script = "$result = [@pattern + 0x13]"
-		script = "Type.am CRxNpc,int,x_showblood,0,$result"
+		script = "Type.am CRxNpc,uint32_t,x_showblood,0,$result"
 		script = "Type.mcomment CRxNpc,x_showblood,\"显示怪物血条\""
 	strings:
 		$pattern = { E8 [4] 81 3D [4] 41 1F 00 00 74 ?? 83 BE [4] 00 75 ?? 81 BE [4] 0F 27 00 00 }
@@ -69,19 +81,44 @@ rule CRxNpc_x_name
 		script = "$result = [@pattern + 0x02] - $offset"
 		script = "Type.am CRxNpc,char,x_name,0x20,$result"
 		script = "Type.mcomment CRxNpc,x_name,\"怪物名称 -{d:$offset}\""
+		
+		//自定义变量
+		script = "$result += 0x21"
+		script = "Type.am CRxNpc,uint8_t,ux_superflag,0,$result"
+		script = "Type.mcomment CRxNpc,ux_superflag,\"自定：被连击招式攻击标记\""
+		
+		script = "Type.am CRxNpc,uint8_t,ux_selmon"
+		script = "Type.mcomment CRxNpc,ux_selmon,\"自定：引怪时被选定的怪物标志\""	
+		
+		script = "Type.am CRxNpc,uint8_t,ux_attackwho"
+		script = "Type.mcomment CRxNpc,ux_attackwho,\"自定：攻击目标 1-自己，2-队友，3-别人\""	
+		
+		script = "Type.am CRxNpc,uint32_t,ux_lastattack"
+		script = "Type.mcomment CRxNpc,ux_lastattack,\"自定：上一次怪物攻击自己的时间\""	
+		
+		script = "Type.am CRxNpc,uint32_t,ux_seltime"
+		script = "Type.mcomment CRxNpc,ux_seltime,\"自定：上次选择时间, PK模式用于保存屏蔽到时间值\""
+
+		script = "Type.am CRxNpc,float,unused_float"
+		
+		script = "Type.am CRxNpc,uint32_t,ux_lasttesttime"
+		script = "Type.mcomment CRxNpc,ux_lasttesttime,\"自定：上次检测距离的时间\""
+	
+		script = "Type.am CRxNpc,uint8_t,ux_failnum"
+		script = "Type.mcomment CRxNpc,ux_failnum,\"自定：攻击失败更换次数（达到3次时永久不选择）\""	
 	strings:
 		$pattern = { 8D 9F [4] 85 DB 0F 84 [4] A1 [4] 8B 10 6A 00 6A 1C 50 8B 82 [4] FF D0 }
 	condition:
 		#pattern == 1	
 }
 
-//3B0 int x_monflag;
+//3B0 uint32_t x_monflag;
 //与CRxNpc_x_showblood的特征码相同
 rule CRxNpc_x_monflag
 {
 	meta:		
 		script = "$result = [@pattern + 0x1f]"
-		script = "Type.am CRxNpc,int,x_monflag,0,$result"
+		script = "Type.am CRxNpc,uint32_t,x_monflag,0,$result"
 		script = "Type.mcomment CRxNpc,x_monflag,\"0x2710或以上的值为怪物,否则为NPC\""
 	strings:
 		$pattern = { 8D 4E ?? E8 [4] 81 3D [4] 41 1F 00 00 74 ?? 83 BE [4] 00 75 ?? 81 BE [4] 0F 27 00 00 }
@@ -102,12 +139,12 @@ rule CRxNpc_x_attack
 		#pattern == 1	
 }
 
-//3B8 int x_visible;
+//3B8 uint32_t x_visible;
 rule CRxNpc_x_visible
 {
 	meta:		
 		script = "$result = [@pattern + 0x16]"
-		script = "Type.am CRxNpc,int,x_visible,0,$result"
+		script = "Type.am CRxNpc,uint32_t,x_visible,0,$result"
 		script = "Type.mcomment CRxNpc,x_visible,\"怪物是否可见\""
 	strings:
 		$pattern = { 6A 00 68 [4] 68 61 04 00 00 FF D2 8B 8D [4] 89 81 }
@@ -115,30 +152,16 @@ rule CRxNpc_x_visible
 		#pattern == 1	
 }
 
-////3BC int x_deadstatus;
-//rule CRxNpc_x_deadstatus
-//{
-//	meta:		
-//		script = "$result = [@pattern + 0x1d]"
-//		script = "log \"//死亡变化状态\""
-//		script = "Type.am CRxNpc,int,x_deadstatus,0,$result"
-//		
-//	strings:
-//		$pattern = { 81 C1 48 A8 00 00 E8 [4] E9 [4] 8B 86 [4] E9 [4] C7 86 [4] 05 00 00 00 }
-//	condition:
-//		#pattern == 1	
-//}
-
-//3BC int x_deadstatus;
-//3C0 int x_dead;
+//3BC uint32_t x_deadstatus;
+//3C0 uint32_t x_dead;
 rule CRxNpc_x_dead
 {
 	meta:
 		script = "$result = [@pattern + 0x11] - $offset"
-		script = "Type.am CRxNpc,int,x_deadstatus,0,$result"
+		script = "Type.am CRxNpc,uint32_t,x_deadstatus,0,$result"
 		script = "Type.mcomment CRxNpc,x_deadstatus,\"怪物死亡状态变化 -{d:$offset}\""
 		script = "$result = [@pattern + 0x1b] - $offset"
-		script = "Type.am CRxNpc,int,x_dead,0,$result"
+		script = "Type.am CRxNpc,uint32_t,x_dead,0,$result"
 		script = "Type.mcomment CRxNpc,x_dead,\"怪物死亡标志 -{d:$offset}\""
 	strings:
 		$pattern = { D9 E8 33 DB D9 9E [4] B8 FF FF 00 00 C7 86 [4] 02 00 00 00 C7 86 [4] 01 00 00 00 }
@@ -146,16 +169,16 @@ rule CRxNpc_x_dead
 		#pattern == 1
 }
 
-//3C8 int x_shootdown;
-//3CC int x_shoottime;
+//3C8 uint32_t x_shootdown;
+//3CC uint32_t x_shoottime;
 rule CRxNpc_x_shoot
 {
 	meta:
 		script = "$result = [@pattern + 0x2d]"
-		script = "Type.am CRxNpc,int,x_shootdown,0,$result"
+		script = "Type.am CRxNpc,uint32_t,x_shootdown,0,$result"
 		script = "Type.mcomment CRxNpc,x_shootdown,\"绝命技能可以使用标志\""
 		script = "$result = [@pattern + 0x27]"
-		script = "Type.am CRxNpc,int,x_shoottime,0,$result"
+		script = "Type.am CRxNpc,uint32_t,x_shoottime,0,$result"
 		script = "Type.mcomment CRxNpc,x_shoottime,\"绝命技施放前开始计时\""
 	strings:
 		$pattern = { 3D 32 3C 00 00 [2] 3D 34 3C 00 00 [2] 3D 30 3F 00 00 [2] C7 86 [4] 01 00 00 00 8B 86 [4] 89 BE [4] 89 BE }
@@ -163,16 +186,16 @@ rule CRxNpc_x_shoot
 		#pattern == 1
 }
 
-//5F4 int x_life;
-//5F8 int x_grade;
+//5F4 uint32_t x_life;
+//5F8 uint32_t x_grade;
 rule CRxNpc_x_life
 {
 	meta:
 		script = "$result = [@pattern + 0x02] - $offset"
-		script = "Type.am CRxNpc,int,x_life,0,$result"
+		script = "Type.am CRxNpc,uint32_t,x_life,0,$result"
 		script = "Type.mcomment CRxNpc,x_life,\"怪物当前血值 -{d:$offset}\""
 		script = "$result = [@pattern + 0x26] - $offset"
-		script = "Type.am CRxNpc,int,x_grade,0,$result"
+		script = "Type.am CRxNpc,uint32_t,x_grade,0,$result"
 		script = "Type.mcomment CRxNpc,x_grade,\"怪物等级 -{d:$offset}\""
 	strings:
 		$pattern = { C7 86 [4] 00 00 00 00 81 3D [4] 29 A0 00 00 [2] 81 BE [4] 72 3F 00 00 0F BF 41 ?? 89 86 }
@@ -180,12 +203,12 @@ rule CRxNpc_x_life
 		#pattern == 1
 }
 
-//610 int x_maxlife;
+//610 uint32_t x_maxlife;
 rule CRxNpc_x_maxlife
 {
 	meta:
 		script = "$result = [@pattern + 0x0f] - $offset"
-		script = "Type.am CRxNpc,int,x_maxlife,0,$result"
+		script = "Type.am CRxNpc,uint32_t,x_maxlife,0,$result"
 		script = "Type.mcomment CRxNpc,x_maxlife,\"怪物最大血值 -{d:$offset}\""
 	strings:
 		$pattern = { C7 86 [4] 00 00 00 00 8B 41 ?? 89 86 [4] 8B 86 [4] 3B 41 [28] 81 3D [4] 29 A0 00 00 }
@@ -219,14 +242,12 @@ rule CRxNpc_x_pMpos
 		#pattern == 1
 }
 
-
-
-//1428 int x_poison_num;
+//1428 uint32_t x_poison_num;
 rule CRxNpc_x_poison_num
 {
 	meta:
 		script = "$result = [@pattern + 0x09] - $offset"
-		script = "Type.am CRxNpc,int,x_poison_num,0,$result"
+		script = "Type.am CRxNpc,uint32_t,x_poison_num,0,$result"
 		script = "Type.mcomment CRxNpc,x_poison_num,\"怪物中毒数量（CK技能中毒数量）-{d:$offset}\""
 	strings:
 		$pattern = { C7 45 ?? 00 00 FF FF 89 BE [4] 39 BE [4] 74 ?? 68 10 01 00 00 }
@@ -234,12 +255,12 @@ rule CRxNpc_x_poison_num
 		#pattern == 1
 }
 
-//1A18 int x_group;
+//1A18 uint32_t x_group;
 rule CRxNpc_x_group
 {
 	meta:
 		script = "$result = [@pattern + 0x0d]"
-		script = "Type.am CRxNpc,int,x_group,0,$result"
+		script = "Type.am CRxNpc,uint32_t,x_group,0,$result"
 		script = "Type.mcomment CRxNpc,x_group,\"风云神物的势力状态，只有monflag = 3c0b 时才能使用\""
 	strings:
 		$pattern = { 81 F9 0B 3C 00 00 75 ?? 0F B6 D0 3B 96 [6] B8 05 00 00 00 E9 [4] 81 F9 5E 3C 00 00 0F 8C [4] 81 F9 6E 3C 00 00 0F 8F [4] 81 F9 60 3C 00 00 }

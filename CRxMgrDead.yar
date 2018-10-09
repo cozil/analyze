@@ -5,7 +5,7 @@ rule CRxMgrDead_start
 		script = "Type.aanc CRxMgrDead,CRxMgr"
 		script = "Type.comment CRxMgrDead, \"死亡保护管理\""
 		script = "Type.ad CRxMgrDead,\"inline void click_dead_protect1() {{ click(0x385); }}\""
-		script = "Type.ad CRxMgrDead,\"inline void click_dead_protect1() {{ click(0x386); }}\""
+		script = "Type.ad CRxMgrDead,\"inline void click_dead_protect2() {{ click(0x386); }}\""
 		script = "Type.ad CRxMgrDead,\"inline void click_dead_noprotect() {{ click(0x387); }}\""
 		script = "Type.ad CRxMgrDead,\"inline void click_dead_close() {{ click(0x387); }}\""
 				

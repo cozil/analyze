@@ -14,13 +14,14 @@ rule CRxMgrLogin_start
 		script = "Type.ad CRxMgrLogin,\"inline void click_server_exit() {{ click(0x0); }}\""
 		script = "Type.ad CRxMgrLogin,\"inline void click_server_connect() {{ click(0x1); }}\""
 		script = "Type.ad CRxMgrLogin,\"inline void click_server_item(int id) {{ click(0xa+id); }} //id:[0,9] \""
+
 	condition:
 		true
 }
 
 //24c CRxWndLogin *	dlg_login;
-//250 CRxEdit *	edit_account;
-//254 CRxEdit * edit_password;
+//250 CRxEdit *	login_edit_account;
+//254 CRxEdit * login_edit_password;
 rule CRxMgrLogin_dlg_login
 {
 	meta:
@@ -38,18 +39,6 @@ rule CRxMgrLogin_dlg_login
 		#pattern == 1	
 }
 
-
-//rule CRxMgrLogin_login_bn_confirm
-//{
-//	meta:
-//		script = "$result = [@pattern + 0x28]"
-//		script = "Type.am CRxMgrLogin,CRxButton*,login_bn_confirm,0,$result"
-//	strings:
-//		$pattern = { 6A 7B [3] B2 00 00 00 [3] 55 [2] B2 00 00 00 ?? 55 [2] E8 [4] EB [3] 8B [5] 89 86 }
-//	condition:
-//		#pattern == 1
-//}
-
 //29c CRxWndMsgBox * dlg_msgbox;
 rule CRxMgrLogin_dlg_msgbox
 {
@@ -63,6 +52,7 @@ rule CRxMgrLogin_dlg_msgbox
 		#pattern == 1	
 }
 
+//2a0 CRxLableEx * msgbox_lb_text;
 rule CRxMgrLogin_msgbox_lb_text
 {
 	meta:
@@ -78,17 +68,6 @@ rule CRxMgrLogin_msgbox_lb_text
 		#pattern >= 1
 }
 
-//rule CRxMgrLogin_msgbox_bn_cancel
-//{
-//	meta:
-//		script = "$result = [@pattern + 0x28]"
-//		script = "Type.am CRxMgrLogin,CRxButton*,msgbox_bn_cancel,0,$result"
-//	strings:
-//		$pattern = { 6A 63 56 81 C1 B2 00 00 00 51 83 C2 77 52 68 B2 00 00 00 6A 77 8B C8 E8 [8] 8B 8E [4] 89 86 }
-//	condition:
-//		#pattern == 1
-//}
-
 //2b4 CRxWndServer * dlg_server;
 rule CRxMgrLogin_dlg_server
 {
@@ -100,46 +79,6 @@ rule CRxMgrLogin_dlg_server
 	condition:
 		#pattern == 1	
 }
-
-//2b8 CRxButton * server_bn_svr_list[0x0a];
-//rule CRxMgrLogin_server_bn_svr_list
-//{
-//	meta:
-//		script = "$result = [@pattern + 0xe]"
-//		script = "Type.am CRxMgrLogin,CRxLabel*,server_lb_svr_list,0x0a,$result-0x50"
-//		script = "Type.am CRxMgrLogin,CRxLabel*,server_lb_line_list,0x0a,$result-0x28"
-//		script = "Type.am CRxMgrLogin,CRxButton*,server_bn_svr_list,0x0a,$result"
-//		script = "Type.am CRxMgrLogin,CRxButton*,server_bn_line_list,0x0a,$result+0x28"
-//		script = "Type.am CRxMgrLogin,CRxLabel*,server_lb_status_list,0x0a,$result+0x50"
-//	strings:
-//		$pattern = { E8 [7] 14 00 00 00 8D BE [10] 0A 00 00 00 [14] E8 [4] 68 F0 03 00 00 E8 [4] 83 C4 04 [6] 09 }
-//	condition:
-//		#pattern == 1
-//}
-
-//380 CRxButton * server_bn_exit;
-//rule CRxMgrLogin_server_bn_exit
-//{
-//	meta:
-//		script = "$result = [@pattern + 0x2b]"
-//		script = "Type.am CRxMgrLogin,CRxButton*,server_bn_exit,0,$result"	
-//	strings:
-//		$pattern = { 81 C1 2F 01 00 00 51 81 C2 9F 01 00 00 52 68 2F 01 00 00 68 9F 01 00 00 8B C8 E8 [8] 8B 8E [4] 89 86 [4] 83 C1 28 }
-//	condition:
-//		#pattern == 1
-//}
-
-//384 CRxButton * server_bn_connect;
-//rule CRxMgrLogin_server_bn_connect
-//{
-//	meta:
-//		script = "$result = [@pattern + 0x2e]"
-//		script = "Type.am CRxMgrLogin,CRxButton*,server_bn_connect,0,$result"
-//	strings:
-//		$pattern = { 6A 01 56 81 C2 2F 01 00 00 52 81 C1 1C 01 00 00 51 68 2F 01 00 00 68 1C 01 00 00 8B C8 E8 [8] 8B 96 [4] 89 86 }
-//	condition:
-//		#pattern == 1
-//}
 
 //388 SERVER_OBJECT * svrlist;
 rule CRxMgrLogin_svrlist

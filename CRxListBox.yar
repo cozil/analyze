@@ -10,24 +10,24 @@ rule CRxLbItem_start
 		true
 }
 
-//int itemdata;
+//uint32_t itemdata;
 rule CRxLbItem_itemdata
 {
 	meta:
 		script = "$result = [@pattern + 0x8]"
-		script = "Type.am CRxLbItem,int,itemdata,0,$result"
+		script = "Type.am CRxLbItem,uint32_t,itemdata,0,$result"
 	strings:
 		$pattern = { 8B 8B [4] 8B 93 [6] 8B 40 ?? 6A 00 ?? 68 F4 03 00 00 FF D0 80 BB [4] 00 }
 	condition:
 		#pattern == 1
 }
 
-//int colcount;
+//uint32_t colcount;
 rule CRxLbItem_colcount
 {
 	meta:
 		script = "$result = [@pattern + 0x13]"
-		script = "Type.am CRxLbItem,int,colcount,0,$result"
+		script = "Type.am CRxLbItem,uint32_t,colcount,0,$result"
 	strings:
 		$pattern = { 8B 45 ?? 83 6D ?? 80 03 77 ?? 83 C7 04 40 89 45 ?? 3B 83 }
 	condition:
@@ -55,21 +55,25 @@ rule CRxLbItem_end
 		true
 }
 
-
 rule CRxListBox_start
 {
 	meta:
 		script = "Type.as CRxListBox"
 		script = "Type.aanc CRxListBox,CRxCtrl"
 		script = "Type.comment CRxListBox,\"CListBox控件结构 Type=0x24\""
+		script = "Type.ad CRxListBox,\"int calc_item_count(int columnid/*1-based*/) const;\""
+		script = "Type.ad CRxListBox,\"int read_items(StringArray& strList, int columnid) const;\""
+		script = "Type.ad CRxListBox,\"bool select_item(const char * cpName, int columnid);\""
+		script = "Type.ad CRxListBox,\"bool select_item(int nItemIndex);\""
 	condition:
 		true
 }
 
-rule CRxListBox_members
+//22c CRxLbItem * items[0x32];
+rule CRxListBox_items
 {
 	meta:
-		script = "$result = [@pattern + 0x2]"
+		script = "$result = [@pattern + 0x3]"
 		script = "Type.am CRxListBox,CRxLbItem*,items,0x32,$result"
 	strings:
 		$pattern = { 8D 9C 8E [4] EB [8] 8B 45 ?? 8B 4D ?? 8B 96 [8] 0F 8F }

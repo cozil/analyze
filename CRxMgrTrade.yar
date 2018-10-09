@@ -11,10 +11,13 @@ rule CRxMgrTrade_start
 		script = "Type.ad CRxMgrTrade,\"inline void click_accept() {{ click(0x62); }}\""
 		script = "Type.ad CRxMgrTrade,\"inline void click_close() {{ click(0x63); }}\""
 		
+		script = "Type.ad CRxMgrTrade,\"inline bool req_activated() const {{ return (dlg_confirm->visible != 0); }}\""
+		script = "Type.ad CRxMgrTrade,\"inline bool req_trading() const {{ return (req_activated() && (dlg_confirm->flag == 0)); }}\""
+		script = "Type.ad CRxMgrTrade,\"inline bool req_accepting() const {{ return (req_activated() && (dlg_confirm->flag == 1)); }}\""
+		
 	condition:
 		true
 }
-
 
 //228 CRxWnd * dlg;
 rule CRxMgrTrade_dlg
@@ -55,16 +58,15 @@ rule CRxMgrTrade_lb_buddy_name
 		#pattern == 1
 }
 
-
-//254 CRxList * ls_buddy_stuffs;
-//258 CRxList * ls_self_stuffs;
+//254 CRxMgrList * ls_buddy_stuffs;
+//258 CRxMgrList * ls_self_stuffs;
 rule CRxMgrTrade_ls_buddy_stuffs
 {
 	meta:
 		script = "$result = byte:[@pattern + 0x1e]"
-		script = "Type.am CRxMgrTrade,CRxList*,ls_buddy_stuffs,0,$offset + $result"
+		script = "Type.am CRxMgrTrade,CRxMgrList*,ls_buddy_stuffs,0,$offset + $result"
 		script = "$result = byte:[@pattern + 0x1e]"
-		script = "Type.am CRxMgrTrade,CRxList*,ls_self_stuffs,0,$offset + $result + 4"
+		script = "Type.am CRxMgrTrade,CRxMgrList*,ls_self_stuffs,0,$offset + $result + 4"
 	strings:
 		$pattern = { C6 [2] 0F [4] 68 [5] 6A 12 [3] E8 [8] 89 }
 	condition:
@@ -85,7 +87,6 @@ rule CRxMgrTrade_lb_buddy_money
 		CRxMgrTrade_lb_buddy_name and #pattern == 1
 }
 
-
 //294 CRxMgrTradeTip * mtr_tip;
 rule CRxMgrTrade_mtr_tip
 {
@@ -97,7 +98,6 @@ rule CRxMgrTrade_mtr_tip
 	condition:
 		#pattern == 1
 }
-
 
 rule CRxMgrTrade_end
 {

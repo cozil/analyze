@@ -32,7 +32,6 @@ rule CRxMgrSweet_state
 		#pattern == 1
 }
 
-
 rule CRxMgrSweet_end
 {
 	meta:

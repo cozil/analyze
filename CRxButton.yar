@@ -9,6 +9,8 @@ rule CRxButton_start
 		true
 }
 
+
+//250 int disabled;
 rule CRxButton_disabled
 {
 	meta:
@@ -20,6 +22,7 @@ rule CRxButton_disabled
 		#pattern == 1
 }
 
+//254 int cmdtype;
 rule CRxButton_cmdtype
 {
 	meta:

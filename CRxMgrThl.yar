@@ -8,12 +8,12 @@ rule CRxMgrThl_start
 		true
 }
 
-//230 int pkskills[3];
+//230 uint32_t pkskills[3];
 rule CRxMgrThl_pkskills
 {
 	meta:
 		script = "$result = [@pattern + 0x1a]"
-		script = "Type.am CRxMgrThl,int,pkskills,3,$result"
+		script = "Type.am CRxMgrThl,uint32_t,pkskills,3,$result"
 	strings:
 	
 		//函数第一个引用位置在CRxMgrThl的构造函数中
@@ -24,12 +24,12 @@ rule CRxMgrThl_pkskills
 		#pattern == 1
 }
  
-//23c int skills[6];
+//23c uint32_t skills[6];
 rule CRxMgrThl_skills
 {
 	meta:
 		script = "$result = [@pattern + 0x4a]"
-		script = "Type.am CRxMgrThl,int,skills,3,$result"
+		script = "Type.am CRxMgrThl,uint32_t,skills,3,$result"
 	strings:
 		//函数第一个引用位置在CRxMgrThl的构造函数中		
 		$pattern = { 1E 00 00 00 [3] 20 00 00 00 [3] 11 00 00 00 [3] 2D 00 00 00 [3] 1F 00 00 00 BB 02 00 00 00 [35] 81 C6 3C 02 00 00 }

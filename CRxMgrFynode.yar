@@ -8,8 +8,6 @@ rule CRxMgrFynode_start
 		true
 }
 
-
-
 //228 CRxWnd * dlg;
 rule CRxMgrFynode_dlg
 {

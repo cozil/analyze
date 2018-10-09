@@ -2,6 +2,7 @@ rule CRxMgrMaker_start
 {
 	meta:
 		script = "Type.as CRxMgrMaker"
+		script = "Type.aanc CRxMgrMaker,CRxMgr"
 		script = "Type.comment CRxMgrMaker, \"制造管理\""
 		script = "Type.ad CRxMgrMaker,\"inline bool is_dlg_simth() const {{ return dlg->flag == 0; }}\""
 		script = "Type.ad CRxMgrMaker,\"inline bool is_dlg_sewer() const {{ return dlg->flag == 1; }}\""
@@ -13,7 +14,7 @@ rule CRxMgrMaker_start
 		true
 }
 
-//CRxWnd * dlg;
+//22c CRxWnd * dlg;
 rule CRxMgrMaker_dlg
 {
 	meta:
@@ -25,32 +26,7 @@ rule CRxMgrMaker_dlg
 		#pattern == 1
 }
 
-//CRxButton * dlg_bn_confirm;
-//rule CRxMgrMaker_dlg_bn_confirm
-//{
-//	meta:
-//		script = "$result = [@pattern + 0x11]"
-//		script = "Type.am CRxMgrMaker,CRxButton*,dlg_bn_confirm,0,$result"
-//	strings:
-//		$pattern = { 6A 02 D9 5D ?? 68 [4] 68 [4] 89 86 [4] 8B 45 ?? 53 50 51 8B 96 2C 02 00 00 6A 04 }
-//	condition:
-//		#pattern == 1
-//}
-
-//CRxButton * dlg_bn_close;
-//rule CRxMgrMaker_dlg_bn_close
-//{
-//	meta:
-//		script = "$result = [@pattern + 0x12]"
-//		script = "Type.am CRxMgrMaker,CRxButton*,dlg_bn_close,0,$result"
-//	strings:
-//		//89 86 [4] E8 [5] 30 00 00 00 68 F4 23 00 00 [8] 4C 00 00 00 [12] 6D 00 00 00 [12] 8E 00 00 00 [12] AF 00 00 00
-//		$pattern = { 83 C4 50 68 90 01 00 00 8D BE [4] 53 57 89 86 [4] E8 [4] B8 30 00 00 00 68 F4 23 00 00 }
-//	condition:
-//		#pattern == 1
-//}
-
-//CRxCombo * cb_items;
+//23c CRxCombo * cb_items;
 rule CRxMgrMaker_dlg_cb_items
 {
 	meta:
@@ -62,11 +38,11 @@ rule CRxMgrMaker_dlg_cb_items
 		#pattern == 1
 }
 
-//RX_MEMBLOCK makerDataList[0x11];
-rule crxMgrMaker_makerDataList
+//c88 RX_MEMBLOCK makerDataList[0x11];
+rule CRxMgrMaker_makerDataList
 {
 	meta:
-		script = "$result = [@pattern + 0x18]"
+		script = "$result = [@pattern + 0x15]"
 		script = "Type.am CRxMgrMaker,RX_MEMBLOCK,makerDataList,0x11,$result"
 		SCRIPT = "Type.mcomment CRxMgrMaker,makerDataList,\"RX_MAKER_ITEM结构，遇到空值结束检索\""
 		script = "lblset [@pattern + 0x6], \"RX_MEMBLOCK::destroy\""
@@ -77,3 +53,10 @@ rule crxMgrMaker_makerDataList
 		#pattern == 1
 }
 
+rule CRxMgrMaker_end
+{
+	meta:
+		script = "Type.print CRxMgrMaker,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN"
+	condition:
+		true
+}

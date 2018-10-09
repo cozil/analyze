@@ -4,10 +4,12 @@ rule CRxLabel_start
 		script = "Type.as CRxLabel"
 		script = "Type.aanc CRxLabel,CRxCtrl"
 		script = "Type.comment CRxLabel, \"标签对象 Type=0x20\""
+		script = "Type.ad CRxLabel,\"void set_text(const char * value);\""
 	condition:
 		true
 }
 
+//228 char text[0x118];
 rule CRxLabel_text
 {
 	meta:

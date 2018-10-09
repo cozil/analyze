@@ -4,7 +4,7 @@ rule CRxMgrTlf_start
 		script = "Type.as CRxMgrTlf"
 		script = "Type.aanc CRxMgrTlf,CRxMgr"
 		script = "Type.comment CRxMgrTlf, \"土灵符管理\""	
-		script = "Type.ad CRxMgrTlf,\"inline void click_item(int id) {{ click(0x64+id); }} //id:[0,9]\""
+		//script = "Type.ad CRxMgrTlf,\"inline void click_item(int id) {{ click(0x64+id); }} //id:[0,9]\""
 	condition:
 		true
 }
@@ -21,14 +21,14 @@ rule CRxMgrTlf_dlg
 		#pattern == 1
 }
 
-//4a4 int tab_id;
-//4a8 int btn_id;
+//4a4 uint32_t tab_id;
+//4a8 uint32_t btn_id;
 rule CRxMgrTlf_tab_id
 {
 	meta:
 		script = "$result = [@pattern + 0xe]"
-		script = "Type.am CRxMgrTlf,int,tab_id,0,$result-4"
-		script = "Type.am CRxMgrTlf,int,btn_id,0,$result"		
+		script = "Type.am CRxMgrTlf,uint32_t,tab_id,0,$result-4"
+		script = "Type.am CRxMgrTlf,uint32_t,btn_id,0,$result"		
 	strings:
 		$pattern = { 8D ?? 9C 83 ?? 09 0F 87 [4] 8B }
 	condition:

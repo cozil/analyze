@@ -4,6 +4,7 @@ rule CRxMgrExtBag_start
 		script = "Type.as CRxMgrExtBag"
 		script = "Type.aanc CRxMgrExtBag,CRxMgr"
 		script = "Type.comment CRxMgrExtBag, \"侠客行囊管理\""
+		script = "Type.ad CRxMgrExtBag,\"inline bool available() const {{ return (2 == state); }}\""
 	condition:
 		true
 }
@@ -20,18 +21,17 @@ rule CRxMgrExtBag_dlg
 		#pattern == 1
 }
 
-//23c int state;
+//23c uint32_t state;
 rule CRxMgrExtBag_state
 {
 	meta:
 		script = "$result = [@pattern + 0x2]"
-		script = "Type.am CRxMgrExtBag,int,state,0,$result"
+		script = "Type.am CRxMgrExtBag,uint32_t,state,0,$result"
 	strings:
 		$pattern = { 83 [5] 00 [2] E8 [4] 6A 01 [2] E8 [4] 6A 01 [2] E8 }
 	condition:
 		#pattern == 1
 }
-
 
 rule CRxMgrExtBag_end
 {

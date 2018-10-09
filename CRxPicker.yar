@@ -3,10 +3,11 @@ rule CRxPicker_start
 	meta:
 		script = "Type.as CRxPicker"
 		script = "Type.aanc CRxPicker,CRxObject"
+		script = "Type.comment CRxPicker,\"鼠标拾取物品管理 type==0x0d\""
+		script = "Type.ad CRxPicker,\"void select(CRxStuff* stuff);\""
 	condition:
 		true
 }
-
 
 //228 CRxStuff  * a_stuff;
 rule CRxPicker_a_stuff
@@ -20,19 +21,17 @@ rule CRxPicker_a_stuff
 		#pattern == 1
 }
 
-//230 int a_enable;
+//230 uint32_t a_enable;
 rule CRxPicker_a_enable
 {
 	meta:
 		script = "$result = [@pattern + 0x02]"
-		script = "Type.am CRxPicker,int,a_enable,0,$result"
+		script = "Type.am CRxPicker,uint32_t,a_enable,0,$result"
 	strings:
 		$pattern = { 38 81 [6] E8 [4] A1 [4] ?? FF FF 00 00 [6] ?? 0F 27 00 00 }
 	condition:
 		#pattern == 1
 }
-
-
 
 rule CRxPicker_end
 {
