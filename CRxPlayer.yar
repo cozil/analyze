@@ -115,13 +115,13 @@ rule CRxPlayer_r_select
 		#pattern == 1
 }
 
-//1a50 POINT3D r_destpos;
+//1a50 Point3d r_destpos;
 //1a68 short r_attack;
 rule CRxPlayer_r_destpos
 {
 	meta:
 		script = "$result = [@pattern + 0x02]"
-		script = "Type.am CRxPlayer,POINT3D,r_destpos,0,$result"
+		script = "Type.am CRxPlayer,Point3d,r_destpos,0,$result"
 		script = "Type.mcomment CRxPlayer,r_destpos,\"角色正在移动的目标位置\""
 		script = "$result = [@pattern + 0x0e]"
 		script = "Type.am CRxPlayer,short,r_attack,0,$result"
@@ -170,16 +170,16 @@ rule CRxPlayer_r_attacklen
 		#pattern == 1
 }
 
-//1c48 POINT3D r_destpos2;
-//1c84 POINT3D r_currpos;
+//1c48 Point3d r_destpos2;
+//1c84 Point3d r_currpos;
 rule CRxPlayer_r_destpos2
 {
 	meta:
 		script = "$result = [@pattern + 0x1d]"
-		script = "Type.am CRxPlayer,POINT3D,r_destpos2,0,$result"
+		script = "Type.am CRxPlayer,Point3d,r_destpos2,0,$result"
 		script = "Type.mcomment CRxPlayer,r_destpos2,\"必杀前调用移动函数使用的参数\""
 		script = "$result = [@pattern + 0x23]"
-		script = "Type.am CRxPlayer,POINT3D,r_currpos,0,$result"
+		script = "Type.am CRxPlayer,Point3d,r_currpos,0,$result"
 		script = "Type.mcomment CRxPlayer,r_currpos,\"玩家当前坐标\""
 	strings:
 		$pattern = { 05 10 02 00 00 50 8D 8D [4] 51 8D 95 [4] 52 8B CF E8 [4] D9 87 [4] D9 87 [4] DE D9 }

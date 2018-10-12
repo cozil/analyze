@@ -222,7 +222,7 @@ rule CRxNpc_mons_pos
 	meta:
 		script = "Type.as _MONS_POS"
 		script = "$result = [@pattern + 0x13]"
-		script = "Type.am _MONS_POS,POINT3D,pos,0,$result"
+		script = "Type.am _MONS_POS,Point3d,pos,0,$result"
 	strings:
 		$pattern = { 46 83 C7 04 83 FE 05 7C DA 8B 45 9C FF 45 80 8B 55 8C 05 80 02 00 00 }
 	condition:

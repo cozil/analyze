@@ -7,12 +7,12 @@ rule CRxGroundStuff_start
 		true
 }
 
-//048 POINT3D s_pos;
+//048 Point3d s_pos;
 rule CRxGroundStuff_s_pos
 {
 	meta:
 		script = "$result = byte:[@pattern + 0x04]"
-		script = "Type.am CRxGroundStuff,POINT3D,pos,0,$result"
+		script = "Type.am CRxGroundStuff,Point3d,pos,0,$result"
 		script = "Type.mcomment CRxGroundStuff,pos,\"地上物品坐标\""
 	strings:
 		$pattern = { 6A 00 D9 5B ?? 6A 1C [47] 6A 00 6A 1B 50 FF D2 }
