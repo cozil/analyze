@@ -309,3 +309,41 @@ Type.mcomment RX_DRUG_ITEM,desc,"4个材料的物品代码"
 TYpe.am RX_DRUG_ITEM,uint32_t,counts,4
 Type.mcomment RX_DRUG_ITEM,desc,"4个材料需要的数量"
 Type.print RX_DRUG_ITEM,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
+
+Type.as CRxRoleInfo
+Type.comment CRxRoleInfo,"场景范围内所有玩家的基础信息结构,PlayerList指向的内容"
+Type.am CRxRoleInfo,uint8_t,available,0,0
+Type.mcomment CRxRoleInfo,available,"人物在附近"
+Type.am CRxRoleInfo,uint8_t,visible,0,1
+Type.mcomment CRxRoleInfo,visible,"人物在可见范围"
+Type.am CRxRoleInfo,char,name,0x10,4
+Type.am CRxRoleInfo,char,school,0x10,0x18
+Type.am CRxRoleInfo,uint8_t,group,0,0x2a
+Type.am CRxRoleInfo,uint8_t,grade,0,0x2b
+Type.am CRxRoleInfo,uint8_t,job,0,0x2c
+Type.am CRxRoleInfo,uint8_t,career,0,0x2d
+Type.am CRxRoleInfo,uint8_t,sex,0,0x37
+Type.am CRxRoleInfo,Point3d,pt1,0,0x38
+Type.am CRxRoleInfo,uint32_t,mapid,0,0x44
+Type.am CRxRoleInfo,uint32_t,roleState,0,0x94
+Type.mcomment CRxRoleInfo,roleState,"检查0x00400000相应bit存在时表示角色处于死亡状态"
+Type.am CRxRoleInfo,int32_t,wx,0,0xc0
+Type.am CRxRoleInfo,int16_t,entity_id,0,0x1a4
+Type.mcomment CRxRoleInfo,entity_id,"人物CRxPlayer对象在ObjList中的索引，如果是自身则为0"
+Type.am CRxRoleInfo,uint8_t,__pad,0,0x1ab
+Type.rm CRxRoleInfo,__pad
+Type.ad CRxRoleInfo,"inline bool is_valid() const {{ return (name[0] != 0); }}"
+Type.ad CRxRoleInfo,"inline bool is_dead() const {{ return !!(roleState & 0x00400000); }}"
+Type.ad CRxRoleInfo,"inline bool is_career_knife() const {{ return (career == CareerKnife); }}"
+Type.ad CRxRoleInfo,"inline bool is_career_sword() const {{ return (career == CareerSword); }}"
+Type.ad CRxRoleInfo,"inline bool is_career_spear() const {{ return (career == CareerSpear); }}"
+Type.ad CRxRoleInfo,"inline bool is_career_bow() const {{ return (career == CareerBow || career == CareerMnz); }}"
+Type.ad CRxRoleInfo,"inline bool is_career_doctor() const {{ return (career == CareerDoctor); }}"
+Type.ad CRxRoleInfo,"inline bool is_career_stabber() const {{ return (career == CareerStabber); }}"
+Type.ad CRxRoleInfo,"inline bool is_career_musician() const {{ return (career == CareerMusician); }}"
+Type.ad CRxRoleInfo,"inline bool is_career_hfg() const {{ return (career == CareerHfg); }}"
+Type.ad CRxRoleInfo,"inline bool is_career_mnz() const {{ return (career == CareerMnz); }}"
+Type.ad CRxRoleInfo,"inline bool is_farattack_career() const {{ return (is_career_doctor() || is_career_bow() || is_career_musician()); }}"
+
+
+

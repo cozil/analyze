@@ -110,8 +110,25 @@ rule Check_CRxShopInfo
 {
 	//CRxShopInfo结构长度是通过累加计算得到，以下特征码包含了累加过程
 	//只要找到特征码则表示结构大小未变化
+	meta:
+		script = "Type.print CRxShopInfo,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN"
 	strings:
 		$pattern = { 8D 3C 80 03 FF 03 FF 03 FF 89 96 [4] 83 BF [4] FF [2] 80 BF [4] 00 }
 	condition:
 		#pattern == 1
+}
+
+rule Check_CRxRoleInfo
+{
+	//只要找到特征码则表示结构大小未变化
+	meta:
+		script = "Type.print CRxRoleInfo,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN"
+	strings:
+		//检查结构大小的特征码
+		$pattern = { B8 0B 00 00 [4] AC 01 00 00 }
+		//检查成员roleState偏移的特征码
+		//如果未找到，将 94 00 00 00 屏蔽掉再查找
+		$pattern1 = { F7 ?? 94 00 00 00 00 00 40 00 [7] 6A 00 68 00 00 40 00 68 57 04 00 00 }
+	condition:
+		$pattern and $pattern1
 }
