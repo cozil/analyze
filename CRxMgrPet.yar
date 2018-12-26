@@ -15,7 +15,9 @@ rule CRxMgrPet_dlg
 		script = "$result = [@pattern + 0x27]"
 		script = "Type.am CRxMgrPet,CRxWnd*,dlg,0,$result"
 	strings:
-		$pattern = { C7 [2] 02 00 00 00 [4] 68 C6 02 00 00 ?? 6A 10 6A 00 [2] E8 [8] A3 [4] 8B }
+		//17014之前版本
+		//$pattern = { C7 [2] 02 00 00 00 [4] 68 C6 02 00 00 ?? 6A 10 6A 00 [2] E8 [8] A3 [4] 8B }
+		$pattern = { C7 [2] 02 00 00 00 [4] 68 [5] 6A 10 6A 00 [2] E8 [8] A3 [4] 8B }
 	condition:
 		#pattern == 1
 }

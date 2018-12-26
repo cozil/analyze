@@ -2,10 +2,17 @@
 //搜索："log \\"/\*.*\*/[\s]*([\w]+) ([\w]+);\\""
 //替换："Type.am CRxSelf,\1,\2,0,$result"
 
+Type.removeAll
+Array.removeAll
+
 //输出格式化设置
-$_OUT_OFFLEN = .4		//结构成员偏移地址文本长度
-$_OUT_TYPELEN = .16		//结构成员类型文本长度
-$_OUT_NAMELEN = .24		//结构成员名称文本长度
+
+//结构成员偏移地址文本长度
+$_OUT_OFFLEN = .4
+//结构成员类型文本长度
+$_OUT_TYPELEN = .16
+//结构成员名称文本长度
+$_OUT_NAMELEN = .24
 
 //鼠标坐标结构
 Type.as Point

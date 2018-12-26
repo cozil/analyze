@@ -29,7 +29,9 @@ rule CRxApp_zzf_type
 		script = "Type.am CRxApp,uint16_t,rxf_type,0,$result"
 		script = "Type.mcomment CRxApp,rxf_type,\"至尊热血符，修改为2可以使用“/土灵符”指令作弊\""
 	strings:
-		$pattern = { 83 FF 58 0F 85 [4] 8B 0D [4] 66 39 99 [4] 7F ?? 66 39 99 [4] 75 ?? 38 1D [4] 75 ?? 68 A0 09 00 00 6A 09 }
+		//17014之前版本
+		//$pattern = { 83 FF 58 0F 85 [4] 8B 0D [4] 66 39 99 [4] 7F ?? 66 39 99 [4] 75 ?? 38 1D [4] 75 ?? 68 A0 09 00 00 6A 09 }
+		$pattern = { 83 FF 58 0F 85 [4] 8B 0D [4] 66 39 99 [4] 7F ?? 66 39 99 [4] 75 ?? 68 A0 09 00 00 6A 09 E8 }
 	condition:
 		#pattern == 1	
 }

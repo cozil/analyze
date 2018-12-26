@@ -39,7 +39,9 @@ rule CRxMgrShop_ls_shop
 		script = "$result = [@pattern + 0x21]"
 		script = "Type.am CRxMgrShop,CRxMgrList*,ls_shop,0,$result"
 	strings:
-		$pattern = { C6 [2] 02 [4] 6A 65 ?? 6A 3C [3] E8 [8] 8B [5] 89 }
+		//17014之前版本
+		//$pattern = { C6 [2] 02 [4] 6A 65 ?? 6A 3C [3] E8 [8] 8B [5] 89 }
+		$pattern = { C6 [2] 02 [4] 6A [2] 6A 3C [3] E8 [8] 8B [5] 89 }
 	condition:
 		#pattern == 1	
 }

@@ -18,7 +18,9 @@ rule CRxMgrUnite_dlg
 		script = "$result = [@pattern + 0x6]"
 		script = "Type.am CRxMgrUnite,CRxWnd*,dlg,0,$result"
 	strings:
-		$pattern = { 6A 01 8B C8 89 86 [4] E8 [4] 68 F4 23 00 00 C7 45 ?? 7D 00 00 00 C7 45 ?? BA 00 00 00 E8 [18] 6A 53 56 6A 01 }
+		//17014之前版本
+		//$pattern = { 6A 01 8B C8 89 86 [4] E8 [4] 68 F4 23 00 00 C7 45 ?? 7D 00 00 00 C7 45 ?? BA 00 00 00 E8 [18] 6A 53 56 6A 01 }
+		$pattern = { 6A 01 8B C8 89 86 [4] E8 [4] 68 F4 23 00 00 C7 45 ?? 7D 00 00 00 C7 45 ?? BA 00 00 00 E8 [18] 6A 60 56 6A 01 }
 	condition:
 		#pattern == 1
 }

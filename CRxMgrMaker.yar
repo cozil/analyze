@@ -21,7 +21,9 @@ rule CRxMgrMaker_dlg
 		script = "$result = [@pattern + 0x18]"
 		script = "Type.am CRxMgrMaker,CRxWnd*,dlg,0,$result"
 	strings:
-		$pattern = { 6A 5D ?? 6A 64 ?? 8B C8 E8 [4] EB ?? 33 C0 A3 [4] 8B 8E }
+		//17014之前版本
+		//$pattern = { 6A 5D ?? 6A 64 ?? 8B C8 E8 [4] EB ?? 33 C0 A3 [4] 8B 8E }
+		$pattern = { 6A [2] 6A 64 ?? 8B C8 E8 [4] EB ?? 33 C0 A3 [4] 8B 8E }
 	condition:
 		#pattern == 1
 }
