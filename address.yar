@@ -2,11 +2,12 @@
 rule BtnTest
 {
 	meta:
-		script = "$result = @pattern + 0x13"
+		script = "$result = @pattern + 0x29"
 		script = "lblset $result, BtnTest"
 		script = "log \"BtnTest=0x{$result}\""
 	strings:
-		$pattern = { 8B 86 54 02 00 00 8B 11 8B 52 04 6A 00 50 68 F4 03 00 00 FF D2 5F 5B C6 86 28 02 00 00 00 }
+		//$pattern = { 8B 86 54 02 00 00 8B 11 8B 52 04 6A 00 50 68 F4 03 00 00 FF D2 5F 5B C6 86 28 02 00 00 00 } 17015
+		$pattern = { 83 7E ?? 00 [8] 00 [9] 8B 86 [4] 8B 11 8B 52 04 6A 00 ?? 68 F4 03 00 00 FF D2 [2] C6 86 [4] 00 B8 01 00 00 00 }
 	condition:
 		#pattern == 1
 }
@@ -17,7 +18,7 @@ rule ResponseAttack
 		script = "lblset @pattern, ResponseAttack"
 		script = "log \"ResponseAttack=0x{@pattern}\""
 	strings:
-		$pattern = { 55 8B EC 6A FF [45] 8B 7D 08 8D 77 06 B8 1F 27 00 00 33 DB 89 BD 98 D2 FF FF 66 39 46 02 }
+		$pattern = { 55 8B EC 6A FF [45] 8B 7D 08 8D 77 06 B8 1F 27 00 00 33 DB 89 BD [4] 66 39 46 02 }
 	condition:
 		#pattern == 1
 }
@@ -206,7 +207,7 @@ rule HF_WPN
 		script = "log \"HF_WPN=0x{@pattern + 0x0D},eb\""
 		//script = "lblset @pattern + 0x0D, HF_WPN"
 	strings:
-		$pattern = { 8B 81 40 04 00 00 83 B8 A0 0D 00 00 02 74 ?? 8B 0D [4] 68 8C 06 00 00 }
+		$pattern = { 8B 81 [4] 83 B8 [4] 02 74 ?? 8B 0D [4] 68 8C 06 00 00 }
 	condition:
 		#pattern == 1	
 }
@@ -252,10 +253,10 @@ rule NP_LK2
 rule HF_NRB
 {
 	meta:
-		script = "log \"HF_NRB=0x{@pattern},90e9\""
-		//script = "lblset @pattern, HF_NRB"
+		script = "log \"HF_NRB=0x{@pattern + 0x28},90e9\""
 	strings:
-		$pattern = { 0F 84 1D 03 00 00 8B 85 [4] 8B B4 C5 [4] 8B 8D [4] 56 BF 01 00 00 00 }
+		//$pattern = { 0F 84 [4] 8B 85 [4] 8B B4 C5 [4] 8B 8D [4] 56 BF 01 00 00 00 } 17015
+		$pattern = { 83 ?? 05 [2] 68 [4] 6A 08 [8] E8 [13] 00 00 00 00 85 ?? 0F 84 }
 	condition:
 		#pattern == 1	
 }
@@ -284,7 +285,8 @@ rule HF_NRD
 		script = "log \"HF_NRD=0x{@pattern},eb1e\""
 		//script = "lblset @pattern, HF_NRD"
 	strings:
-		$pattern = { 7A 3E D9 85 F8 D3 FF FF DD 9D F0 D3 FF FF E8 [4] DC 9D F0 D3 FF FF DF E0 F6 C4 41 7A ?? 6A 31 57 }
+		//$pattern = { 7A 3E D9 85 F8 D3 FF FF DD 9D F0 D3 FF FF E8 [4] DC 9D F0 D3 FF FF DF E0 F6 C4 41 7A ?? 6A 31 57 } 17015
+		$pattern = { 7A 3E D9 85 [4] DD 9D [4] E8 [4] DC 9D [4] DF E0 F6 C4 41 7A ?? 6A 31 }
 	condition:
 		#pattern == 1	
 }
@@ -292,11 +294,12 @@ rule HF_NRD
 rule NF_RAC
 {
 	meta:
-		script = "$result = @pattern"
+		script = "$result = @pattern + 0x5 + [@pattern + 0x1]"
 		script = "log \"NF_RAC=0x{$result}\""
 		script = "lblset $result, ClearPlayerAction"
 	strings:
-		$pattern = { 53 56 8B F1 33 DB 8D 86 [4] 50 89 9E [4] 89 9E [4] 89 9E [4] 89 9E [4] 89 9E [4] 88 9E [4] E8 [4] 68 40 18 00 00 88 9E [4] 53 81 C6 00 02 00 00 }
+		//$pattern = { 53 56 8B F1 33 DB 8D 86 [4] 50 89 9E [4] 89 9E [4] 89 9E [4] 89 9E [4] 89 9E [4] 88 9E [4] E8 [4] 68 40 18 00 00 88 9E [4] 53 81 C6 00 02 00 00 } 17015
+		$pattern = { E8 [4] 6A 01 [2] C6 86 [4] 01 E8 [6] 12 [4] 22 }
 	condition:
 		#pattern == 1	
 }
@@ -361,7 +364,7 @@ rule HC_XYZ
 		script = "lblset $result, MouseX"
 		script = "lblset $result+0x04, MouseY"
 	strings:
-		$pattern = { 52 68 [4] 68 FA 03 00 00 FF D0 83 F8 FF 0F 85 [4] 8B BF 6C 1A 00 00 }
+		$pattern = { 52 68 [4] 68 FA 03 00 00 FF D0 83 F8 FF 0F 85 [4] 8B BF [6] 01 }
 	condition:
 		#pattern == 1
 }
@@ -374,7 +377,7 @@ rule HF_HPR
 		script = "$result = @pattern + 0x19"
 		script = "log \"HF_HPB=0x{$result},9090\""
 	strings:
-		$pattern = { 8B B5 80 FE FF FF B9 01 00 00 00 89 8F C4 26 00 00 33 D2 39 0D [4] 75 0C 89 97 C4 26 00 00 89 97 04 26 00 00 }
+		$pattern = { 8B B5 [4] B9 01 00 00 00 89 8F [4] 33 D2 39 0D [4] 75 ?? 89 97 [4] 89 97 }
 	condition:
 		#pattern == 1	
 }
@@ -388,7 +391,7 @@ rule HC_HPR
 		script = "log \"NP_GOL=0x{$result}\""
 		script = "lblset $result, ObjList"
 	strings:
-		$pattern = { 8B 75 08 C7 06 00 00 00 00 8B 15 [4] 81 FA FF FF 00 00 0F 84 FD 00 00 00 8B 04 95 }
+		$pattern = { 8B 75 08 C7 06 00 00 00 00 8B 15 [4] 81 FA FF FF 00 00 0F 84 [4] 8B 04 95 }
 	condition:
 		#pattern == 1	
 }
@@ -400,7 +403,7 @@ rule HF_HPP
 		script = "$result = @pattern + 0x12"
 		script = "log \"HF_HPP=0x{$result},eb\""
 	strings:
-		$pattern = { 8B 46 F8 8B 50 04 8D 4E F8 FF D2 E9 [4] 85 DB 75 ?? 8D 4E F8 }
+		$pattern = { 8B 46 F8 8B 50 04 8D 4E F8 FF D2 E9 [4] 85 ?? 75 ?? 8D 4E F8 }
 	condition:
 		#pattern == 1	
 }
@@ -433,7 +436,7 @@ rule HF_PKC
 		script = "$result = @pattern + 0x0d"
 		script = "log \"HF_PKC=0x{$result},909090\""
 	strings:
-		$pattern = { 83 E0 02 C3 33 C0 66 39 81 24 43 00 00 0F 9F C0 C3 }
+		$pattern = { 83 E0 02 C3 33 C0 66 39 81 [2] 00 00 0F 9F C0 C3 }
 	condition:
 		#pattern == 1	
 }
@@ -467,7 +470,7 @@ rule NF_USS
 		script = "log \"NF_USS=0x{$result}\""
 		script = "lblset $result, USeAtShortcut"
 	strings:
-		$pattern = { 43 83 C1 04 83 FB 1E 7C ?? 33 DB EB ?? 8B 0D [4] 8B 89 80 02 00 00 53 E8 [4] 8B BD 98 D2 FF FF 33 DB }
+		$pattern = { 43 83 C1 04 83 FB 1E 7C ?? 33 DB EB ?? 8B 0D [4] 8B 89 [4] 53 E8 [4] 8B BD [4] 33 DB }
 	condition:
 		#pattern == 1	
 }
@@ -545,10 +548,10 @@ rule HF_JPW
 rule HF_JPX
 {
 	meta:
-		script = "$result = @pattern + 0x12"
-		script = "log \"HF_JPX=0x{$result},eb57\""
+		script = "$result = @pattern + 0x13"
+		script = "log \"HF_JPX=0x{$result},e902010000\""
 	strings:
-		$pattern = { 8B 8A 5C 4A 53 00 E8 [4] 80 BD [4] 01 0F 84 [4] D9 85 [4] 8D 85 [4] 50 6A 08 83 EC }
+		$pattern = { 8B 8A 5C 4A 53 00 E8 [4] 8A 85 [4] 3C 02 0F }
 	condition:
 		#pattern == 1	
 }
@@ -592,7 +595,7 @@ rule HF_JP1
 		script = "$result = @pattern + 0x17"
 		script = "log \"HF_JP1=0x{$result},eb\""
 	strings:
-		$pattern = { D9 9D B0 FE FF FF D9 85 B0 FE FF FF D8 1D [4] DF E0 F6 C4 05 7A ?? C7 87 [4] 00 00 00 00 B8 01 00 00 00 }
+		$pattern = { D9 9D [4] D9 85 [4] D8 1D [4] DF E0 F6 C4 05 7A ?? C7 87 [4] 00 00 00 00 ?? 01 00 00 00 }
 	condition:
 		#pattern == 1	
 }
@@ -630,11 +633,11 @@ rule NP_FIX
 rule NP_ATV
 {
 	meta:
-		script = "$result = [@pattern + 0x36]"
+		script = "$result = [@pattern + 0x37]"
 		script = "log \"NP_ATV=0x{$result}\""
 		script = "lblset $result, CurSelObj"
 	strings:
-		$pattern = { 68 FF 00 00 00 53 6A 0A 6A 2E E8 [4] 68 FF 00 00 00 53 6A 0A E8 [4] 83 C4 2C B9 [4] 89 1D [4] E8 [4] 8B 15 [4] A1 }
+		$pattern = { 68 FF 00 00 00 [2] 0A ?? 2E E8 [5] FF 00 00 00 [2] 0A E8 [7] B9 [10] E8 [10] 8b 0d }
 	condition:
 		#pattern == 1	
 }
