@@ -8,11 +8,12 @@ __START:
 	$num = 0
 	$result1 = 0
 	//log "$compare = {$compare}"
-	
+	//log "pattern count = {#pattern}"
 __LOOP:
 	cmp $num,#pattern
 	je __FINISH
 	Array.get pattern,$num
+	//log "pattern[{$num}] = {$result}"
 	cmp $result,0
 	jz __FAIL
 	$result2 = [$result + $offset]
@@ -29,7 +30,9 @@ __NEXT:
 	$num += 1
 	jmp __LOOP
 __FAIL:
-	invalid
+	error 没有匹配的结果
 __FINISH:
-	$result = $result1
+	cmp $result1, 0
+	jz __FAIL
+	$result = $result1	
 	//log "Searching for {$compare} result is {$result}"

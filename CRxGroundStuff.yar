@@ -2,7 +2,7 @@ rule CRxGroundStuff_start
 {
 	meta:
 		script = "Type.as CRxGroundStuff"
-		script = "Type.aanc CRxGroundStuff,CRxObject"
+		script = "Type.aanc CRxGroundStuff,CRxGameEntity"
 	condition:
 		true
 }

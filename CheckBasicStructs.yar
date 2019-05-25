@@ -23,7 +23,7 @@ rule Check_CRxSkillList
 		script = "msg \"CRxSkillList/CRxSkillItem结构发生改变\""
 		script = "_EXIT:"
 	strings:
-		$pattern = { 81 FF [4] 0F 8D [4] 8B CF 69 C9 [4] 8B B1 [4] 8D 99 [12] 14 FA 1E 00 [8] 78 FA 1E 00 [8] DC FA 1E 00 }
+		$pattern = { 81 [5] 0F [7] 69 [5] 8B [5] 8D [13] 14 FA 1E 00 [8] 78 FA 1E 00 [8] DC FA 1E 00 }
 	condition:
 		#pattern == 1
 }
@@ -71,7 +71,7 @@ rule Check_RX_SHOP_ITEM
 rule Check_RX_MAKER_ITEM
 {
 	meta:
-		script = "$result1 = [@pattern + 0x24]"
+		script = "$result1 = [@pattern + 0x28]"
 		script = "Type.size RX_MAKER_ITEM"
 		script = "cmp $result,$result1"
 		script = "jnz _FAIL"
@@ -82,7 +82,7 @@ rule Check_RX_MAKER_ITEM
 		script = "msg \"RX_MAKER_ITEM结构发生改变\""
 		script = "_EXIT:"
 	strings:
-		$pattern = { C1 E1 04 8B 84 31 [4] 03 CE 3B 81 [4] 74 ?? 8B 55 ?? 8B 75 ?? 39 30 75 ?? 39 50 ?? 74 ?? 05 }
+		$pattern = { C1 E1 04 8B [8] 3B [11] 8B [2] 8B [2] 39 [3] 39 [4] 05 }
 	condition:
 		#pattern == 1
 }

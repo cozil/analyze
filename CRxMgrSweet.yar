@@ -12,10 +12,10 @@ rule CRxMgrSweet_start
 rule CRxMgrSweet_mgr_flower
 {
 	meta:
-		script = "$result = [@pattern + 0x37]"
+		script = "$result = [@pattern + 0x1e]"
 		script = "Type.am CRxMgrSweet,CRxMgrFlower*,mgr_flower,0,$result"
 	strings:
-		$pattern = { 68 78 02 00 00 [40] 68 D0 02 00 00 [3] 89 }
+		$pattern = { c6 [2] 02 [7] e8 [8] 68 [7] 89 [5] e8 [10] c6 [2] 03 }
 	condition:
 		#pattern == 1
 }
@@ -24,10 +24,10 @@ rule CRxMgrSweet_mgr_flower
 rule CRxMgrSweet_state
 {
 	meta:
-		script = "$result = [@pattern + 0x37]"
+		script = "$result = [@pattern + 0x1e]"
 		script = "Type.am CRxMgrSweet,CRxMgrSweetState*,mgr_state,0,$result"
 	strings:
-		$pattern = { 68 D4 02 00 00 [40] 68 00 03 00 00 [3] 89 }
+		$pattern = { c6 [2] 04 [7] e8 [8] 68 [7] 89 [5] e8 [10] c6 [2] 05 }
 	condition:
 		#pattern == 1
 }

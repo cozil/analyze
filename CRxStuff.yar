@@ -400,17 +400,18 @@ rule CRxStuff_s_breaking
 rule CRxStuff_advflag
 {
 	meta:
-		script = "$result = [@pattern + 0x3a]"
+		script = "$result = [@pattern + 0x32]"
 		script = "Type.am CRxStuff,uint8_t,advflag,0,$result"
 		script = "Type.mcomment CRxStuff,advflag,\"奇玉石属性标记\""
-		script = "$result = [@pattern + 0x53]"
+		script = "$result = [@pattern + 0x4b]"
 		script = "Type.am CRxStuff,uint16_t,advcode,0,$result"
 		script = "Type.mcomment CRxStuff,advcode,\"奇玉石代码\""
 		script = "$result = [@pattern + 0x21]"
 		script = "Type.am CRxStuff,uint16_t,soul,0,$result"
 		script = "Type.mcomment CRxStuff,soul,\"灵魂阶段 0-5\""
 	strings:
-		$pattern = { 81 ?? AD DF 14 3C [12] 81 ?? B0 DF 14 3C [6] 0F B7 87 [4] C7 85 [4] 00 00 00 00 [9] F6 87 [4] 01 [17] 0F B7 8F }
+		$pattern = { 81 ?? AD DF 14 3C [12] 81 ?? B0 DF 14 3C [6] 0f [17] f6 [5] 01 [17] 0f }
+		
 	condition:
 		#pattern == 1
 }

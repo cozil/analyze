@@ -28,11 +28,11 @@ rule CRxMgrThl_pkskills
 rule CRxMgrThl_skills
 {
 	meta:
-		script = "$result = [@pattern + 0x4a]"
+		script = "$result = [@pattern + 0x4d]"
 		script = "Type.am CRxMgrThl,uint32_t,skills,3,$result"
 	strings:
 		//函数第一个引用位置在CRxMgrThl的构造函数中		
-		$pattern = { 1E 00 00 00 [3] 20 00 00 00 [3] 11 00 00 00 [3] 2D 00 00 00 [3] 1F 00 00 00 BB 02 00 00 00 [35] 81 C6 3C 02 00 00 }
+		$pattern = { C7 [2] 1E 00 00 00 C7 [2] 20 00 00 00 C7 [2] 11 00 00 00 C7 [2] 2D 00 00 00 C7 [2] 1F 00 00 00 [40] 81 }
 	condition:
 		#pattern == 1
 }

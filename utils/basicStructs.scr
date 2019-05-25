@@ -152,21 +152,30 @@ Type.am CRxObject,CRxObject*,parent
 Type.am CRxObject,uint32_t,objType
 Type.am CRxObject,int16_t,index
 Type.am CRxObject,int16_t,pad_000e
-Type.ad CRxObject,"inline bool is_dialog() const {{ return (GO_DIALOG == objType); }}"
-Type.ad CRxObject,"inline bool is_manager() const {{ return (GO_MANAGE == objType); }}"
-Type.ad CRxObject,"inline bool is_button() const {{ return (GO_BUTTON == objType); }}"
-Type.ad CRxObject,"inline bool is_label() const {{ return (GO_LABEL == objType); }}"
-Type.ad CRxObject,"inline bool is_npc() const {{ return (GO_MONSTER == objType); }}"
-Type.ad CRxObject,"inline bool is_player() const {{ return (GO_PLAYER == objType); }}"
-Type.ad CRxObject,"inline bool is_ground_stuff() const {{ return (GO_STUFF == objType); }}"
-Type.ad CRxObject,"inline bool is_list() const {{ return (GO_LIST == objType); }}"
-Type.ad CRxObject,"inline bool is_listbox() const {{ return (GO_LISTBOX == objType); }}"
-Type.ad CRxObject,"inline bool is_package_stuff() const {{ return (GO_STUFF_PACKAGE == objType); }}"
-Type.ad CRxObject,"inline bool is_toolbar_stuff() const {{ return (GO_STUFF_TOOLBAR == objType); }}"
-Type.ad CRxObject,"inline bool is_skill_class() const {{ return (GO_STUFF_SKILLCLASS == objType); }}"
-Type.ad CRxObject,"inline bool is_skill_item() const {{ return (GO_STUFF_SKILL == objType); }}"
+Type.ad CRxObject,"inline bool is_dialog(bool checkVisible = false) const {{ return (this != nullptr && GO_DIALOG == objType && (!checkVisible || ((CRxCtrl *)this)->visible)); }}"
+Type.ad CRxObject,"inline bool is_manager() const {{ return (this != nullptr && GO_MANAGE == objType); }}"
+Type.ad CRxObject,"inline bool is_button() const {{ return (this != nullptr && GO_BUTTON == objType); }}"
+Type.ad CRxObject,"inline bool is_label() const {{ return (this != nullptr && GO_LABEL == objType); }}"
+Type.ad CRxObject,"inline bool is_npc() const {{ return (this != nullptr && GO_MONSTER == objType); }}"
+Type.ad CRxObject,"inline bool is_player() const {{ return (this != nullptr && GO_PLAYER == objType); }}"
+Type.ad CRxObject,"inline bool is_ground_stuff() const {{ return (this != nullptr && GO_STUFF == objType); }}"
+Type.ad CRxObject,"inline bool is_list() const {{ return (this != nullptr && GO_LIST == objType); }}"
+Type.ad CRxObject,"inline bool is_listbox() const {{ return (this != nullptr && GO_LISTBOX == objType); }}"
+Type.ad CRxObject,"inline bool is_package_stuff() const {{ return (this != nullptr && GO_STUFF_PACKAGE == objType); }}"
+Type.ad CRxObject,"inline bool is_toolbar_stuff() const {{ return (this != nullptr && GO_STUFF_TOOLBAR == objType); }}"
+Type.ad CRxObject,"inline bool is_skill_class() const {{ return (this != nullptr && GO_STUFF_SKILLCLASS == objType); }}"
+Type.ad CRxObject,"inline bool is_skill_item() const {{ return (this != nullptr && GO_STUFF_SKILL == objType); }}"
 
 Type.print CRxObject,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
+
+//定义CRxGameEntity
+Type.as CRxGameEntity
+Type.comment CRxGameEntity, "游戏实体对象基础结构(static)"
+Type.aanc CRxGameEntity, CRxObject
+type.am CRxGameEntity,uint32_t,sessionid
+type.ad CRxGameEntity,"inline bool is_attackable() const {{ return (is_player() || is_ground_stuff() || is_npc()); }}"
+Type.print CRxGameEntity,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
+
 
 //定义CRxMgr结构
 Type.as CRxMgr
@@ -272,7 +281,7 @@ Type.as RX_MAKER_ITEM
 Type.am RX_MAKER_ITEM,uint64_t,code,0,0
 Type.am RX_MAKER_ITEM,char,name,0x40,8
 Type.am RX_MAKER_ITEM,RX_STUFF_PAIR,needItems,0x0a,0x1b0
-Type.am RX_MAKER_ITEM,char,__pad_250,0x110,0x250
+Type.am RX_MAKER_ITEM,char,__pad_250,0x114,0x250
 
 
 
@@ -280,7 +289,7 @@ Type.as CRxShopInfo
 Type.comment CRxShopInfo,"玩家开店信息结构(static)"
 Type.am CRxShopInfo,uint32_t,sid,0,4
 Type.am CRxShopInfo,char,shopname,0x20,8
-Type.print CRxShopInfo,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
+//Type.print CRxShopInfo,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 Type.as CRxBaseStuff
 Type.comment CRxBaseStuff,"物品基本信息，数据来源于ybi.cfg (static)"
@@ -339,6 +348,7 @@ Type.am CRxRoleInfo,int16_t,entity_id,0,0x1a4
 Type.mcomment CRxRoleInfo,entity_id,"人物CRxPlayer对象在ObjList中的索引，如果是自身则为0"
 Type.am CRxRoleInfo,uint8_t,__pad,0,0x1ab
 Type.rm CRxRoleInfo,__pad
+Type.ad CRxRoleInfo,"const static int MaxSize = 3000;"
 Type.ad CRxRoleInfo,"inline bool is_valid() const {{ return (name[0] != 0); }}"
 Type.ad CRxRoleInfo,"inline bool is_dead() const {{ return !!(roleState & 0x00400000); }}"
 Type.ad CRxRoleInfo,"inline bool is_career_knife() const {{ return (career == CareerKnife); }}"

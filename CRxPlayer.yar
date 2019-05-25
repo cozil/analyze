@@ -2,7 +2,7 @@ rule CRxPlayer_start
 {
 	meta:
 		script = "Type.as CRxPlayer"
-		script = "Type.aanc CRxPlayer,CRxObject"
+		script = "Type.aanc CRxPlayer,CRxGameEntity"
 		script = "Type.comment CRxPlayer,\"玩家对象管理\""
 		script = "Type.ad CRxPlayer,\"void clear_move_state();\""
 		script = "Type.ad CRxPlayer,\"bool is_poison_exists(uint32_t code) const;\""
@@ -34,17 +34,17 @@ rule CRxPlayer_start
 }
 
 //014 int sessionid;
-rule CRxPlayer_sessionid
-{
-	meta:
-		script = "$result = byte:[@pattern + 0x02]"
-		script = "Type.am CRxPlayer,int,sessionid,0,$result"
-		script = "Type.mcomment CRxPlayer,sessionid,\"会话ID\""
-	strings:
-		$pattern = { 8B 47 ?? 8B 0D [4] 8D 72 ?? 3B C8 74 ?? 81 3D [4] 41 9C 00 00 [2] 81 3D [4] A5 9C 00 00 }
-	condition:
-		#pattern == 1
-}
+//rule CRxPlayer_sessionid
+//{
+//	meta:
+//		script = "$result = byte:[@pattern + 0x02]"
+//		script = "Type.am CRxPlayer,int,sessionid,0,$result"
+//		script = "Type.mcomment CRxPlayer,sessionid,\"会话ID\""
+//	strings:
+//		$pattern = { 8B 47 ?? 8B 0D [4] 8D 72 ?? 3B C8 74 ?? 81 3D [4] 41 9C 00 00 [2] 81 3D [4] A5 9C 00 00 }
+//	condition:
+//		#pattern == 1
+//}
 
 //018 char r_name[0x30];
 rule CRxPlayer_r_name
@@ -80,7 +80,7 @@ rule CRxPlayer_r_skill_info
 		script = "Type.am CRxPlayer,CRxSkillItem*,r_skill_info,0,$result\""
 		script = "Type.mcomment CRxPlayer,r_skill_info,\"正在使用的技能对象\""
 	strings:
-		$pattern = { 69 D2 50 1A 00 00 69 C0 90 01 00 00 8D BC 02 [4] 89 BE }
+		$pattern = { 69 ?? 50 1A 00 00 69 ?? 90 01 00 00 8D [6] 89 [21] 31 1f 06 00 }
 	condition:
 		#pattern == 1
 }
@@ -97,7 +97,7 @@ rule CRxPlayer_r_ani_id
 		script = "Type.am CRxPlayer,uint32_t,r_skillid,0,$result"
 		script = "Type.mcomment CRxPlayer,r_skillid,\"最后一次使用的技能代码\""
 	strings:
-		$pattern = { 69 D2 84 01 00 00 89 84 3A [4] 8B 97 [4] 8B 46 ?? 69 D2 84 01 00 00 89 84 3A [80] 0F 27 00 00 }
+		$pattern = { 69 ?? 84 01 00 00 89 [6] 8B [5] 8B [2] 69 ?? 84 01 00 00 [68] 0F 27 00 00 }
 	condition:
 		#pattern == 1
 }
@@ -127,7 +127,7 @@ rule CRxPlayer_r_destpos
 		script = "Type.am CRxPlayer,short,r_attack,0,$result"
 		script = "Type.mcomment CRxPlayer,r_attack,\"正在被攻击的怪物编号\""
 	strings:
-		$pattern = { 8D 87 [4] 89 85 [4] C7 87 [4] FF FF 00 00 C7 87 [4] 00 00 00 00 C6 87 [4] 00 C7 05 [4] 00 00 00 00 }
+		$pattern = { 8D [5] 89 [5] C7 [5] FF FF 00 00 89 [5] 88 [5] 8b [5] 89 [5] 83 [5] 00 [13] 00 }
 	condition:
 		#pattern == 1
 }
@@ -208,7 +208,7 @@ rule CRxPlayer_r_pet_ride_flag
 		script = "Type.am CRxPlayer,uint32_t,r_pet_ride_flag,0,$result"
 		script = "Type.mcomment CRxPlayer,r_pet_ride_flag,\"宠物骑乘标记，0：没有骑乘，1：正在骑乘，大于1：已骑乘\""
 	strings:
-		$pattern = { 81 63 ?? FF FF FF 7F 8B 0D [4] 83 B9 [4] 00 8B 43 ?? 8D 53 ?? 89 95 [6] 3D 25 C7 2D 00 [2] 3D 26 C7 2D 00 }
+		$pattern = { 81 [2] FF FF FF 7F 8B [5] 83 [5] 00 [14] 25 c7 2d 00 }
 	condition:
 		#pattern == 1
 }
@@ -247,11 +247,11 @@ rule CRxPlayer_r_jumpflag
 rule CRxPlayer_r_light
 {
 	meta:
-		script = "$result = [@pattern + 0x07]"
+		script = "$result = [@pattern + 0x02]"
 		script = "Type.am CRxPlayer,uint32_t,r_light,0,$result"
 		script = "Type.mcomment CRxPlayer,r_light,\"轻功标志 1:15轻功疾风御气术 2:60轻功梯云纵 3/4:飞行状态 5:100轻功草上飞 6:疾龙一式 7:疾龙二式 8:疾龙三式\""
 	strings:
-		$pattern = { E8 [4] 8B 83 [4] 83 F8 03 74 ?? 83 F8 04 74 ?? 83 F8 08 74 ?? 83 F8 09 }
+		$pattern = { 8B [7] 03 [4] 04 [4] 08 [4] 09 [6] 68 00 28 00 00 }
 	condition:
 		#pattern == 1
 }
@@ -260,11 +260,11 @@ rule CRxPlayer_r_light
 rule CRxPlayer_r_run
 {
 	meta:
-		script = "$result = [@pattern + 0x28]"
+		script = "$result = [@pattern + 0x2A]"
 		script = "Type.am CRxPlayer,uint32_t,r_run,0,$result"
 		script = "Type.mcomment CRxPlayer,r_run,\"当r_light==0时, 0:表示行走 1:表示跑\""
 	strings:
-		$pattern = { 3D 7A 90 06 00 [16] 81 E9 14 90 06 00 [11] 8B 86 }
+		$pattern = { 3D 7A 90 06 00 [20] 14 90 06 00 [11] 8B }
 	condition:
 		#pattern == 1
 }
@@ -299,11 +299,11 @@ rule CRxPlayer_r_career
 rule CRxPlayer_r_sex
 {
 	meta:
-		script = "$result = [@pattern + 0x16]"
+		script = "$result = [@pattern + 0x11]"
 		script = "Type.am CRxPlayer,uint32_t,r_sex,0,$result"
 		script = "Type.mcomment CRxPlayer,r_sex,\"玩家性别\""
 	strings:
-		$pattern = { 83 F8 76 [2] 83 F8 77 [2] 83 F8 02 [2] BA 01 00 00 00 39 93 }
+		$pattern = { 83 ?? 76 [4] 77 [4] 02 [2] 83 [5] 01 }
 	condition:
 		#pattern == 1
 }
@@ -313,13 +313,11 @@ rule CRxPlayer_r_sex
 rule CRxPlayer_r_deadstate
 {
 	meta:
-		script = "$result = [@pattern + 0x33]"
+		script = "$result = [@pattern + 0x17]"
 		script = "Type.am CRxPlayer,uint32_t,r_deadstate,0,$result"
 		script = "Type.mcomment CRxPlayer,r_deadstate,\"人物死亡状态，死亡时置2\""
 	strings:
-		$pattern = { 8D 87 [4] 89 85 [4] C7 87 [4] FF FF 00 00 C7 87 [4] 00 00 00 00 C6 87 [4] 00 C7 05 [4] 00 00 00 00 }
-		//offset:0x17
-		//$pattern = { 6A 01 68 50 04 00 00 8B CE FF D0 B8 01 00 00 00 E9 [4] 8B 87 [4] DD D8 }
+		$pattern = { 6A 01 68 50 04 00 00 8B CE FF D0 B8 01 00 00 00 E9 [4] 8B 87 [4] DD D8 }
 	condition:
 		#pattern == 1
 }
@@ -329,13 +327,14 @@ rule CRxPlayer_r_deadstate
 rule CRxPlayer_move_flag
 {
 	meta:
-		script = "$result = [@pattern + 0x0a]"
+		script = "$result = [@pattern + 0x08]"
 		script = "Type.am CRxPlayer,uint32_t,r_move_flag1,0,$result"
 		script = "Type.mcomment CRxPlayer,r_move_flag1,\"两个标记为0时表示人物正在移动，瞬移使用，瞬移后置1\""
-		script = "$result = [@pattern + 0x04]"
+		script = "$result = [@pattern + 0x02]"
 		script = "Type.am CRxPlayer,uint32_t,r_move_flag2,0,$result"
 	strings:
-		$pattern = { 33 C9 89 8F [4] 89 8F [4] C7 87 [4] 01 00 00 00 8B 87 [4] 3B C1 0F 84 [4] 8B 40 ?? 81 C7 68 1A 00 00 57 6A 1E }
+		$pattern = { 89 [5] 89 [5] C7 [5] 01 00 00 00 [25] 1E }
+		
 	condition:
 		#pattern == 1
 }

@@ -691,7 +691,7 @@ rule NP_MSD
 		script = "log \"NP_MSD=0x{$result}\""
 		script = "lblset $result, MouseClick"
 	strings:
-		$pattern = { 3D B1 39 0C 00 74 ?? 3D B2 39 0C 00 74 ?? 3D 79 3A 0C 00 74 ?? 52 8B CE E8 [4] 83 3D [4] 00 }
+		$pattern = { 3D B1 39 0C 00 [2] 3D B2 39 0C 00 [2] 3D 79 3A 0C 00 [5] E8 [4] 83 3D [4] 00 }
 	condition:
 		#pattern == 1	
 }
@@ -729,13 +729,13 @@ rule NF_FUS
 rule HE_RSP
 {
 	meta:
-		script = "$result = @pattern"
+		script = "$result = @pattern + 0x2a + [@pattern + 0x26]"
 		script = "log \"HE_RSP=0x{$result}\""
 		script = "lblset $result, Response"
 	strings:
-		$pattern = { 55 8B EC B8 [93] 83 FF 74 74 ?? 83 FF 67 74 ?? 83 FF 68 74 ?? 83 FF 6B 74 ?? 83 FF 65 74 ?? 83 FF 66 }
+		$pattern = { B8 7E 02 00 00 [3] 02 [3] C0 00 00 00 ?? C0 00 00 00 [12] 00 00 00 00 E8  }
 	condition:
-		#pattern == 1	
+		#pattern == 1
 }
 
 rule NF_ATK
@@ -745,7 +745,7 @@ rule NF_ATK
 		script = "log \"NF_ATK=0x{$result}\""
 		script = "lblset $result, NormalAttack"
 	strings:
-		$pattern = { 55 8B EC B8 [63] 3D 01 12 7A 00 75 ?? 8B CF E8 [4] 5F 8B 4D FC 33 CD E8 [4] 8B E5 5D C2 04 00 3D 02 12 7A 00 }
+		$pattern = { 55 8B EC B8 [63] 3D 01 12 7A 00 }
 	condition:
 		#pattern == 1	
 }
@@ -790,10 +790,11 @@ rule HF_AT2
 rule HF_AT3
 {
 	meta:
-		script = "$result = @pattern + 0x27"
+		script = "$result = @pattern"
 		script = "log \"HF_AT3=0x{$result},eb04\""
 	strings:
-		$pattern = { 8B 8D [4] 8B 94 8B [4] 80 BA [4] 00 8B BD [4] 75 ?? 57 E8 [4] 83 C4 04 85 C0 0F 84 8D FB FF FF 8B 8D [4] 57 E8 }
+		$pattern = { 0F 84 [68] F1 11 03 00 [4] 91 98 04 00 [4] F9 1F 06 00 }
+		
 	condition:
 		#pattern == 1	
 }
@@ -801,10 +802,10 @@ rule HF_AT3
 rule HF_AT4
 {
 	meta:
-		script = "$result = @pattern + 0x09"
+		script = "$result = @pattern + 0xC"
 		script = "log \"HF_AT4=0x{$result},eb0f\""
 	strings:
-		$pattern = { 8B 87 [4] 83 F8 03 74 ?? 83 F8 04 74 ?? 83 F8 08 74 ?? 83 F8 09 74 }
+		$pattern = { C2 04 00 8B [5] 83 ?? 03 [2] 83 ?? 04 [2] 83 ?? 08 [2] 83 ?? 09 }
 	condition:
 		#pattern == 1	
 }
@@ -916,11 +917,11 @@ rule NF_FMV
 rule NF_FSM
 {
 	meta:
-		script = "$result = @pattern + 0x14 + [@pattern + 0x10]"
+		script = "$result = @pattern + 0xD + [@pattern + 0x9]"
 		script = "log \"NF_FSM=0x{$result}\""
 		script = "lblset $result, MoveStuff"
 	strings:
-		$pattern = { 8B 81 [4] 52 8B 91 [4] 50 52 E8 [4] 5F C7 86 [4] FF FF FF FF }
+		$pattern = { 6A 00 6A 5B 6A 00 [2] E8 }
 	condition:
 		#pattern == 1	
 }
@@ -986,7 +987,7 @@ rule HR_SMT
 		script = "$result = @pattern + 0x05 + [@pattern + 0x01]"
 		script = "lblset $result, PrintMonsterTitle"
 	strings:
-		$pattern = { E8 [4] 8B 47 ?? 8B 50 ?? 6A 00 8D 4F ?? 6A 00 68 20 04 00 00 FF D2 83 F8 01 }
+		$pattern = { E8 [4] 8B [2] 8B [2] 6A 00 8D [2] 6A 00 68 20 04 00 00 FF ?? 83 F8 01 }
 	condition:
 		#pattern == 1	
 }
@@ -1090,10 +1091,11 @@ rule NF_WXN
 rule HF_PKN
 {
 	meta:
-		script = "$result = @pattern + 0x06"
+		script = "$result = @pattern + 0x12"
 		script = "log \"HF_PKN=0x{$result},eb\""
 	strings:
-		$pattern = { 81 F9 41 1F 00 00 75 ?? 8B 15 [4] 83 BA [4] 00 0F 85 [4] 8B 85 [4] 50 C7 03 FF FF FF FF 8B 0D [4] 68 9F 0B 00 00 E8 }
+		$pattern = { C7 ?? F8 69 C7 FF 8B 0D [4] 81 ?? 41 1F 00 00 75 }
+		
 	condition:
 		#pattern == 1	
 }
@@ -1155,7 +1157,8 @@ rule HR_ROS
 		script = "$result = @pattern + 0x06 + [@pattern + 0x02]"
 		script = "lblset $result, find_object_sid"
 	strings:
-		$pattern = { 56 E8 [4] 8B F0 83 C4 18 85 F6 74 36 83 7E 08 2E 75 30 C7 86 [4] 01 00 00 00 }
+		$pattern = { 56 E8 [16] 2E [8] 01 00 00 00 }
+		
 	condition:
 		#pattern == 1	
 }
@@ -1187,10 +1190,11 @@ rule NP_ZD
 rule HF_FMS
 {
 	meta:
-		script = "$result = @pattern + 0x20"
+		script = "$result = @pattern"
 		script = "log \"HF_FMS=0x{$result},90e9\""
 	strings:
-		$pattern = { 81 85 [4] 54 03 00 00 83 C6 04 81 FE 24 05 00 00 0F 8C [4] 83 BD [4] 00 0F 85 [4] 8B 0D [4] 68 E9 00 00 00 6A 09 E8 }
+		$pattern = { 0F 85 [10] 68 E9 00 00 00 6A 09 E8 [10] 6A 00 6A 00 6A 00 [13] 6a 00 6a 1d 6a 02 E8 [12] 83 }
+		
 	condition:
 		#pattern == 1	
 }
@@ -1202,7 +1206,7 @@ rule address_BagStuffList
 		script = "log \"NP_LGS=0x{$result}\""
 		script = "lblset $result, BagStuffList"
 	strings:
-		$pattern = { C6 45 ?? 09 [4] 68 [4] 56 6A 42 53 8B C8 E8 [4] EB ?? 33 C0 A3 }
+		$pattern = { 68 59 08 00 00 6A 09 E8 [19] 8B [14] BC CC 9A 3B }
 	condition:
 		#pattern == 1	
 }
@@ -1234,11 +1238,11 @@ rule address_BagEquipList
 rule address_BagNingshenList
 {
 	meta:
-		script = "$result = [@pattern + 0x1e]"
+		script = "$result = [@pattern + 0x2]"
 		script = "log \"NP_LGN=0x{$result}\""
 		script = "lblset $result, BagNingshenList"
 	strings:
-		$pattern = { C6 [2] 0A [4] 68 [5] 6A 06 6A 11 [2] E8 [8] A3 }
+		$pattern = { 8B [5] 8B [14] EE DC 14 3C [8] 3B DD 14 3C }
 	condition:
 		#pattern == 1	
 }
@@ -1246,11 +1250,12 @@ rule address_BagNingshenList
 rule address_BagTaskitemList
 {
 	meta:
-		script = "$result = [@pattern + 0x1d]"
+		script = "$result = [@pattern + 0x23]"
 		script = "log \"NP_LGT=0x{$result}\""
 		script = "lblset $result, BagTaskitemList"
 	strings:
-		$pattern = { C6 [2] 0D [4] 68 [5] 6A 24 [3] E8 [8] A3 }
+		$pattern = { 68 7F 0D 00 00 E9 [11] 0F 27 00 00 [3] 7B 01 00 00 E9 [4] 8B }
+		
 	condition:
 		#pattern == 1	
 }
@@ -1272,11 +1277,11 @@ rule address_MyShopList
 rule address_PlayerShopList
 {
 	meta:
-		script = "$result = [@pattern + 0x30]"
+		script = "$result = [@pattern + 0x1d]"
 		script = "log \"NP_LPS=0x{$result}\""
 		script = "lblset $result, PlayerShopList"
 	strings:
-		$pattern = { 68 F4 23 00 00 E8 [20] 68 [4] 56 6A 08 6A 00 [2] E8 [4] EB ?? 33 C0 A3 }
+		$pattern = { 68 F6 06 00 00 E8 [11] 68 80 00 00 00 ?? E8 [4] A1 }
 	condition:
 		#pattern == 1
 }
@@ -1284,11 +1289,12 @@ rule address_PlayerShopList
 rule address_MakerMenuList
 {
 	meta:
-		script = "$result = [@pattern + 0x1a]"
+		script = "$result = [@pattern + 0x2]"
 		script = "log \"NP_LMM=0x{$result}\""
 		script = "lblset $result, MakerMenuList"
 	strings:
-		$pattern = { C6 45 ?? 04 [4] 6A ?? 56 6A 64 [3] E8 [4] EB ?? 33 C0 A3 [4] 8B 8E }
+		$pattern = { 8B [5] 89 [48] 7a dc 14 3c }
+		
 	condition:
 		#pattern == 1
 }
@@ -1296,11 +1302,11 @@ rule address_MakerMenuList
 rule address_MakerReadyList
 {
 	meta:
-		script = "$result = [@pattern + 0x1b]"
+		script = "$result = [@pattern + 0x1c]"
 		script = "log \"NP_LMR=0x{$result}\""
 		script = "lblset $result, MakerReadyList"
 	strings:
-		$pattern = { C6 45 ?? 05 [4] 6A ?? 56 6A 73 6A 00 8B C8 E8 [4] EB ?? 33 C0 A3 }
+		$pattern = { 68 50 0F 00 00 6A 09 E8 [18] 8B [6] 72 00 00 00 }
 	condition:
 		#pattern == 1
 }
@@ -1308,11 +1314,11 @@ rule address_MakerReadyList
 rule address_BreakerList
 {
 	meta:
-		script = "$result = [@pattern + 0x1e]"
+		script = "$result = [@pattern + 0x2]"
 		script = "log \"NP_LBK=0x{$result}\""
 		script = "lblset $result, BreakerList"
 	strings:
-		$pattern = { C6 45 ?? 06 [4] 68 [4] 56 6A 6C 6A 00 [2] E8 [4] EB ?? 33 C0 A3 }
+		$pattern = { 8B [36] 6A 0B 6A 01 [13] 68 CB 00 00 00 6A 09 E8 }
 	condition:
 		#pattern == 1
 }

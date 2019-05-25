@@ -2,7 +2,7 @@ rule CRxNpc_start
 {
 	meta:
 		script = "Type.as CRxNpc"
-		script = "Type.aanc CRxNpc,CRxObject"
+		script = "Type.aanc CRxNpc,CRxGameEntity"
 		script = "Type.comment CRxNpc,\"游戏NPC/怪物对象管理\""
 		script = "$offset = 0"
 		script = "Type.ad CRxNpc,\"bool attack_state_intime(uint32_t dwIntvl = 5000) const;\""
@@ -36,17 +36,17 @@ rule CRxNpc_offset__
 }
 
 //014 int sessionid;
-rule CRxNpc_sessionid
-{
-	meta:
-		script = "$result = byte:[@pattern + 0x26] - $offset"
-		script = "Type.am CRxNpc,int,sessionid,0,$result"
-		script = "Type.mcomment CRxNpc,sessionid,\"NPC会话ID -{d:$offset}\""
-	strings:
-		$pattern = { 3D 81 0C 00 00 [2] 3D 59 1B 00 00 [2] 3D BD 1B 00 00 [2] C7 83 [4] 07 00 00 00 5B 8B E5 5D C3 8B 43 }
-	condition:
-		#pattern == 1	
-}
+//rule CRxNpc_sessionid
+//{
+//	meta:
+//		script = "$result = byte:[@pattern + 0x26] - $offset"
+//		script = "Type.am CRxNpc,int,sessionid,0,$result"
+//		script = "Type.mcomment CRxNpc,sessionid,\"NPC会话ID -{d:$offset}\""
+//	strings:
+//		$pattern = { 3D 81 0C 00 00 [2] 3D 59 1B 00 00 [2] 3D BD 1B 00 00 [2] C7 83 [4] 07 00 00 00 5B 8B E5 5D C3 8B 43 }
+//	condition:
+//		#pattern == 1	
+//}
 
 //354 uint32_t x_showblood;
 rule CRxNpc_x_showblood
@@ -78,7 +78,7 @@ rule CRxNpc_x_distance
 rule CRxNpc_x_name
 {
 	meta:
-		script = "$result = [@pattern + 0x02] - $offset"
+		script = "$result = [@pattern + 0x19] - $offset"
 		script = "Type.am CRxNpc,char,x_name,0x20,$result"
 		script = "Type.mcomment CRxNpc,x_name,\"怪物名称 -{d:$offset}\""
 		
@@ -107,7 +107,9 @@ rule CRxNpc_x_name
 		script = "Type.am CRxNpc,uint8_t,ux_failnum"
 		script = "Type.mcomment CRxNpc,ux_failnum,\"自定：攻击失败更换次数（达到3次时永久不选择）\""	
 	strings:
-		$pattern = { 8D 9F [4] 85 DB 0F 84 [4] A1 [4] 8B 10 6A 00 6A 1C 50 8B 82 [4] FF D0 }
+		$pattern = { 83 ?? 2E 75 ?? [2] 74 ?? 83 ?? f8 EB [9] 6A 00 05 }
+		
+
 	condition:
 		#pattern == 1	
 }
@@ -237,7 +239,7 @@ rule CRxNpc_x_pMpos
 		script = "Type.am CRxNpc,_MONS_POS*,x_pMpos,0,$result"
 		script = "Type.mcomment CRxNpc,x_pMpos,\"怪物坐标指针\""
 	strings:
-		$pattern = { 8B B6 [4] 85 D2 [40] 81 C1 10 FC FF FF 81 F9 8F 00 00 00 }
+		$pattern = { 8B [47-51] 81 ?? 10 FC FF FF 81 ?? 8F 00 00 00 }
 	condition:
 		#pattern == 1
 }

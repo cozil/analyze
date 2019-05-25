@@ -35,25 +35,24 @@ rule CRxMgrTrade_dlg
 rule CRxMgrTrade_dlg_confirm
 {
 	meta:
-		script = "$result = [@pattern + 0x40]"
+		script = "$result = [@pattern + 0x47]"
 		script = "Type.am CRxMgrTrade,CRxWnd*,dlg_confirm,0,$result"
 	strings:
-		$pattern = { 6A 01 E8 [4] 68 [4] E8 [13] C6 [2] 02 [4] 6A 01 [2] 6A 73 68 03 01 00 00 6A 05 6A 3C 6A 14 [2] E8 [8] 8B }
+		$pattern = { 6a 01 e8 [4] 68 [4] e8 [13] C6 [2] 02 [4-20] 6A 01 [2] 6A 73 68 03 01 00 00 6A 05 6A 3C 6A 14 [2] e8 [8] 8b }
 	condition:
 		#pattern == 1
 }
 
-//23c CRxLabel * lb_buddy_name;
-//240 CRxLabel * lb_self_name;
+//CRxLabel * lb_buddy_name;
+//CRxLabel * lb_self_name;
 rule CRxMgrTrade_lb_buddy_name
 {
 	meta:
-		script = "$offset = [@pattern + 0x2]"
-		script = "$result = 0x100 - byte:[@pattern + 0x44]"
-		script = "Type.am CRxMgrTrade,CRxLabel*,lb_buddy_name,0,$offset - $result"
-		script = "Type.am CRxMgrTrade,CRxLabel*,lb_self_name,0,$offset - $result + 4"
+		script = "$result = [@pattern +0xb]]"
+		script = "Type.am CRxMgrTrade,CRxLabel*,lb_buddy_name,0,$result"
+		script = "Type.am CRxMgrTrade,CRxLabel*,lb_self_name,0,$result + 4"
 	strings:
-		$pattern = { 8D [5] 68 [4] E8 [28] 6A 11 68 82 00 00 00 6A 01 [2] EC ?? 6A 50 [2] E8 [8] 89 }
+		$pattern = { 6A 00 8D [6] 8B [5] E8 [4] 8D ?? 27 }
 	condition:
 		#pattern == 1
 }
@@ -75,17 +74,17 @@ rule CRxMgrTrade_ls_buddy_stuffs
 
 //25c CRxLabel * lb_buddy_money;
 //260 CRxLabel * lb_self_money;
-rule CRxMgrTrade_lb_buddy_money
-{
-	meta:
-		script = "$result = byte:[@pattern + 0x2e]"
-		script = "Type.am CRxMgrTrade,CRxLabel*,lb_buddy_money,0,$offset + $result"
-		script = "Type.am CRxMgrTrade,CRxLabel*,lb_self_money,0,$offset + $result + 4"
-	strings:
-		$pattern = { C6 [2] 0E [11] 6A 11 68 82 00 00 00 6A 06 [2] 85 00 00 00 ?? 6A 21 [2] E8 [8] 89 }
-	condition:
-		CRxMgrTrade_lb_buddy_name and #pattern == 1
-}
+//rule CRxMgrTrade_lb_buddy_money
+//{
+//	meta:
+//		script = "$result = byte:[@pattern + 0x2e]"
+//		script = "Type.am CRxMgrTrade,CRxLabel*,lb_buddy_money,0,$offset + $result"
+//		script = "Type.am CRxMgrTrade,CRxLabel*,lb_self_money,0,$offset + $result + 4"
+//	strings:
+//		$pattern = { C6 [2] 0E [18] 6A 11 68 82 00 00 00 6A 06 [2] 85 00 00 00 ?? 6A 21 [2] E8 [8] 89 }
+//	condition:
+//		CRxMgrTrade_lb_buddy_name and #pattern == 1
+//}
 
 //294 CRxMgrTradeTip * mtr_tip;
 rule CRxMgrTrade_mtr_tip

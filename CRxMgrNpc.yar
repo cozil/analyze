@@ -22,14 +22,14 @@ rule CRxMgrNpc_start
 rule CRxMgrNpc_mgr_shop
 {
 	meta:
-		script = "$result = [@pattern + 0x34]"
+		script = "$result = [@pattern + 0x4b]"
 		script = "Type.am CRxMgrNpc,CRxMgrShop*,mgr_shop,0,$result"
 		script = "Type.mcomment CRxMgrNpc,mgr_shop,\"NPC商店管理\""
 	strings:
 		//offset:0x4b
-		//$pattern = { 83 C1 03 69 C9 [4] 81 C1 [60] 50 51 8B 8A [4] E8 [4] 83 C6 04 4F }
+		$pattern = { 83 C1 03 69 C9 [4] 81 C1 [60] 50 51 8B 8A [4] E8 [4] 83 C6 04 4F }
 		//offset:0x34
-		$pattern = { 68 58 02 00 00 89 79 ?? E8 [4] 83 C4 04 89 85 [4] C6 45 ?? 13 3B C3 74 ?? 56 8B C8 E8 [4] EB ?? 33 C0 68 48 02 00 00 88 5D ?? 89 86 [4] E8 }
+		//$pattern = { 68 58 02 00 00 89 79 ?? E8 [4] 83 C4 04 89 85 [4] C6 45 ?? 13 3B C3 74 ?? 56 8B C8 E8 [4] EB ?? 33 C0 68 48 02 00 00 88 5D ?? 89 86 [4] E8 }
 	condition:
 		#pattern == 1	
 }
@@ -42,10 +42,7 @@ rule CRxMgrNpc_mgr_sxstone
 		script = "Type.am CRxMgrNpc,CRxMgrSxstone*,mgr_sxstone,0,$result"
 		script = "Type.mcomment CRxMgrNpc,mgr_sxstone,\"属性石合成管理\""
 	strings:
-		//offset:0x49
-		//$pattern = { 6A 65 8B CE E8 [4] 6A 00 E8 [4] 8B 95 [4] 8B 02 83 C4 04 50 8B CE E8 [4] E9 [4] D9 05 [4] E8 [4] D9 05 [4] 50 E8 [4] 8B 0D [4] 50 51 8B 8E [4] E8 }
-		//offset:0x3a
-		$pattern = { 68 48 02 00 00 88 5D ?? 89 86 [4] E8 [4] 83 C4 04 89 85 [4] C6 45 ?? 14 3B C3 74 ?? 56 8B C8 E8 [4] EB ?? 33 C0 68 40 02 00 00 88 5D ?? 89 86 [4] E8 }
+		$pattern = { 68 [4] 88 [2] 89 [5] e8 [16] 14 [7] e8 [8] 68 [4] 88 [2] 89 [5] e8 [13] c6 [2] 15 }
 	condition:
 		#pattern == 1	
 }
@@ -58,10 +55,7 @@ rule CRxMgrNpc_mgr_depot
 		script = "Type.am CRxMgrNpc,CRxMgrDepot*,mgr_depot,0,$result"
 		script = "Type.mcomment CRxMgrNpc,mgr_depot,\"仓库管理\""
 	strings:
-		//offset:0x4e
-		//$pattern = { 6A 04 6A 01 E8 [4] A1 [4] 6A 00 50 8B CE E8 [4] 8B 95 [4] 8B 02 50 8B CE E8 [4] E9 [4] D9 05 [4] E8 [4] D9 05 [4] 50 E8 [4] 8B 0D [4] 50 51 8B 8E [4] E8 }
-		//offset:0x3a
-		$pattern = { 68 40 02 00 00 88 5D ?? 89 86 [4] E8 [4] 83 C4 04 89 85 [4] C6 45 ?? 15 3B C3 74 ?? 56 8B C8 E8 [4] EB ?? 33 C0 68 44 02 00 00 88 5D ?? 89 86 [4] E8 }
+		$pattern = { 68 [4] 88 [2] 89 [5] e8 [16] 15 [7] e8 [8] 68 [4] 88 [2] 89 [5] e8 [13] c6 [2] 16 }
 	condition:
 		#pattern == 1	
 }
@@ -78,7 +72,7 @@ rule CRxMgrNpc_mgr_unite
 		script = "Type.am CRxMgrNpc,CRxMgrStrong*,mgr_strong,0,$result"
 		script = "Type.mcomment CRxMgrNpc,mgr_strong,\"强化管理\""
 	strings:
-		$pattern = { 33 C0 68 44 02 00 00 88 5D ?? 89 86 [4] E8 [4] 83 C4 04 89 85 [4] C6 45 ?? 17 3B C3 74 ?? 56 8B C8 E8 [4] EB ?? 33 C0 68 84 02 00 00 88 5D ?? 89 86 [4] E8 }
+		$pattern = { 33 C0 68 [4] 88 [2] 89 [5] E8 [7] 89 [5] C6 [2] 17 [7] E8 [8] 68 [4] 88 [2] 89 [5] E8 }
 	condition:
 		#pattern == 1	
 }
@@ -89,12 +83,9 @@ rule CRxMgrNpc_mgr_pk
 	meta:
 		script = "$result = [@pattern + 0x3a]"
 		script = "Type.am CRxMgrNpc,CRxMgrPk*,mgr_pk,0,$result"
-		script = "Type.mcomment CRxMgrNpc,mgr_strong,\"PK管理\""
+		script = "Type.mcomment CRxMgrNpc,mgr_pk,\"PK管理\""
 	strings:
-		//offset:0x0e
-		//$pattern = { 8B 15 [4] 8B 82 [4] 8B 88 [4] C6 81 [4] 00 FF D3 89 86 [4] 39 3D [4] 75 ?? 8B 15 [4] 57 6A 31 52 }
-		//offset:0x3a
-		$pattern = { 68 88 0A 00 00 88 5D ?? 89 86 [4] E8 [4] 83 C4 04 89 85 [4] C6 45 ?? 27 3B C3 74 ?? 56 8B C8 E8 [4] EB ?? 33 C0 68 48 05 00 00 88 5D ?? 89 86 [4] E8 }
+		$pattern = { 68 [4] 88 [2] 89 [5] E8 [7] 89 [5] C6 [2] 27 [7] E8 [8] 68 [4] 88 [2] 89 [5] E8 }
 	condition:
 		#pattern == 1
 }
@@ -107,7 +98,7 @@ rule CRxMgrNpc_mgr_portal
 		script = "Type.am CRxMgrNpc,CRxMgrPortal*,mgr_portal,0,$result"
 		script = "Type.mcomment CRxMgrNpc,mgr_portal,\"单线传送管理\""
 	strings:
-		$pattern = { 68 70 02 00 00 88 5D ?? 89 86 [4] E8 [4] 83 C4 04 89 85 [4] C6 45 ?? 2D 3B C3 74 ?? 56 8B C8 E8 [4] EB ?? 33 C0 68 44 02 00 00 88 5D ?? 89 86 [4] E8 }
+		$pattern = { 68 [4] 88 [2] 89 [5] E8 [7] 89 [5] C6 [2] 2D [7] E8 [8] 68 [4] 88 [2] 89 [5] E8 }
 	condition:
 		#pattern == 1
 }
@@ -120,7 +111,7 @@ rule CRxMgrNpc_mgr_raise
 		script = "Type.am CRxMgrNpc,CRxMgrRaise*,mgr_raise,0,$result"
 		script = "Type.mcomment CRxMgrNpc,mgr_raise,\"提真管理\""
 	strings:
-		$pattern = { 68 D4 02 00 00 88 5D ?? 89 86 [4] E8 [4] 83 C4 04 89 85 [4] C6 45 ?? 33 3B C3 74 ?? 56 8B C8 E8 [4] EB ?? 33 C0 68 [4] 88 5D ?? 89 86 [4] E8 }
+		$pattern = { 68 [4] 88 [2] 89 [5] E8 [7] 89 [5] C6 [2] 33 [7] E8 [8] 68 [4] 88 [2] 89 [5] E8 }
 	condition:
 		#pattern == 1
 }

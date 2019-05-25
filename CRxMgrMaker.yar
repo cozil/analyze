@@ -35,7 +35,7 @@ rule CRxMgrMaker_dlg_cb_items
 		script = "$result = [@pattern + 0x1e]"
 		script = "Type.am CRxMgrMaker,CRxCombo*,cb_items,0,$result"
 	strings:
-		$pattern = { 6A 10 68 CB 00 00 00 6A 38 6A 4E [2] E8 [4] EB ?? 33 C0 8B 8E [4] 89 86 }
+		$pattern = { 6A 10 68 CB 00 00 00 6A 38 6A 4E [2] E8 [4] EB ?? 33 C0 8B [5] 89 }
 	condition:
 		#pattern == 1
 }

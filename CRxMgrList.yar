@@ -63,7 +63,7 @@ rule CRxMgrList_states
 		script = "$result = [@pattern + 0x44]"
 		script = "Type.am CRxMgrList,uint32_t,list_arg,0,$result"
 	strings:
-		$pattern = { 80 BB [4] 00 [9] 00 00 00 00 [8] 83 BA [4] 00 0F 84 [4] 8B BF [6] 0D [4] 45 [2] 8B 75 ?? 8B 82 [4] 8B B6 }
+		$pattern = { 80 [5] 00 [9] 00 00 00 00 [8] 83 [5] 00 [6] 8B [7] 0D [4] 45 [2] 8B [2] 8B [5] 8B }
 	condition:
 		#pattern == 1
 }
@@ -163,11 +163,11 @@ rule CRxMgrList_dlg_drop_confirm
 rule CRxMgrList_dlg_flyring_confirm
 {
 	meta:
-		script = "$result = [@pattern + 0x34]"
+		script = "$result = [@pattern + 0x2]"
 		script = "Type.am CRxMgrList,CRxWnd*,dlg_flyring_confirm,0,$result"
-		script = "Type.mcomment CRxMgrList,dlg_drop_confirm,\"使用戒指传送确认窗口(背包列表)\""
+		script = "Type.mcomment CRxMgrList,dlg_flyring_confirm,\"使用戒指传送确认窗口(背包列表)\""
 	strings:
-		$pattern = { 6A 01 [2] 6A 73 68 03 01 00 00 6A 05 6A 3C 6A 14 [2] E8 [9] 68 [6] 89 7D ?? 89 86 [4] E8 [4] 8B 8E }
+		$pattern = { 8B [5] 8B [5] ?? E8 [6] FF 8D [6] 42 00 00 00 }
 	condition:
 		#pattern == 1
 }

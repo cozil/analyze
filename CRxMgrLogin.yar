@@ -26,17 +26,36 @@ rule CRxMgrLogin_dlg_login
 {
 	meta:
 		script = "$result = [@pattern + 0x1f]"
-		script = "Type.am CRxMgrLogin,CRxWnd*,dlg_login,0,$result"		
-		script = "$result = [@pattern + 0x94]"
+		script = "Type.am CRxMgrLogin,CRxWnd*,dlg_login,0,$result"			
+	strings:
+		$pattern = { 6A 01 6A 01 [25] 89 [5] E8 [11] E8 [11] E8 [11] E8 [47] 68 C8 00 00 00 }
+	condition:
+		#pattern == 1
+}
+
+
+rule CRxMgrLogin_login_edit_account
+{
+	meta:
+		script = "$result = [@pattern + 0x25]"
 		script = "Type.am CRxMgrLogin,CRxEdit*,login_edit_account,0,$result"
 		script = "Type.mcomment CRxMgrLogin,login_edit_account,\"输入帐户框\""
-		script = "$result = [@pattern + 0x15d]"
+	strings:
+		$pattern = { 68 C8 00 00 00 [2] 6A 0E 68 A5 00 00 00 6A 56 6A 58 [2] E8 [14] 89 }
+	condition:
+		#pattern == 1	
+}
+
+rule CRxMgrLogin_login_edit_password
+{
+	meta:
+		script = "$result = [@pattern + 0x26]"
 		script = "Type.am CRxMgrLogin,CRxEdit*,login_edit_password,0,$result"
 		script = "Type.mcomment CRxMgrLogin,login_edit_password,\"输出密码框\""		
 	strings:
-		$pattern = { 6A 01 6A 01 56 68 [4] 57 51 8B C8 E8 [4] EB ?? [90] 68 C8 00 00 00 53 56 6A 0E 68 A5 00 00 00 6A 56 6A 58 8B C8 E8 [4] EB ?? 33 C0 50 6A 78 88 5D ?? 89 86 [4] E8 [158] 68 C9 00 00 00 6A 01 56 6A 0E 68 A5 00 00 00 6A 73 6A 58 8B C8 E8 [4] EB ?? 33 C0 50 6A 78 88 5D ?? 89 86 [4] E8 }
+		$pattern = { 68 C9 00 00 00 6A 01 ?? 6A 0E 68 A5 00 00 00 6A 73 6A 58 [2] E8 [14] 89 }
 	condition:
-		#pattern == 1	
+		#pattern == 1
 }
 
 //29c CRxWndMsgBox * dlg_msgbox;
@@ -52,18 +71,21 @@ rule CRxMgrLogin_dlg_msgbox
 		#pattern == 1	
 }
 
+
+
+
 //2a0 CRxLableEx * msgbox_lb_text;
 rule CRxMgrLogin_msgbox_lb_text
 {
 	meta:
 		script = "Type.offset CRxMgrLogin, dlg_msgbox"
 		script = "$compare = $result"
-		script = "$offset = 0x1e"
+		script = "$offset = 0x2d"
 		load = "utils/match_dword_at.scr"
-		script = "$result = [$result + 0x24]"
+		script = "$result = [$result + 0x33]"
 		script = "Type.am CRxMgrLogin,CRxLabelEx*,msgbox_lb_text,0,$result"
 	strings:
-		$pattern = { 6A 01 [2] 6A 73 68 03 01 00 00 6A 05 6A 3C 6A 14 8B C8 E8 [8] 8B 96 [4] 89 86 }
+		$pattern = { C6 [2] 10 [11] 6A 01 [2] 6A 73 68 03 01 00 00 6A 05 6A 3C 6A 14 [2] E8 [8] 8B [5] 89 }
 	condition:
 		#pattern >= 1
 }

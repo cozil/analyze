@@ -36,7 +36,7 @@ rule CRxMgrPk_mgr_fypk
 		script = "Type.am CRxMgrPk,CRxMgrFypk*,mgr_fypk,0,$result"
 		script = "Type.mcomment CRxMgrPk,mgr_fypk,\"风云大战管理\""
 	strings:
-		$pattern = { 68 70 03 00 00 E8 [4] 83 C4 04 89 85 [4] C6 45 ?? 0D 3B C3 74 ?? 56 8B C8 E8 [4] EB ?? 33 C0 89 86 }
+		$pattern = { 68 [4] E8 [7] 89 [5] C6 [2] 0D [7] E8 [8] 89 }
 	condition:
 		#pattern == 1
 }

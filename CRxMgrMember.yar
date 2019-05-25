@@ -13,14 +13,14 @@ rule CRxMgrMember_start
 rule CRxMgrMember_t_exist
 {
 	meta:
-		script = "$result = [@pattern + 0x28]"
+		script = "$result = [@pattern + 0x2A]"
 		script = "Type.am CRxMgrMember,uint8_t,t_exist,0,$result"
 		script = "Type.mcomment CRxMgrMember,t_exist,\"单元指向有效队员\""
-		script = "$result = [@pattern + 0x32]"
+		script = "$result = [@pattern + 0x34]"
 		script = "Type.am CRxMgrMember,short,t_sid,0,$result"
 		script = "Type.mcomment CRxMgrMember,t_sid,\"队员sid\""
 	strings:
-		$pattern = { FF 00 FF FF [2] 00 00 FF FF [8] 00 [5] 00 [13] 80 [5] 00 [2] 0F BF }
+		$pattern = { C7 ?? 00 00 FF FF 80 [5] 00 [9] 00 [17] 80 [5] 00 [2] 0F BF }
 	condition:
 		#pattern == 1
 }

@@ -15,7 +15,7 @@ rule CRxMgrFymap_dlg_map
 		script = "$result = [@pattern + 0xf]"
 		script = "Type.am CRxMgrFymap,CRxWnd*,dlg_map,0,$result"	
 	strings:
-		$pattern = { 8B 8E [4] 56 57 E8 [4] 8B 86 [4] 68 F0 03 00 00 C6 80 [4] 01 E8 [4] 83 C4 04 89 45 ?? C6 45 ?? 07 }
+		$pattern = { 8B [7] E8 [52] 68 38 01 00 00 ?? 6a 12 68 1d 01 00 00 6a 03 68 0f 01 00 00 [2] E8 }
 	condition:
 		#pattern == 1
 }

@@ -30,24 +30,24 @@ rule CRxMgrTeam_dlg_msgbox
 rule CRxMgrTeam_curr_playersid
 {
 	meta:
-		script = "$result = [@pattern + 0x3]"
+		script = "$result = [@pattern + 0x10]"
 		script = "Type.am CRxMgrTeam,short,curr_playersid,0,$result"
 		script = "Type.mcomment CRxMgrTeam,curr_playersid,\"当前交互的玩家sid\""
 	strings:
-		$pattern = { 66 8B [6] 34 00 00 00 66 89 [8] 80 [5] 00 [3] 06 00 00 00 66 [6] 66 [6] 66 [6] 66 }
+		$pattern = { 66 [6] 89 [5] 66 [6] 88 [5] 88 [5] C7 [5] FF FF FF FF C6 [5] 01 }
 	condition:
-		#pattern == 1
+		#pattern >= 1
 }
 
 //280 int captain_sid;
 rule CRxMgrTeam_captain_sid
 {
 	meta:
-		script = "$result = [@pattern + 0x13]"
+		script = "$result = [@pattern + 0x12]"
 		script = "Type.am CRxMgrTeam,int,captain_sid,0,$result"
 		script = "Type.mcomment CRxMgrTeam,captain_sid,\"队长sid\""
 	strings:
-		$pattern = { 66 [3] 01 0F 85 [4] 8B [5] 39 [5] 74 [3] 68 9C 0C 00 00 }
+		$pattern = { 66 [3] 01 0F [5] A1 [4] 39 [8] 9C 0C 00 00 }
 	condition:
 		#pattern == 1
 }
@@ -69,11 +69,11 @@ rule CRxMgrTeam_selected_sid
 rule CRxMgrTeam_team_level
 {
 	meta:
-		script = "$result = [@pattern + 0x18]"
+		script = "$result = [@pattern + 0x1c]"
 		script = "Type.am CRxMgrTeam,uint16_t,team_level,0,$result"
 		script = "Type.mcomment CRxMgrTeam,team_level,\"队伍等级\""
 	strings:
-		$pattern = { 55 8B EC 83 EC 10 53 57 8B [2] 0F B7 ?? 07 8A ?? 09 89 [2] 66 89 }
+		$pattern = { 55 8b ec [8] 09 [6] 07 [6] 66 [18] ff }
 	condition:
 		#pattern == 1
 }

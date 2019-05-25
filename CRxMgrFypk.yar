@@ -21,7 +21,7 @@ rule CRxMgrFypk_mgr_fynode
 		script = "Type.am CRxMgrFypk,CRxMgrFymap*,mgr_fymap,0,$result"
 		script = "Type.mcomment CRxMgrFypk,mgr_fymap,\"风云地图管理\""
 	strings:
-		$pattern = { 89 45 ?? C6 45 ?? 05 [7] E8 [8] 68 4C 03 00 00 C6 45 ?? 04 89 86 [4] E8 [4] 83 C4 04 89 45 ?? C6 45 ?? 06 [7] E8 [8] 89 86 }
+		$pattern = { 89 [2] C6 [2] 05 [7] E8 [8] 68 [4] C6 [2] 04 89 [5] E8 [7] 89 [2] C6 [2] 06 [7] E8 [8] 89 }
 	condition:
 		#pattern == 1
 }

@@ -4,6 +4,8 @@ rule CRxMgrExtBag_start
 		script = "Type.as CRxMgrExtBag"
 		script = "Type.aanc CRxMgrExtBag,CRxMgr"
 		script = "Type.comment CRxMgrExtBag, \"侠客行囊管理\""
+		script = "Type.ad CRxMgrExtBag,\"inline bool disabled() const {{ return (0 == state); }}\""
+		script = "Type.ad CRxMgrExtBag,\"inline bool limitted() const {{ return (1 == state); }}\""
 		script = "Type.ad CRxMgrExtBag,\"inline bool available() const {{ return (2 == state); }}\""
 	condition:
 		true

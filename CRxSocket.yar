@@ -3,7 +3,7 @@ rule CRxSocket_start
 {
 	meta:
 		script = "Type.as CRxSocket"
-		script = "Type.comment CRxSocket,\"通讯管理\""
+		script = "Type.comment CRxSocket,\"閫氳绠＄悊\""
 		script = "Type.ad CRxSocket,\"inline bool is_socket_down() const {{ return (-1 == Socket); }};\""
 		script = "Type.ad CRxSocket,\"void reset_counter();\""
 	condition:

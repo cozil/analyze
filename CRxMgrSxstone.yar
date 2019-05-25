@@ -18,7 +18,7 @@ rule CRxMgrSxstone_dlg
 		script = "$result = [@pattern + 0x6]"
 		script = "Type.am CRxMgrSxstone,CRxWnd*,dlg,0,$result"
 	strings:
-		$pattern = { 6A 01 8B C8 89 86 [4] E8 [4] 68 F4 23 00 00 C7 45 ?? 7D 00 00 00 C7 45 ?? BA 00 00 00 E8 [18] 6A 56 }
+		$pattern = { 6A 01 [2] 89 [5] E8 [4] 68 [4] C7 [2] 7D 00 00 00 C7 [2] BA 00 00 00 E8 [18] 6A 56 }
 	condition:
 		#pattern == 1
 }

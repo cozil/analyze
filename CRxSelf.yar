@@ -54,12 +54,13 @@ rule CRxSelf_sex
 rule CRxSelf_school
 {
 	meta:
-		script = "$result = [@pattern + 0xa]"
+		script = "$result = [@pattern + 0x1]"
 		script = "lblset $result, CRxSelf::school"
 		script = "Type.am CRxSelf,char,school,0x10,$result - RoleInfo\""
 		script = "Type.mcomment CRxSelf,school,\"门派\""
 	strings:
-		$pattern = { 6A 0F 8D 81 [4] 50 68 [4] 66 89 15 [4] E8 [23] 81 FF BC 03 00 00 }
+		$pattern = { B8 [47] FF [11] 7F 7F 7F FF [2] 39 EF FF FF  }
+		
 	condition:
 		#pattern == 1			
 }
@@ -297,18 +298,19 @@ rule CRxSelf_point
 rule CRxSelf_wx_quota
 {
 	meta:
-		script = "$result = [@pattern + 0x02]"
+		script = "$result = [@pattern + 0x9]"
 		script = "lblset $result, CRxSelf::wx_quota"
 		script = "Type.am CRxSelf,uint16_t,wx_quota,0,$result - RoleInfo"
 		script = "Type.mcomment CRxSelf,wx_quota,\"当日武勋配额\""
 		
-		script = "$result = [@pattern + 0x10]"
+		script = "$result = [@pattern + 0x17]"
 		script = "lblset $result, CRxSelf::wx_lose"
 		script = "Type.am CRxSelf,uint16_t,wx_lose,0,$result - RoleInfo"	
 		script = "Type.mcomment CRxSelf,wx_lose,\"当日因击杀丢失的武勋\""
 		
 	strings:
-		$pattern = { 66 A3 [4] 0F B7 8B [4] 66 89 0D [4] 0F B7 93 [4] 66 89 15 [4] 0F B7 83 [4] 66 A3 [4] E8 }
+		//特征码中的偏移值为通讯封包结构成员
+		$pattern = { 0F [2] 2C 04 00 00 66 [5] 0F [2] 2E 04 00 00 66 }
 	condition:
 		#pattern == 1			
 }

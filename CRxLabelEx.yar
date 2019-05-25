@@ -16,7 +16,7 @@ rule CRxLabelEx_text
 		script = "$result = [@pattern + 0x15]"
 		script = "Type.am CRxLabelEx,char,text,0x200,$result"
 	strings:
-		$pattern = { 68 00 02 00 00 [3] 8B 55 ?? 6A FF 68 00 02 00 00 [3] 29 02 00 00 ?? E8 }
+		$pattern = { 68 00 02 00 00 [3] 8B [2] 6A FF 68 00 02 00 00 [8] E8 }
 	condition:
 		#pattern == 1
 }

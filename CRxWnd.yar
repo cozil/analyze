@@ -6,30 +6,30 @@ rule CRxWnd_start
 {
 	meta:
 		script = "Type.as CRxWnd"
-		script = "Type.aanc CRxWnd,CRxObject"
+		script = "Type.aanc CRxWnd,CRxCtrl"
 		script = "Type.comment CRxWnd,\"窗口基础类 type=0x18\""
 	condition:
 		true
 }
 
 //0040 uint32_t visible;
-rule CRxWnd_visible
-{
-	meta:
-		script = "$result = byte:[@pattern + 0x06]"
-		script = "$result1 = byte:[@pattern + 0x11]"
-		script = "cmp $result - $result1,0"
-		script = "jz _SUCCESS"
-		script = "msg \"Invalid offset for CRxWnd::visible\""
-		script = "jmp _END"
-		script = "_SUCCESS:"
-		script = "Type.am CRxWnd,uint32_t,visible,0,$result"
-		script = "_END:"
-	strings:
-		$pattern = { 55 8B EC 51 83 79 ?? 00 [6] 56 C7 41 ?? 01 00 00 00 }
-	condition:
-		#pattern == 1
-}
+//rule CRxWnd_visible
+//{
+//	meta:
+//		script = "$result = byte:[@pattern + 0x06]"
+//		script = "$result1 = byte:[@pattern + 0x11]"
+//		script = "cmp $result - $result1,0"
+//		script = "jz _SUCCESS"
+//		script = "msg \"Invalid offset for CRxWnd::visible\""
+//		script = "jmp _END"
+//		script = "_SUCCESS:"
+//		script = "Type.am CRxWnd,uint32_t,visible,0,$result"
+//		script = "_END:"
+//	strings:
+//		$pattern = { 55 8B EC 51 83 79 ?? 00 [6] 56 C7 41 ?? 01 00 00 00 }
+//	condition:
+//		#pattern == 1
+//}
 
 //314 uint32_t flag;
 rule CRxWnd_flag
