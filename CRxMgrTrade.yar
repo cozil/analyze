@@ -4,12 +4,11 @@ rule CRxMgrTrade_start
 		script = "Type.as CRxMgrTrade"
 		script = "Type.aanc CRxMgrTrade,CRxMgr"
 		script = "Type.comment CRxMgrTrade, \"交易管理\""
-		script = "Type.ad CRxMgrTrade,\"inline void click_confirm_cancel() {{ click(0x5f); }}\""
-		script = "Type.ad CRxMgrTrade,\"inline void click_confirm_accept() {{ click(0x60); }}\""
-		script = "Type.ad CRxMgrTrade,\"inline void click_confirm_reject() {{ click(0x61); }}\""
-		
-		script = "Type.ad CRxMgrTrade,\"inline void click_accept() {{ click(0x62); }}\""
-		script = "Type.ad CRxMgrTrade,\"inline void click_close() {{ click(0x63); }}\""
+		script = "Type.ad CRxMgrTrade,\"static const int confirm_cancel_id = 0x5f;\""
+		script = "Type.ad CRxMgrTrade,\"static const int confirm_accept_id = 0x60;\""
+		script = "Type.ad CRxMgrTrade,\"static const int confirm_reject_id = 0x61;\""
+		script = "Type.ad CRxMgrTrade,\"static const int accept_id = 0x62;\""
+		script = "Type.ad CRxMgrTrade,\"static const int close_id = 0x63;\""
 		
 		script = "Type.ad CRxMgrTrade,\"inline bool req_activated() const {{ return (dlg_confirm->visible != 0); }}\""
 		script = "Type.ad CRxMgrTrade,\"inline bool req_trading() const {{ return (req_activated() && (dlg_confirm->flag == 0)); }}\""

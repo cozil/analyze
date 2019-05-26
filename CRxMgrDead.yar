@@ -4,15 +4,13 @@ rule CRxMgrDead_start
 		script = "Type.as CRxMgrDead"
 		script = "Type.aanc CRxMgrDead,CRxMgr"
 		script = "Type.comment CRxMgrDead, \"死亡保护管理\""
-		script = "Type.ad CRxMgrDead,\"inline void click_dead_protect1() {{ click(0x385); }}\""
-		script = "Type.ad CRxMgrDead,\"inline void click_dead_protect2() {{ click(0x386); }}\""
-		script = "Type.ad CRxMgrDead,\"inline void click_dead_noprotect() {{ click(0x387); }}\""
-		script = "Type.ad CRxMgrDead,\"inline void click_dead_close() {{ click(0x387); }}\""
-				
-		script = "Type.ad CRxMgrDead,\"inline void click_pay_confirm() {{ click(0x388); }}\""
-		script = "Type.ad CRxMgrDead,\"inline void click_pay_cancel() {{ click(0x389); }}\""
-		
-		script = "Type.ad CRxMgrDead,\"inline void click_payfail() {{ click(0x38b); }}\""
+		script = "Type.ad CRxMgrDead,\"static const int dead_protect1_id = 0x385;\""
+		script = "Type.ad CRxMgrDead,\"static const int dead_protect2_id = 0x386;\""
+		script = "Type.ad CRxMgrDead,\"static const int dead_noprotect_id = 0x387;\""
+		script = "Type.ad CRxMgrDead,\"static const int dead_close_id = 0x387;\""				
+		script = "Type.ad CRxMgrDead,\"static const int pay_confirm_id = 0x388;\""
+		script = "Type.ad CRxMgrDead,\"static const int pay_cancel_id = 0x389;\""		
+		script = "Type.ad CRxMgrDead,\"static const int payfail_id = 0x38b;\""
 	condition:
 		true
 }

@@ -4,6 +4,7 @@ rule CRxMgrMember_start
 		script = "Type.as CRxMgrMember"
 		script = "Type.aanc CRxMgrMember,CRxMgr"
 		script = "Type.comment CRxMgrMember, \"队伍成员管理\""	
+		script = "Type.ad CRxMgrMember,\"static const int MaxSize = 7; \""
 	condition:
 		true
 }
@@ -24,6 +25,20 @@ rule CRxMgrMember_t_exist
 	condition:
 		#pattern == 1
 }
+
+//char t_name[0x20];
+rule CRxMgrMember_t_name
+{
+	meta:
+		script = "$result = [@pattern + 0x30]"
+		script = "Type.am CRxMgrMember,char,t_name,0x20,$result"
+		script = "Type.mcomment CRxMgrMember,t_name,\"队友名称\""
+	strings:
+		$pattern = { 68 00 FF FF FF [2] 6A FF E8 [12] 6A 01 [2] E8 [19] 89 }
+	condition:
+		#pattern == 1
+}
+
 
 rule CRxMgrMember_end
 {

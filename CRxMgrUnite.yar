@@ -4,9 +4,9 @@ rule CRxMgrUnite_start
 		script = "Type.as CRxMgrUnite"
 		script = "Type.aanc CRxMgrUnite,CRxMgr"
 		script = "Type.comment CRxMgrUnite,\"合成管理\""
-		script = "Type.ad CRxMgrUnite,\"inline void click_close() {{ click(0x61); }}\""
-		script = "Type.ad CRxMgrUnite,\"inline void click_confirm() {{ click(0x62); }}\""
-		script = "Type.ad CRxMgrUnite,\"inline void click_cancel() {{ click(0x63); }}\""
+		script = "Type.ad CRxMgrUnite,\"static const int close_id = 0x61;\""
+		script = "Type.ad CRxMgrUnite,\"static const int confirm_id = 0x62;\""
+		script = "Type.ad CRxMgrUnite,\"static const int cancel_id = 0x63;\""
 	condition:
 		true
 }

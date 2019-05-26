@@ -9,9 +9,9 @@ rule CRxMgrShop_start
 		script = "Type.as CRxMgrShop"
 		script = "Type.aanc CRxMgrShop,CRxMgr"
 		script = "Type.comment CRxMgrShop,\"商店管理\""
-		script = "Type.ad CRxMgrShop,\"inline void click_close() {{ click(0x5b); }}\""
-		script = "Type.ad CRxMgrShop,\"inline void click_nextpage() {{ click(0x2712); }}\""
-		script = "Type.ad CRxMgrShop,\"inline void click_prevpage() {{ click(0x2711); }}\""
+		script = "Type.ad CRxMgrShop,\"static const int close_id = 0x5b;\""
+		script = "Type.ad CRxMgrShop,\"static const int nextpage_id = 0x2712;\""
+		script = "Type.ad CRxMgrShop,\"static const int prevpage_id = 0x2711;\""
 		
 	condition:
 		true

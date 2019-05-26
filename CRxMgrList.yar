@@ -6,27 +6,27 @@ rule CRxMgrList_start
 		script = "Type.as SlotState"
 		script = "Type.am SlotState,char,enabled"
 		script = "Type.am SlotState,char,pad_01,0x23"
-
-		script = "Type.ad CRxMgrList,\"inline void click_price_confirm() {{ click(0x60);}} //NPC商店购买物品输入数量确认/取消\""
-		script = "Type.ad CRxMgrList,\"inline void click_price_cancel() {{ click(0x61);}}\""	
 		
-		script = "Type.ad CRxMgrList,\"inline void click_input_confirm() {{ click(0x62);}} //仓库取物品输入数量确认/取消\""
-		script = "Type.ad CRxMgrList,\"inline void click_input_cancel() {{ click(0x63);}}\""		
+		script = "Type.ad CRxMgrList, \"static const int price_confirm_id = 0x60;      //NPC商店购买物品输入数量确认/取消\""
+		script = "Type.ad CRxMgrList, \"static const int price_cancel_id = 0x61;\""
+		
+		script = "Type.ad CRxMgrList,\"static const int input_confirm_id = 0x62;      //仓库取物品输入数量确认/取消\""
+		script = "Type.ad CRxMgrList,\"static const int input_cancel_id = 0x63;\""		
 	
-		script = "Type.ad CRxMgrList,\"inline void click_myshop_confirm() {{ click(0x5a);}} //开店输入数量确认/取消\""
-		script = "Type.ad CRxMgrList,\"inline void click_myshop_cancel() {{ click(0x5b);}}\""	
+		script = "Type.ad CRxMgrList,\"static const int myshop_confirm_id = 0x5a;      //开店输入数量确认/取消\""
+		script = "Type.ad CRxMgrList,\"static const int myshop_cancel_id = 0x5b;\""	
 		
-		script = "Type.ad CRxMgrList,\"inline void click_drop_confirm() {{ click(0x5c);}} //扔掉属性物品确认/取消\""
-		script = "Type.ad CRxMgrList,\"inline void click_drop_cancel() {{ click(0x5d);}}\""	
+		script = "Type.ad CRxMgrList,\"static const int drop_confirm_id = 0x5c;      //扔掉属性物品确认/取消\""
+		script = "Type.ad CRxMgrList,\"static const int drop_cancel_id = 0x5d;\""	
 			
-		script = "Type.ad CRxMgrList,\"inline void click_sell_confirm() {{ click(0x5e);}} //属性物品卖店确认/取消\""
-		script = "Type.ad CRxMgrList,\"inline void click_sell_cancel() {{ click(0x5f);}}\""
+		script = "Type.ad CRxMgrList,\"static const int sell_confirm_id = 0x5e;      //属性物品卖店确认/取消\""
+		script = "Type.ad CRxMgrList,\"static const int sell_cancel_id = 0x5f;\""
 		
-		script = "Type.ad CRxMgrList,\"inline void click_flyring_confirm() {{ click(0xc9);}} //戒指传送确认/取消\""
-		script = "Type.ad CRxMgrList,\"inline void click_flyring_cancel() {{ click(0xca);}}\""	
+		script = "Type.ad CRxMgrList,\"static const int flyring_confirm_id = 0xc9;      //戒指传送确认/取消\""
+		script = "Type.ad CRxMgrList,\"static const int flyring_cancel_id = 0xca;\""	
 		
-		script = "Type.ad CRxMgrList,\"inline void click_break_confirm() {{ click(0xcb);}} //属性物品分解确认/取消\""
-		script = "Type.ad CRxMgrList,\"inline void click_break_cancel() {{ click(0xcc);}}\""
+		script = "Type.ad CRxMgrList,\"static const int break_confirm_id = 0xcb;      //属性物品分解确认/取消\""
+		script = "Type.ad CRxMgrList,\"static const int break_cancel_id = 0xcc;\""
 		
 		script = "Type.ad CRxMgrList,\"int calc_free_space() const;\""
 		script = "Type.ad CRxMgrList,\"int get_free_slot() const;\""

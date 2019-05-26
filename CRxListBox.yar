@@ -65,6 +65,7 @@ rule CRxListBox_start
 		script = "Type.ad CRxListBox,\"int read_items(StringArray& strList, int columnid) const;\""
 		script = "Type.ad CRxListBox,\"bool select_item(const char * cpName, int columnid);\""
 		script = "Type.ad CRxListBox,\"bool select_item(int nItemIndex);\""
+		script = "Type.ad CRxListBox,\"int find_item(const char *cpName, int columnid) const;\""
 	condition:
 		true
 }

@@ -4,9 +4,9 @@ rule CRxMgrSxstone_start
 		script = "Type.as CRxMgrSxstone"
 		script = "Type.aanc CRxMgrSxstone,CRxMgr"
 		script = "Type.comment CRxMgrSxstone, \"赋予属性管理\""
-		script = "Type.ad CRxMgrSxstone,\"inline void click_close() {{ click(0x61); }}\""
-		script = "Type.ad CRxMgrSxstone,\"inline void click_confirm() {{ click(0x62); }}\""
-		script = "Type.ad CRxMgrSxstone,\"inline void click_cancel() {{ click(0x63); }}\""
+		script = "Type.ad CRxMgrSxstone,\"static const int close_id = 0x61;\""
+		script = "Type.ad CRxMgrSxstone,\"static const int confirm_id = 0x62;\""
+		script = "Type.ad CRxMgrSxstone,\"static const int cancel_id = 0x63;\""
 	condition:
 		true
 }

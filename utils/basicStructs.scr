@@ -48,6 +48,7 @@ Type.am RX_MEMBLOCK, void*,start
 Type.am RX_MEMBLOCK, void*,end
 Type.am RX_MEMBLOCK, void*,max
 Type.am RX_MEMBLOCK, int,__pad
+Type.ad RX_MEMBLOCK, "inline DWORD get_size(void) const { return ((DWORD)end - (DWORD)start); }"
 Type.print RX_MEMBLOCK,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 
@@ -142,6 +143,8 @@ Type.am RX_GAME_TASK,uint32_t,progress
 Type.mcomment RX_GAME_TASK,progress,"完成进度,>=RX_TASK_FLOW数量时表明任务结束"
 Type.am RX_GAME_TASK,uint32_t,state
 Type.mcomment RX_GAME_TASK,state,"状态,拒绝或接任务失败时置1，下次再接时会显示其它谈话内容"
+type.ad RX_GAME_TASK,"inline int get_reward_count(void) const { return (linkReward.get_size() / sizeof(RX_STUFF_PAIR)); }"
+type.ad RX_GAME_TASK,"inline int get_flow_count(void) const { return (linkFlow.get_size() / sizeof(RX_TASK_FLOW)); }"
 Type.print RX_GAME_TASK,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 //定义CRxObject结构
@@ -363,4 +366,7 @@ Type.ad CRxRoleInfo,"inline bool is_career_mnz() const {{ return (career == Care
 Type.ad CRxRoleInfo,"inline bool is_farattack_career() const {{ return (is_career_doctor() || is_career_bow() || is_career_musician()); }}"
 
 
-
+Type.as CRxYbmsgText
+Type.comment CRxYbmsgText,"游戏进程用于存储文本的结构"
+Type.am CRxYbmsgText,char,text,0x200,0
+Type.am CRxYbmsgText,char,channel,0,0x203

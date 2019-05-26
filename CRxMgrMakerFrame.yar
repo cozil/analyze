@@ -4,11 +4,11 @@ rule CRxMgrMakerFrame_start
 		script = "Type.as CRxMgrMakerFrame"
 		script = "Type.aanc CRxMgrMakerFrame,CRxMgr"
 		script = "Type.comment CRxMgrMakerFrame,\"制造框架窗口管理\""
-		script = "Type.ad CRxMgrMakerFrame,\"inline void click_smith() {{ click(0x898); }}\""
-		script = "Type.ad CRxMgrMakerFrame,\"inline void click_sewer() {{ click(0x899); }}\""
-		script = "Type.ad CRxMgrMakerFrame,\"inline void click_chemist() {{ click(0x89a); }}\""
-		script = "Type.ad CRxMgrMakerFrame,\"inline void click_breaker() {{ click(0x89b); }}\""
-		script = "Type.ad CRxMgrMakerFrame,\"inline void click_close() {{ click(0x61); }}\""
+		script = "Type.ad CRxMgrMakerFrame,\"static const int smith_id = 0x898;\""
+		script = "Type.ad CRxMgrMakerFrame,\"static const int sewer_id = 0x899;\""
+		script = "Type.ad CRxMgrMakerFrame,\"static const int chemist_id = 0x89a;\""
+		script = "Type.ad CRxMgrMakerFrame,\"static const int breaker_id = 0x89b;\""
+		script = "Type.ad CRxMgrMakerFrame,\"static const int close_id = 0x61;\""
 	condition:
 		true
 }

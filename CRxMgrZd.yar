@@ -4,7 +4,7 @@ rule CRxMgrZd_start
 		script = "Type.as CRxMgrZd"
 		script = "Type.aanc CRxMgrZd,CRxMgr"
 		script = "Type.comment CRxMgrZd,\"真斗烈战管理"
-		script = "Type.ad CRxMgrZd,\"inline void click_goback() {{ click(0xc8); }}\""
+		script = "Type.ad CRxMgrZd,\"static const int goback_id = 0xc8;\""
 	condition:
 		true
 }

@@ -4,8 +4,8 @@ rule CRxMgrTradeTip_start
 		script = "Type.as CRxMgrTradeTip"
 		script = "Type.aanc CRxMgrTradeTip,CRxMgr"
 		script = "Type.comment CRxMgrTradeTip, \"交易防骗提醒管理\""
-		script = "Type.ad CRxMgrTradeTip,\"inline void click_confirm() {{ click(0x1); }}\""
-		script = "Type.ad CRxMgrTradeTip,\"inline void click_cancel() {{ click(0x2); }}\""
+		script = "Type.ad CRxMgrTradeTip,\"static const int confirm_id = 0x1;\""
+		script = "Type.ad CRxMgrTradeTip,\"static const int cancel_id = 0x2;\""
 	condition:
 		true
 }

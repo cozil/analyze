@@ -4,10 +4,10 @@ rule CRxMgrTask_start
 		script = "Type.as CRxMgrTask"
 		script = "Type.aanc CRxMgrTask,CRxMgr"
 		script = "Type.comment CRxMgrTask,\"任务管理\""
-		script = "Type.ad CRxMgrTask,\"inline void click_tasklist_close() {{ click(0x3eb); }}\""
-		script = "Type.ad CRxMgrTask,\"inline void click_taskdetail_reject() {{ click(0x3e9); }}\""
-		script = "Type.ad CRxMgrTask,\"inline void click_taskdetail_close() {{ click(0x3e9); }}\""
-		script = "Type.ad CRxMgrTask,\"inline void click_taskdetail_accept() {{ click(0x3ed); }}\""
+		script = "Type.ad CRxMgrTask,\"static const int tasklist_close_id = 0x3eb;\""
+		script = "Type.ad CRxMgrTask,\"static const int taskdetail_reject_id = 0x3e9;\""
+		script = "Type.ad CRxMgrTask,\"static const int taskdetail_close_id = 0x3e9;\""
+		script = "Type.ad CRxMgrTask,\"static const int taskdetail_accept_id = 0x3ed;\""
 	condition:
 		true
 }
@@ -85,7 +85,7 @@ rule CRxMgrTask_dlg_taskdetail
 	meta:
 		script = "$result = [@pattern + 0xa]"
 		script = "Type.am CRxMgrTask,CRxWnd*,dlg_taskdetail,0,$result"
-		script = "Type.mcomment CRxMgrTask,dlg_alltasks,\"任务接受/拒绝窗口\nflag标志定义 0:显示任务列表 1:显示任务接受拒绝确认 2:显示接受拒绝结果\""
+		script = "Type.mcomment CRxMgrTask,dlg_taskdetail,\"任务接受/拒绝窗口\nflag标志定义 0:显示任务列表 1:显示任务接受拒绝确认 2:显示接受拒绝结果\""
 	strings:
 		$pattern = { C6 [2] 0F [4] 8B [5] 68 FF 00 00 00 6A FF [3] 68 8C 00 00 00 68 DE 00 00 00 [2] E8 }
 	condition:

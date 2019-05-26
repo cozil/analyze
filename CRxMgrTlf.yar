@@ -21,6 +21,18 @@ rule CRxMgrTlf_dlg
 		#pattern == 1
 }
 
+rule CRxMgrTlf_stuff_id
+{
+	meta:
+		script = "$result = [@pattern + 0x23]"
+		script = "Type.am CRxMgrTlf,uint32_t,stuff_id,0,$result"		
+	strings:
+		$pattern = { 68 A1 03 00 00 6A 09 E8 [13] 8B [5] 8B [5] 89 }
+	condition:
+		#pattern == 1
+}
+
+
 //4a4 uint32_t tab_id;
 //4a8 uint32_t btn_id;
 rule CRxMgrTlf_tab_id

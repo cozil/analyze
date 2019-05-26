@@ -4,10 +4,10 @@ rule CRxMgrDrug_start
 		script = "Type.as CRxMgrDrug"
 		script = "Type.aanc CRxMgrDrug,CRxMgr"
 		script = "Type.comment CRxMgrDrug, \"制药管理\""
-		script = "Type.ad CRxMgrDrug,\"inline void click_close() {{ click(0x61); }}\""
-		script = "Type.ad CRxMgrDrug,\"inline void click_confirm() {{ click(0x62); }}\""
-		script = "Type.ad CRxMgrDrug,\"inline void click_cancel() {{ click(0x63); }}\""
-		script = "Type.ad CRxMgrDrug,\"inline void click_msg_close() {{ click(0x65); }}\""
+		script = "Type.ad CRxMgrDrug,\"static const int close_id = 0x61;\""
+		script = "Type.ad CRxMgrDrug,\"static const int confirm_id = 0x62;\""
+		script = "Type.ad CRxMgrDrug,\"static const int cancel_id = 0x63;\""
+		script = "Type.ad CRxMgrDrug,\"static const int msg_close_id = 0x65;\""
 	condition:
 		true
 }

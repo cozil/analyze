@@ -4,7 +4,7 @@ rule CRxMgrEquip_start
 		script = "Type.as CRxMgrEquip"
 		script = "Type.aanc CRxMgrEquip,CRxMgr"
 		script = "Type.comment CRxMgrEquip, \"装备栏管理\""
-		script = "Type.ad CRxMgrEquip,\"inline void click_close() {{ click(0xd); }}\""
+		script = "Type.ad CRxMgrEquip,\"static const int close_id = 0xd;\""
 	condition:
 		true
 }

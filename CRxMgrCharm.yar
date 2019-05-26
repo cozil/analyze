@@ -4,8 +4,8 @@ rule CRxMgrCharm_start
 		script = "Type.as CRxMgrCharm"
 		script = "Type.aanc CRxMgrCharm,CRxMgr"
 		script = "Type.comment CRxMgrCharm,\"至尊、热血符管理\""
-		script = "Type.ad CRxMgrCharm,\"inline void click_confirm() {{ click(0x63); }}\""
-		script = "Type.ad CRxMgrCharm,\"inline void click_cancel() {{ click(0x5f); }}\""
+		script = "Type.ad CRxMgrCharm,\"static const int confirm_id = 0x63;\""
+		script = "Type.ad CRxMgrCharm,\"static const int cancel_id = 0x5f;\""
 	condition:
 		true
 }

@@ -4,11 +4,11 @@ rule CRxMgrFlower_start
 		script = "Type.as CRxMgrFlower"
 		script = "Type.aanc CRxMgrFlower,CRxMgr"
 		script = "Type.comment CRxMgrFlower, \"送收花管理\""
-		script = "Type.ad CRxMgrFlower,\"inline void click_hint_confirm() {{ click(0x5); }}\""
-		script = "Type.ad CRxMgrFlower,\"inline void click_send_confirm() {{ click(0x6); }}\""
-		script = "Type.ad CRxMgrFlower,\"inline void click_send_cancel() {{ click(0x7); }}\""
-		script = "Type.ad CRxMgrFlower,\"inline void click_recv_confirm() {{ click(0x8); }}\""
-		script = "Type.ad CRxMgrFlower,\"inline void click_recv_cancel() {{ click(0x9); }}\""
+		script = "Type.ad CRxMgrFlower,\"static const int hint_confirm_id = 0x5;\""
+		script = "Type.ad CRxMgrFlower,\"static const int send_confirm_id = 0x6;\""
+		script = "Type.ad CRxMgrFlower,\"static const int send_cancel_id = 0x7;\""
+		script = "Type.ad CRxMgrFlower,\"static const int recv_confirm_id = 0x8;\""
+		script = "Type.ad CRxMgrFlower,\"static const int recv_cancel_id = 0x9;\""
 	condition:
 		true
 }

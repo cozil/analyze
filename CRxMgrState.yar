@@ -12,6 +12,7 @@ rule CRxMgrState_start
 		script = "Type.as CRxMgrState"
 		script = "Type.aanc CRxMgrState,CRxMgr"
 		script = "Type.comment CRxMgrState, \"人物信息窗口管理器 基本信息/武功/气功/动作\""
+		script = "Type.ad CRxMgrState, \"static const int item_id = 0x12c;\""
 		script = "Type.ad CRxMgrState,\"inline void click_item(int id) {{ click(0x12c+id); }} //id:[0,15]\""
 	condition:
 		true

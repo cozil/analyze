@@ -4,8 +4,8 @@ rule CRxMgrTeam_start
 		script = "Type.as CRxMgrTeam"
 		script = "Type.aanc CRxMgrTeam,CRxMgr"
 		script = "Type.comment CRxMgrTeam, \"组队管理\""
-		script = "Type.ad CRxMgrTeam,\"inline void click_msgbox_accept() {{ click(0x62); }}\""
-		script = "Type.ad CRxMgrTeam,\"inline void click_msgbox_reject() {{ click(0x63); }}\""		
+		script = "Type.ad CRxMgrTeam,\"static const int msgbox_accept_id = 0x62;\""
+		script = "Type.ad CRxMgrTeam,\"static const int msgbox_reject_id = 0x63;\""		
 		
 		script = "Type.ad CRxMgrTeam,\"inline bool req_activated() const {{ return (dlg_msgbox->visible != 0); }}\""
 		script = "Type.ad CRxMgrTeam,\"inline bool req_inviting() const {{ return (req_activated() && (dlg_msgbox->flag == 0)); }}\""

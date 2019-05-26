@@ -132,3 +132,13 @@ rule Check_CRxRoleInfo
 	condition:
 		$pattern and $pattern1
 }
+
+rule Check_RxYbmsgText
+{
+	meta:
+		script = "Type.print CRxYbmsgText,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN"
+	strings:
+		$pattern = { 69 ?? 04 02 00 00 [36] 10 18 08 00 }
+	condition:
+		#pattern >= 1
+}
