@@ -2,7 +2,7 @@ rule CRxButton_start
 {
 	meta:
 		script = "Type.as CRxButton"
-		script = "Type.aanc CRxButton,CRxObject"
+		script = "Type.aanc CRxButton,CRxCtrl"
 		script = "Type.comment CRxButton,\"按钮类 type=0x22\""
 		script = "Type.ad CRxButton,\"void clicked();\""
 	condition:
@@ -26,6 +26,8 @@ rule CRxButton_disabled
 rule CRxButton_cmdtype
 {
 	meta:
+		script = "$result = [@pattern + 0x2]"
+		script = "Type.am CRxButton,int,focused,0,$result"	
 		script = "$result = [@pattern + 0x21]"
 		script = "Type.am CRxButton,int,cmdtype,0,$result"
 	strings:

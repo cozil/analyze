@@ -10,6 +10,13 @@ rule CRxMgrTrade_start
 		script = "Type.ad CRxMgrTrade,\"static const int accept_id = 0x62;\""
 		script = "Type.ad CRxMgrTrade,\"static const int close_id = 0x63;\""
 		
+		script = "Type.ad CRxMgrTrade,\"inline void click_confirm_cancel() {{ click(confirm_cancel_id); }} \""
+		script = "Type.ad CRxMgrTrade,\"inline void click_confirm_accept() {{ click(confirm_accept_id); }} \""
+		script = "Type.ad CRxMgrTrade,\"inline void click_confirm_reject() {{ click(confirm_reject_id); }} \""
+		
+		script = "Type.ad CRxMgrTrade,\"inline void click_accept() {{ click(accept_id); }} \""
+		script = "Type.ad CRxMgrTrade,\"inline void click_close() {{ click(close_id); }} \""
+		
 		script = "Type.ad CRxMgrTrade,\"inline bool req_activated() const {{ return (dlg_confirm->visible != 0); }}\""
 		script = "Type.ad CRxMgrTrade,\"inline bool req_trading() const {{ return (req_activated() && (dlg_confirm->flag == 0)); }}\""
 		script = "Type.ad CRxMgrTrade,\"inline bool req_accepting() const {{ return (req_activated() && (dlg_confirm->flag == 1)); }}\""
@@ -38,6 +45,33 @@ rule CRxMgrTrade_dlg_confirm
 		script = "Type.am CRxMgrTrade,CRxWnd*,dlg_confirm,0,$result"
 	strings:
 		$pattern = { 6a 01 e8 [4] 68 [4] e8 [13] C6 [2] 02 [4-20] 6A 01 [2] 6A 73 68 03 01 00 00 6A 05 6A 3C 6A 14 [2] e8 [8] 8b }
+	condition:
+		#pattern == 1
+}
+
+//char player_accept;
+//char self_accept;
+rule CRxMgrTrade_player_accept
+{
+	meta:
+		script = "$result = [@pattern + 0x1c]"
+		script = "Type.am CRxMgrTrade,char,player_accept,0,$result"
+		script = "$result = [@pattern + 0x7]"
+		script = "Type.am CRxMgrTrade,char,self_accept,0,$result"
+	strings:
+		$pattern = { 68 C9 00 00 00 88 [5] 8B [5] 6A 09 E8 [6] 88 [5] 8B [5] 68 CA 00 00 00 }
+	condition:
+		#pattern == 1
+}
+
+//int source_sid;
+rule CRxMgrTrade_source_sid 
+{
+	meta:
+		script = "$result = [@pattern + 0x12]"
+		script = "Type.am CRxMgrTrade,uint32_t,source_sid,0,$result"
+	strings:
+		$pattern = { c6 [5] 00 [9] 89 [8] 3B [5] 8B [7] 68 C1 00 00 00 E8 }
 	condition:
 		#pattern == 1
 }

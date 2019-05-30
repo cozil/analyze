@@ -22,6 +22,24 @@ rule CRxMgrPk_start
 		script = "Type.ad CRxMgrPk,\"static const int goback1_id = 0xf; //返回村庄1\""
 		script = "Type.ad CRxMgrPk,\"static const int goback2_id = 0x10; //返回村庄2\""
 		
+		script = "Type.ad CRxMgrPk,\"inline void click_pkquery_accept() {{ click(pkquery_accept_id); }}\""
+		script = "Type.ad CRxMgrPk,\"inline void click_pkquery_reject() {{ click(pkquery_reject_id); }}\""
+		
+		script = "Type.ad CRxMgrPk,\"inline void click_zdinvite_accept() {{ click(zdinvite_accept_id); }}\""
+		script = "Type.ad CRxMgrPk,\"inline void click_zdinvite_reject() {{ click(zdinvite_reject_id); }}\""
+		
+		script = "Type.ad CRxMgrPk,\"inline void click_zdenter_accept() {{ click(zdenter_accept_id); }}\""
+		script = "Type.ad CRxMgrPk,\"inline void click_zdenter_reject() {{ click(zdenter_reject_id); }}\""
+		
+		script = "Type.ad CRxMgrPk,\"inline void click_relive_dst() {{ click(relive_dst_id); }}\""
+		script = "Type.ad CRxMgrPk,\"inline void click_relive_src() {{ click(relive_src_id); }}\""
+		
+		script = "Type.ad CRxMgrPk,\"inline void click_enter_fight() {{ click(enter_fight_id); }}\""
+		script = "Type.ad CRxMgrPk,\"inline void click_enter_battle() {{ click(enter_battle_id); }}\""
+		
+		script = "Type.ad CRxMgrPk,\"inline void click_goback1() {{ click(goback1_id); }}\""
+		script = "Type.ad CRxMgrPk,\"inline void click_goback2() {{ click(goback2_id); }}\""
+		
 		script = "Type.ad CRxMgrPk,\"inline bool battle_over() const {{ return (dlg_goback1->visible || dlg_goback2->visible); }}\""
 		script = "Type.ad CRxMgrPk,\"inline bool battle_processing() const {{ return (battle_start == 1); }}\""
 	condition:

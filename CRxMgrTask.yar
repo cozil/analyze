@@ -8,6 +8,10 @@ rule CRxMgrTask_start
 		script = "Type.ad CRxMgrTask,\"static const int taskdetail_reject_id = 0x3e9;\""
 		script = "Type.ad CRxMgrTask,\"static const int taskdetail_close_id = 0x3e9;\""
 		script = "Type.ad CRxMgrTask,\"static const int taskdetail_accept_id = 0x3ed;\""
+		script = "Type.ad CRxMgrTask,\"inline void click_tasklist_close() {{ click(tasklist_close_id); }}\""
+		script = "Type.ad CRxMgrTask,\"inline void click_taskdetail_reject() {{ click(taskdetail_reject_id); }}\""
+		script = "Type.ad CRxMgrTask,\"inline void click_taskdetail_close() {{ click(taskdetail_close_id); }}\""
+		script = "Type.ad CRxMgrTask,\"inline void click_taskdetail_accept() {{ click(taskdetail_accept_id); }}\""
 	condition:
 		true
 }

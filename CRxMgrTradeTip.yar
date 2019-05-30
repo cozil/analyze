@@ -6,6 +6,8 @@ rule CRxMgrTradeTip_start
 		script = "Type.comment CRxMgrTradeTip, \"交易防骗提醒管理\""
 		script = "Type.ad CRxMgrTradeTip,\"static const int confirm_id = 0x1;\""
 		script = "Type.ad CRxMgrTradeTip,\"static const int cancel_id = 0x2;\""
+		script = "Type.ad CRxMgrTradeTip,\"inline void click_confirm() {{ click(confirm_id); }}\""
+		script = "Type.ad CRxMgrTradeTip,\"inline void click_cancel() {{ click(cancel_id); }}\""
 	condition:
 		true
 }

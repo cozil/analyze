@@ -52,6 +52,13 @@ rule CRxGroundStuff_name
 		script = "$result = [@pattern + 0x02]"
 		script = "Type.am CRxGroundStuff,char,name,0x3c,$result"
 		script = "Type.mcomment CRxGroundStuff,name,\"地上物品名称\""
+		
+		script = "Type.am CRxGroundStuff,uint16_t,us_picknum,0,$result+0x3c"
+		script = "Type.mcomment CRxGroundStuff,us_picknum,\"自定：拾取次数\""
+		script = "Type.am CRxGroundStuff,uint16_t,us_failnum,0,$result+0x3e"
+		script = "Type.mcomment CRxGroundStuff,us_failnum,\"自定：拾取失败次数\""
+		script = "Type.am CRxGroundStuff,uint32_t,us_lastpick,0,$result+0x40"
+		script = "Type.mcomment CRxGroundStuff,us_lastpick,\"自定：上次尝试拾取时间\""
 	strings:
 		$pattern = { 8D BB [4] 6A 40 57 E8 [4] 83 C4 20 81 7E ?? 00 94 35 77 }
 	condition:

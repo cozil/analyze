@@ -9,6 +9,12 @@ rule CRxMgrMakerFrame_start
 		script = "Type.ad CRxMgrMakerFrame,\"static const int chemist_id = 0x89a;\""
 		script = "Type.ad CRxMgrMakerFrame,\"static const int breaker_id = 0x89b;\""
 		script = "Type.ad CRxMgrMakerFrame,\"static const int close_id = 0x61;\""
+		
+		script = "Type.ad CRxMgrMakerFrame,\"inline void click_smith() {{ click(smith_id); }}\""
+		script = "Type.ad CRxMgrMakerFrame,\"inline void click_sewer() {{ click(sewer_id); }}\""
+		script = "Type.ad CRxMgrMakerFrame,\"inline void click_chemist() {{ click(chemist_id); }}\""
+		script = "Type.ad CRxMgrMakerFrame,\"inline void click_breaker() {{ click(breaker_id); }}\""
+		script = "Type.ad CRxMgrMakerFrame,\"inline void click_close() {{ click(close_id); }}\""
 	condition:
 		true
 }

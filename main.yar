@@ -23,7 +23,7 @@ include "e:/rxwg/analyze/CRxLabel.yar"
 include "e:/rxwg/analyze/CRxLabelEx.yar"
 include "e:/rxwg/analyze/CRxCombo.yar"
 include "e:/rxwg/analyze/CRxListBox.yar"
-//include "e:/rxwg/analyze/CRxButton.yar"
+include "e:/rxwg/analyze/CRxButton.yar"
 include "e:/rxwg/analyze/CRxWnd.yar"
 include "e:/rxwg/analyze/CRxImage.yar"
 

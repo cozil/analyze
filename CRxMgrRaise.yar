@@ -7,6 +7,9 @@ rule CRxMgrRaise_start
 		script = "Type.ad CRxMgrRaise,\"static const int close_id = 0x61;\""
 		script = "Type.ad CRxMgrRaise,\"static const int confirm_id = 0x62;\""
 		script = "Type.ad CRxMgrRaise,\"static const int cancel_id = 0x63;\""
+		script = "Type.ad CRxMgrRaise,\"inline void click_close() {{ click(close_id); }}\""
+		script = "Type.ad CRxMgrRaise,\"inline void click_confirm() {{ click(confirm_id); }}\""
+		script = "Type.ad CRxMgrRaise,\"inline void click_cancel() {{ click(cancel_id); }}\""		
 	condition:
 		true
 }

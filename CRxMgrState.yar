@@ -70,6 +70,17 @@ rule CRxMgrState_qi_ls_qigong2
 		#pattern == 1
 }
 
+rule CRxMgrState_qi_buttons
+{
+	meta:
+		script = "$result = [@pattern + 0x1a]"
+		script = "Type.am CRxMgrState,CRxButton*,qi_buttons1,0x10,$result"
+	strings:
+		$pattern = { 80 [3] 14 [9] 00 [8] 8B [6] 6A 00 }
+	condition:
+		#pattern == 1
+}
+
 //504 uint8_t modified;
 rule CRxMgrState_modified
 {

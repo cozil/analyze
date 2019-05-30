@@ -8,6 +8,12 @@ rule CRxMgrTool_start
 		script = "Type.ad CRxMgrTool,\"static const int dead0_backtown_id = 0x63;\""
 		script = "Type.ad CRxMgrTool,\"static const int dead1_here_id = 0x32;\""
 		script = "Type.ad CRxMgrTool,\"static const int dead1_backtown_id = 0x33;\""
+		
+		script = "Type.ad CRxMgrTool,\"inline void click_toolbar_maker() {{ click(toolbar_maker_id); }}\""
+		script = "Type.ad CRxMgrTool,\"inline void click_notify_cancel() {{ click(notify_cancel_id); }}\""
+		script = "Type.ad CRxMgrTool,\"inline void click_dead0_backtown() {{ click(dead0_backtown_id); }}\""
+		script = "Type.ad CRxMgrTool,\"inline void click_dead1_backtown() {{ click(dead1_backtown_id); }}\""
+		script = "Type.ad CRxMgrTool,\"inline void click_dead1_here() {{ click(dead1_here_id); }}\""
 	condition:
 		true
 }

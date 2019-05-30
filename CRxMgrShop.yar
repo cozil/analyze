@@ -12,6 +12,9 @@ rule CRxMgrShop_start
 		script = "Type.ad CRxMgrShop,\"static const int close_id = 0x5b;\""
 		script = "Type.ad CRxMgrShop,\"static const int nextpage_id = 0x2712;\""
 		script = "Type.ad CRxMgrShop,\"static const int prevpage_id = 0x2711;\""
+		script = "Type.ad CRxMgrShop,\"inline void click_close() {{ click(close_id); }}\""
+		script = "Type.ad CRxMgrShop,\"inline void click_nextpage() {{ click(nextpage_id); }}\""
+		script = "Type.ad CRxMgrShop,\"inline void click_prevpage() {{ click(prevpage_id); }}\""
 		
 	condition:
 		true

@@ -10,6 +10,9 @@ rule CRxMgrMaker_start
 		script = "Type.ad CRxMgrMaker,\"inline bool is_dlg_breaker() const {{ return dlg->flag == 3; }}\""
 		script = "Type.ad CRxMgrMaker,\"static const int makeit_id = 0x1;\""
 		script = "Type.ad CRxMgrMaker,\"static const int cancel_id = 0x2;\""
+		
+		script = "Type.ad CRxMgrMaker,\"inline void click_makeit() {{ click(makeit_id); }}\""
+		script = "Type.ad CRxMgrMaker,\"inline void click_cancel() {{ click(cancel_id); }}\""
 	condition:
 		true
 }

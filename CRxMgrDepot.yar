@@ -9,6 +9,10 @@ rule CRxMgrDepot_start
 		script = "Type.ad CRxMgrDepot,\"static const int open_depot2_id = 0x2;\""
 		script = "Type.ad CRxMgrDepot,\"static const int close_depot1_id = 0x62;\""
 		script = "Type.ad CRxMgrDepot,\"static const int close_depot2_id = 0x63;\""
+		script = "Type.ad CRxMgrDepot,\"inline void click_open_depot1() {{ click(open_depot1_id); }}\""
+		script = "Type.ad CRxMgrDepot,\"inline void click_open_depot2() {{ click(open_depot2_id); }}\""
+		script = "Type.ad CRxMgrDepot,\"inline void click_close_depot1() {{ click(close_depot1_id); }}\""
+		script = "Type.ad CRxMgrDepot,\"inline void click_close_depot2() {{ click(close_depot2_id); }}\""
 	condition:
 		true
 }

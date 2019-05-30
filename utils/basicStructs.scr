@@ -48,7 +48,7 @@ Type.am RX_MEMBLOCK, void*,start
 Type.am RX_MEMBLOCK, void*,end
 Type.am RX_MEMBLOCK, void*,max
 Type.am RX_MEMBLOCK, int,__pad
-Type.ad RX_MEMBLOCK, "inline DWORD get_size(void) const { return ((DWORD)end - (DWORD)start); }"
+Type.ad RX_MEMBLOCK, "inline DWORD get_size(void) const {{ return ((DWORD)end - (DWORD)start); }}"
 Type.print RX_MEMBLOCK,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 
@@ -109,7 +109,7 @@ Type.am RX_TASK_FLOW,RX_STRING,rsz,0x0b
 Type.am RX_TASK_FLOW,RX_TASK_NPC,npc
 Type.am RX_TASK_FLOW,RX_MEMBLOCK,linkStuffs
 Type.mcomment RX_TASK_FLOW,linkStuffs,"任务需求物品内存块(RX_REQUIRE_STUFF结构)"
-Type.ad RX_TASK_FLOW,"inline uint32_t get_stuff_count() const;"
+Type.ad RX_TASK_FLOW,"inline uint32_t get_stuff_count() const {{ return (linkStuffs.get_size() / sizeof(RX_REQUIRE_STUFF)); }}"
 Type.print RX_TASK_FLOW,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 
@@ -143,8 +143,8 @@ Type.am RX_GAME_TASK,uint32_t,progress
 Type.mcomment RX_GAME_TASK,progress,"完成进度,>=RX_TASK_FLOW数量时表明任务结束"
 Type.am RX_GAME_TASK,uint32_t,state
 Type.mcomment RX_GAME_TASK,state,"状态,拒绝或接任务失败时置1，下次再接时会显示其它谈话内容"
-type.ad RX_GAME_TASK,"inline int get_reward_count(void) const { return (linkReward.get_size() / sizeof(RX_STUFF_PAIR)); }"
-type.ad RX_GAME_TASK,"inline int get_flow_count(void) const { return (linkFlow.get_size() / sizeof(RX_TASK_FLOW)); }"
+type.ad RX_GAME_TASK,"inline uint32_t get_reward_count(void) const {{ return (linkReward.get_size() / sizeof(RX_STUFF_PAIR)); }}"
+type.ad RX_GAME_TASK,"inline uint32_t get_flow_count(void) const {{ return (linkFlow.get_size() / sizeof(RX_TASK_FLOW)); }}"
 Type.print RX_GAME_TASK,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
 //定义CRxObject结构
@@ -155,7 +155,7 @@ Type.am CRxObject,CRxObject*,parent
 Type.am CRxObject,uint32_t,objType
 Type.am CRxObject,int16_t,index
 Type.am CRxObject,int16_t,pad_000e
-Type.ad CRxObject,"inline bool is_dialog(bool checkVisible = false) const {{ return (this != nullptr && GO_DIALOG == objType && (!checkVisible || ((CRxCtrl *)this)->visible)); }}"
+Type.ad CRxObject,"inline bool is_dialog() const {{ return (this != nullptr && GO_DIALOG == objType); }}"
 Type.ad CRxObject,"inline bool is_manager() const {{ return (this != nullptr && GO_MANAGE == objType); }}"
 Type.ad CRxObject,"inline bool is_button() const {{ return (this != nullptr && GO_BUTTON == objType); }}"
 Type.ad CRxObject,"inline bool is_label() const {{ return (this != nullptr && GO_LABEL == objType); }}"
@@ -168,6 +168,7 @@ Type.ad CRxObject,"inline bool is_package_stuff() const {{ return (this != nullp
 Type.ad CRxObject,"inline bool is_toolbar_stuff() const {{ return (this != nullptr && GO_STUFF_TOOLBAR == objType); }}"
 Type.ad CRxObject,"inline bool is_skill_class() const {{ return (this != nullptr && GO_STUFF_SKILLCLASS == objType); }}"
 Type.ad CRxObject,"inline bool is_skill_item() const {{ return (this != nullptr && GO_STUFF_SKILL == objType); }}"
+Type.ad CRxObject,"static const int MaxSize = 10000;"
 
 Type.print CRxObject,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
@@ -201,10 +202,9 @@ Type.print CRxCtrl,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 Type.as LineInfo
 Type.comment LineInfo, "登录服务器线路项数据(static)"
 Type.am LineInfo,uint16_t,lineid
-Type.am LineInfo,uint16_t,__pad_02
-Type.am LineInfo,char*,linename
-Type.am LineInfo,int,onlinenum
-Type.print LineInfo,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
+Type.am LineInfo,char*,linename,0,0x0c
+Type.am LineInfo,int,onlinenum,0,0x10
+
 
 Type.as ServerHead
 Type.comment ServerHead, "登录服务器头部数据(static)"
@@ -212,18 +212,18 @@ Type.am ServerHead,char,__pad_00,0xc
 Type.am ServerHead,char*,servername
 Type.am ServerHead,char,__pad_10,0x6
 Type.am ServerHead,uint16_t,linenum
-Type.print ServerHead,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
-Type.as ServerItem
-Type.comment ServerItem, "登录服务器项(static)"
-Type.am ServerItem,ServerHead,head
-Type.am ServerItem,LineInfo,lines,0xa
-Type.print ServerItem,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 
-Type.as ServerObject
-Type.comment ServerItem, "登录服务器完整结构(static)"
-Type.am ServerObject,ServerItem,servers,0xa,0x4c4
-Type.print ServerObject,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
+//Type.as ServerItem
+//Type.comment ServerItem, "登录服务器项(static)"
+//Type.am ServerItem,ServerHead,head
+//Type.am ServerItem,LineInfo,lines,0xa
+
+
+//Type.as ServerObject
+//Type.comment ServerItem, "登录服务器完整结构(static)"
+//Type.am ServerObject,ServerItem,servers,0xa,0x4c4
+
 
 Type.as StuffProp
 Type.comment StuffProp, "物品合成属性结构(static)"

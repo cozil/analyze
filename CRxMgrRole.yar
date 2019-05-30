@@ -13,6 +13,11 @@ rule CRxMgrRole_start
 		script = "Type.ad CRxMgrRole,\"static const int create_id = 0x7d3;\""
 		script = "Type.ad CRxMgrRole,\"static const int delete_id = 0x7d4;\""
 		
+		script = "Type.ad CRxMgrRole,\"inline void click_enter() {{ click(enter_id); }}\""
+		script = "Type.ad CRxMgrRole,\"inline void click_back() {{ click(back_id); }}\""
+		script = "Type.ad CRxMgrRole,\"inline void click_create() {{ click(create_id); }}\""
+		script = "Type.ad CRxMgrRole,\"inline void click_delete() {{ click(delete_id); }}\""
+		
 		script = "Type.ad CRxMgrRole,\"bool select_role(uint32_t nRoleIndex);\""
 		script = "Type.ad CRxMgrRole,\"bool select_role(const char * roleName);\""
 		script = "Type.ad CRxMgrRole,\"bool select_role_uid(uint32_t uid);\""

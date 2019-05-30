@@ -5,6 +5,7 @@ rule CRxMgrMyShop_start
 		script = "Type.aanc CRxMgrMyShop,CRxMgr"
 		script = "Type.ad CRxMgrMyShop,\"static const int playershop_buy_id = 0x50;\""
 		script = "Type.ad CRxMgrMyShop,\"static const int playershop_close_id = 0x63;\""
+		script = "Type.ad CRxMgrMyShop,\"inline void click_playershop_close() {{ click(playershop_close_id); }}\""
 		script = "Type.ad CRxMgrMyShop,\"inline void click_playershop_buy(int id) {{ click(playershop_buy_id+id); }} //id:[0,7]\""
 	condition:
 		true

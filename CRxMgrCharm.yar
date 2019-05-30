@@ -6,6 +6,8 @@ rule CRxMgrCharm_start
 		script = "Type.comment CRxMgrCharm,\"至尊、热血符管理\""
 		script = "Type.ad CRxMgrCharm,\"static const int confirm_id = 0x63;\""
 		script = "Type.ad CRxMgrCharm,\"static const int cancel_id = 0x5f;\""
+		script = "Type.ad CRxMgrCharm,\"inline void click_confirm() {{ click(confirm_id); }}\""
+		script = "Type.ad CRxMgrCharm,\"inline void click_cancel() {{ click(cancel_id); }}\""			
 	condition:
 		true
 }

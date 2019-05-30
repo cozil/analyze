@@ -18,6 +18,10 @@ rule CRxMgrSweetState_mgr_flower
 		script = "$result = [@pattern + 0x2]"
 		script = "Type.am CRxMgrSweetState,uint32_t,state,0,$result"
 		script = "Type.mcomment CRxMgrSweetState,state,\"情侣状态 0:无情侣 1:不在一条线上 2:在一条线上\""
+		
+		script = "Type.am CRxMgrSweetState,char,sweet_name,0x10,$result+0x14"
+		script = "Type.mcomment CRxMgrSweetState,sweet_name,\"情侣名称\""
+		
 		script = "$result = [@pattern + 0x32]"
 		script = "Type.am CRxMgrSweetState,uint32_t,grade,0,$result"
 		script = "Type.mcomment CRxMgrSweetState,grade,\"情侣关系等级\""

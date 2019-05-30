@@ -28,6 +28,28 @@ rule CRxMgrList_start
 		script = "Type.ad CRxMgrList,\"static const int break_confirm_id = 0xcb;      //属性物品分解确认/取消\""
 		script = "Type.ad CRxMgrList,\"static const int break_cancel_id = 0xcc;\""
 		
+		
+		script = "Type.ad CRxMgrList,\"inline void click_price_confirm() {{ click(price_confirm_id); }}\""
+		script = "Type.ad CRxMgrList,\"inline void click_price_cancel() {{ click(price_cancel_id); }}\""
+		
+		script = "Type.ad CRxMgrList,\"inline void click_input_confirm() {{ click(input_confirm_id); }}\""
+		script = "Type.ad CRxMgrList,\"inline void click_input_cancel() {{ click(input_cancel_id); }}\""
+		
+		script = "Type.ad CRxMgrList,\"inline void click_myshop_confirm() {{ click(myshop_confirm_id); }}\""
+		script = "Type.ad CRxMgrList,\"inline void click_myshop_cancel() {{ click(myshop_cancel_id); }}\""
+		
+		script = "Type.ad CRxMgrList,\"inline void click_drop_confirm() {{ click(drop_confirm_id); }}\""
+		script = "Type.ad CRxMgrList,\"inline void click_drop_cancel() {{ click(drop_cancel_id); }}\""
+
+		script = "Type.ad CRxMgrList,\"inline void click_sell_confirm() {{ click(sell_confirm_id); }}\""
+		script = "Type.ad CRxMgrList,\"inline void click_sell_cancel() {{ click(sell_cancel_id); }}\""
+		
+		script = "Type.ad CRxMgrList,\"inline void click_flyring_confirm() {{ click(flyring_confirm_id); }}\""
+		script = "Type.ad CRxMgrList,\"inline void click_flyring_cancel() {{ click(flyring_cancel_id); }}\""
+
+		script = "Type.ad CRxMgrList,\"inline void click_break_confirm() {{ click(break_confirm_id); }}\""
+		script = "Type.ad CRxMgrList,\"inline void click_break_cancel() {{ click(break_cancel_id); }}\""		
+			
 		script = "Type.ad CRxMgrList,\"int calc_free_space() const;\""
 		script = "Type.ad CRxMgrList,\"int get_free_slot() const;\""
 		script = "Type.ad CRxMgrList,\"int calc_stuff_count() const;\""

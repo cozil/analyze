@@ -11,6 +11,8 @@ rule CRxMgrNpc_start
 		script = "Type.comment CRxMgrNpc,\"NPC管理\""
 		script = "Type.ad CRxMgrNpc,\"static const int close_id = 0x5a;\""
 		script = "Type.ad CRxMgrNpc,\"static const int menu_item_id = 0x5b;\""
+		
+		script = "Type.ad CRxMgrNpc,\"inline void click_close() {{ click(close_id); }}\""
 		script = "Type.ad CRxMgrNpc,\"inline void click_menu_item(int id) {{ click(menu_item_id+id); }} //id:[0,4]\""
 		
 		script = "Type.ad CRxMgrNpc,\"int find_npc_flag(int flag) const;\""

@@ -9,6 +9,11 @@ rule CRxMgrFlower_start
 		script = "Type.ad CRxMgrFlower,\"static const int send_cancel_id = 0x7;\""
 		script = "Type.ad CRxMgrFlower,\"static const int recv_confirm_id = 0x8;\""
 		script = "Type.ad CRxMgrFlower,\"static const int recv_cancel_id = 0x9;\""
+		script = "Type.ad CRxMgrFlower,\"inline void click_hint_confirm() {{ click(hint_confirm_id); }}\""
+		script = "Type.ad CRxMgrFlower,\"inline void click_send_confirm() {{ click(send_confirm_id); }}\""
+		script = "Type.ad CRxMgrFlower,\"inline void click_send_cancel() {{ click(send_cancel_id); }}\""
+		script = "Type.ad CRxMgrFlower,\"inline void click_recv_confirm() {{ click(recv_confirm_id); }}\""
+		script = "Type.ad CRxMgrFlower,\"inline void click_recv_cancel() {{ click(recv_cancel_id); }}\""
 	condition:
 		true
 }

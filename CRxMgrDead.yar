@@ -11,6 +11,15 @@ rule CRxMgrDead_start
 		script = "Type.ad CRxMgrDead,\"static const int pay_confirm_id = 0x388;\""
 		script = "Type.ad CRxMgrDead,\"static const int pay_cancel_id = 0x389;\""		
 		script = "Type.ad CRxMgrDead,\"static const int payfail_id = 0x38b;\""
+		
+		script = "Type.ad CRxMgrDead,\"inline void click_dead_protected1() {{ click(dead_protect1_id); }}\""
+		script = "Type.ad CRxMgrDead,\"inline void click_dead_protected2() {{ click(dead_protect2_id); }}\""
+		script = "Type.ad CRxMgrDead,\"inline void click_dead_noprotect() {{ click(dead_noprotect_id); }}\""
+		
+		script = "Type.ad CRxMgrDead,\"inline void click_dead_close() {{ click(dead_close_id); }}\""
+		script = "Type.ad CRxMgrDead,\"inline void click_pay_confirm() {{ click(pay_confirm_id); }}\""
+		script = "Type.ad CRxMgrDead,\"inline void click_pay_cancel() {{ click(pay_cancel_id); }}\""
+		script = "Type.ad CRxMgrDead,\"inline void click_payfail() {{ click(payfail_id); }}\""
 	condition:
 		true
 }
@@ -51,6 +60,18 @@ rule CRxMgrDead_dlg_payfail
 		#pattern == 1
 }
 
+
+//int lucky_flag;
+rule CRxMgrDead_lucky_flag
+{
+	meta:
+		script = "$result = [@pattern + 0x2]"
+		script = "Type.am CRxMgrDead,uint32_t,lucky_flag,0,$result"
+	strings:
+		$pattern = { 80 [5] 00 [2] 80 [5] 00 [2] 83 [5] 13 }
+	condition:
+		#pattern == 1
+}
 
 rule CRxMgrDead_end
 {

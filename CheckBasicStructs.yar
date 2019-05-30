@@ -142,3 +142,4 @@ rule Check_RxYbmsgText
 	condition:
 		#pattern >= 1
 }
+

@@ -14,6 +14,12 @@ rule CRxMgrLogin_start
 		script = "Type.ad CRxMgrLogin,\"static const int server_exit_id = 0x0;\""
 		script = "Type.ad CRxMgrLogin,\"static const int server_connect_id = 0x1;\""
 		script = "Type.ad CRxMgrLogin,\"static const int server_item_id = 0xa;\""
+		
+		script = "Type.ad CRxMgrLogin,\"inline void click_login_confirm() {{ click(login_confirm_id); }}\""
+		script = "Type.ad CRxMgrLogin,\"inline void click_login_cancel() {{ click(login_cancel_id); }}\""
+		script = "Type.ad CRxMgrLogin,\"inline void click_msgbox_confirm() {{ click(msgbox_confirm_id); }}\""
+		script = "Type.ad CRxMgrLogin,\"inline void click_server_exit() {{ click(server_exit_id); }}\""
+		script = "Type.ad CRxMgrLogin,\"inline void click_server_connect() {{ click(server_connect_id); }}\""
 		script = "Type.ad CRxMgrLogin,\"inline void click_server_item(int id) {{ click(server_item_id+id); }} //id:[0,9] \""
 
 	condition:
@@ -103,14 +109,53 @@ rule CRxMgrLogin_dlg_server
 		#pattern == 1	
 }
 
+
+rule CRxMgrLogin_ServerObject
+{
+	meta:
+		//这两个为静态结构
+		script = "Type.print LineInfo,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN"
+		script = "Type.print ServerHead,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN"
+			
+		//ServerItem结构
+		script = "$result = [@pattern + 0x32] - [@pattern + 0x2b]"
+		script = "Type.as ServerItem"
+		script = "Type.am ServerItem,ServerHead,head,0,0"
+		script = "Type.am ServerItem,LineInfo,lines,0x0a,$result"
+		script = "Type.print ServerItem,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN"
+		
+		//ServerObject结构
+		script = "$result = [@pattern + 0x32]"
+		script = "Type.as ServerObject"
+		script = "Type.am ServerObject,ServerItem,servers,0x0a,$result"		
+		script = "Type.print ServerObject,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN"
+		
+		//检查ServerItem大小
+		script = "$result1 = [@pattern + 0x1a]"
+		script = "Type.size ServerItem"
+		script = "cmp $result,$result1"
+		script = "jz _EXIT"
+		script = "log \"Size of ServerItem has changed from 0x{$result} to 0x{$result1}\""
+		script = "msg \"ServerItem结构发生改变\""
+		script = "_EXIT:"
+	strings:
+		$pattern = { 83 ?? 0A [12] 83 ?? 0A [6] 69 [14] 0F [7] 0F [6] 6A 0D }
+	condition:
+		#pattern == 1
+}
+
+
 //388 SERVER_OBJECT * svrlist;
 rule CRxMgrLogin_svrlist
 {
 	meta:
 		script = "$result = [@pattern + 0x02]"
 		script = "Type.am CRxMgrLogin,ServerObject*,svrlist,0,$result"
+				
 	strings:
-		$pattern = { 8B 8E [4] 33 C0 89 45 ?? 3B C8 74 [20] 83 F8 64 0F 8F [4] 83 F8 33 7D ?? C7 45 ?? 00 00 00 00 EB ?? 33 C9 83 F8 5B }
+		//$pattern = { 8B 8E [4] 33 C0 89 45 ?? 3B C8 74 [20] 83 F8 64 0F 8F [4] 83 F8 33 7D ?? C7 45 ?? 00 00 00 00 EB ?? 33 C9 83 F8 5B }
+		$pattern = { 8B [20] 69 [14] 64 [8] 33 [5] 00 00 00 00 [6] 5B }
+		
 	condition:
 		#pattern == 1	
 }

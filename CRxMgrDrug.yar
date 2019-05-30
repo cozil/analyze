@@ -8,6 +8,10 @@ rule CRxMgrDrug_start
 		script = "Type.ad CRxMgrDrug,\"static const int confirm_id = 0x62;\""
 		script = "Type.ad CRxMgrDrug,\"static const int cancel_id = 0x63;\""
 		script = "Type.ad CRxMgrDrug,\"static const int msg_close_id = 0x65;\""
+		script = "Type.ad CRxMgrDrug,\"inline void click_close() {{ click(close_id); }}\""
+		script = "Type.ad CRxMgrDrug,\"inline void click_confirm() {{ click(confirm_id); }}\""
+		script = "Type.ad CRxMgrDrug,\"inline void click_cancel() {{ click(cancel_id); }}\""
+		script = "Type.ad CRxMgrDrug,\"inline void click_msg_close() {{ click(msg_close_id); }}\""
 	condition:
 		true
 }

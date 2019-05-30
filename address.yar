@@ -1511,26 +1511,24 @@ rule address_StrongLuckyList
 		#pattern == 1
 }
 
+rule address_StrongJluckyList
+{
+	meta:
+		script = "$result = [@pattern + 0x1]"
+		script = "log \"NP_LJL=0x{$result}\""
+		script = "lblset $result, StrongJluckyList"
+	strings:
+		$pattern = { A1 [8] 83 [5] 00 [2] 83 [5] 0b [3] 2b 00 00 00 }
+	condition:
+		#pattern == 1
+}
+
 rule address_StrongJstoneList
 {
 	meta:
 		script = "$result = [@pattern + 0x43]"
 		script = "log \"NP_LJS=0x{$result}\""
 		script = "lblset $result, StrongJstoneList"
-	strings:
-		//17014之前版本 + 0x42
-		//$pattern = { C7 [5] AA 00 00 00 C7 [5] 23 01 00 00 89 [2] E8 [4] 83 C4 0C 89 [2] C6 [2] 05 [7] 01 00 00 00 [4] E8 [8] 8D [2] A3 }
-		$pattern = { C7 [5] AA 00 00 00 C7 [5] 23 01 00 00 89 [2] E8 [4] 83 C4 0C 89 [2] C6 [2] 05 ?? 01 00 00 00 [14] E8 [8] A3 }
-	condition:
-		#pattern == 1
-}
-
-rule address_StrongJequipList
-{
-	meta:
-		script = "$result = [@pattern + 0x43]"
-		script = "log \"NP_LJE=0x{$result}\""
-		script = "lblset $result, StrongJequipList"
 	strings:
 		//17014之前版本 + 0x43
 		//$pattern = { C7 [2] 63 00 00 00 C7 [2] 28 00 00 00 [3] C7 [2] D2 00 00 00 [3] E8 [10] C6 [2] 04 [4] 68 AC 00 00 00 ?? 6A 03 [3] E8 [8] A3 }
@@ -1540,12 +1538,12 @@ rule address_StrongJequipList
 }
 
 
-rule address_StrongJluckyList
+rule address_StrongJequipList
 {
 	meta:
 		script = "$result = [@pattern + 0x2f]"
-		script = "log \"NP_LJL=0x{$result}\""
-		script = "lblset $result, StrongJluckyList"
+		script = "log \"NP_LJE=0x{$result}\""
+		script = "lblset $result, StrongJequipList"
 	strings:
 		//17014之前版本 + 0x2f
 		//$pattern = { C7 [2] BA 00 00 00 E8 [10] C6 [2] 02 [4] 68 85 00 00 00 ?? 6A 01 [3] E8 [8] A3 }
