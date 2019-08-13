@@ -3,7 +3,7 @@ rule CRxMgrTool_start
 	meta:
 		script = "Type.as CRxMgrTool"
 		script = "Type.aanc CRxMgrTool,CRxMgr"
-		script = "Type.ad CRxMgrTool,\"static const int toolbar_maker_id = 0xbb9;\""
+		script = "Type.ad CRxMgrTool,\"static const int toolbar_maker_id = 0xbbb;\""
 		script = "Type.ad CRxMgrTool,\"static const int notify_cancel_id = 0x12;\""
 		script = "Type.ad CRxMgrTool,\"static const int dead0_backtown_id = 0x63;\""
 		script = "Type.ad CRxMgrTool,\"static const int dead1_here_id = 0x32;\""

@@ -176,7 +176,7 @@ Type.print CRxObject,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 Type.as CRxGameEntity
 Type.comment CRxGameEntity, "游戏实体对象基础结构(static)"
 Type.aanc CRxGameEntity, CRxObject
-type.am CRxGameEntity,uint32_t,sessionid
+type.am CRxGameEntity,uint32_t,sessionid,0,0x14
 type.ad CRxGameEntity,"inline bool is_attackable() const {{ return (is_player() || is_ground_stuff() || is_npc()); }}"
 Type.print CRxGameEntity,$_OUT_OFFLEN,$_OUT_TYPELEN,$_OUT_NAMELEN
 

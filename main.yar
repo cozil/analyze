@@ -7,6 +7,7 @@ rule main_start
 		script = "yaraEx.ll 0"
 		script = "Type.removeAll"
 		script = "Array.removeAll"
+		script = "labelclear"
 	condition:
 		true
 }

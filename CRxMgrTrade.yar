@@ -95,12 +95,12 @@ rule CRxMgrTrade_lb_buddy_name
 rule CRxMgrTrade_ls_buddy_stuffs
 {
 	meta:
-		script = "$result = byte:[@pattern + 0x1e]"
-		script = "Type.am CRxMgrTrade,CRxMgrList*,ls_buddy_stuffs,0,$offset + $result"
-		script = "$result = byte:[@pattern + 0x1e]"
-		script = "Type.am CRxMgrTrade,CRxMgrList*,ls_self_stuffs,0,$offset + $result + 4"
+		script = "$result = [@pattern + 0x20]"
+		script = "Type.am CRxMgrTrade,CRxMgrList*,ls_buddy_stuffs,0,$result"
+		script = "Type.am CRxMgrTrade,CRxMgrList*,ls_self_stuffs,0,$result + 4"
 	strings:
-		$pattern = { C6 [2] 0F [4] 68 [5] 6A 12 [3] E8 [8] 89 }
+		$pattern = { 0F [2] 74 0F [2] 72 [4] E8 [16] 8B }
+		
 	condition:
 		CRxMgrTrade_lb_buddy_name and #pattern == 1
 }

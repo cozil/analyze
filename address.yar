@@ -1569,11 +1569,11 @@ rule address_RaiseStuffList
 rule address_RaiseEquipList
 {
 	meta:
-		script = "$result = [@pattern + 0x36]"
+		script = "$result = [@pattern + 0x18]"
 		script = "log \"NP_LRE=0x{$result}\""
 		script = "lblset $result, RaiseEquipList"
 	strings:
-		$pattern = { 68 FF 00 00 00 6A 09 E8 [10] 6A 01 [7] 0A 00 00 00 [7] E8 [4] 6A 01 8D [6] 8B }
+		$pattern = { 83 [5] 00 [3] DE 00 00 00 [9] A1 }
 	condition:
 		#pattern == 1
 }
