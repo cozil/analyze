@@ -1121,7 +1121,7 @@ rule HF_PK2
 	meta:
 		script = "log \"HF_PK2=0x{@pattern},eb04\""
 	strings:
-		$pattern = { 0F 85 [4] A1 [4] 3D 8D 23 00 00 0F 84 [4] 3D 29 23 00 00 0F 84 [4] 3D F1 23 00 00 0F 84 [4] 3D 21 03 00 00 }
+		$pattern = { 0F 85 [4] A1 [4] 3D 8D 23 00 00 0F 84 [4] 3D 29 23 00 00 0F 84 [4] 3D F1 23 00 00 0F 84 [4] 3D 41 9C 00 00 }
 	condition:
 		#pattern == 1	
 }
@@ -1143,7 +1143,7 @@ rule NF_MPP
 		script = "log \"HF_PK3=0x{$result},eb\""
 		
 	strings:
-		$pattern = { 8B 15 [4] 8B 8A 5C 4A 53 00 E8 [4] 8B 85 [4] 0B 85 [4] 75 ?? E8 [4] 85 C0 74 ?? 85 F6 74 }
+		$pattern = { 8B [5] 8B ?? 5C 4A 53 00 E8 [4] 8B [5] 0B [5] 75 ?? E8 [18] 01 [8] 00 }
 	condition:
 		#pattern == 1	
 }
