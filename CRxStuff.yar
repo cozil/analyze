@@ -6,7 +6,7 @@ rule CRxStuff_start
 		script = "Type.comment CRxStuff,\"物品管理\""
 		script = "Type.ad CRxStuff,\"inline bool is_disable_select() const {{ return (s_disable || s_except); }}\""
 		script = "Type.ad CRxStuff,\"inline bool is_disable_trade() const {{ return (is_disable_select() || s_binding || locked); }}\""
-		
+
 		script = "Type.ad CRxStuff,\"inline bool is_career_knife() const {{ return (local_career == LocalCareerKnife); }}\""
 		script = "Type.ad CRxStuff,\"inline bool is_career_sword() const {{ return (local_career == LocalCareerSword); }}\""
 		script = "Type.ad CRxStuff,\"inline bool is_career_spear() const {{ return (local_career == LocalCareerSpear); }}\""
@@ -19,12 +19,13 @@ rule CRxStuff_start
 		script = "Type.ad CRxStuff,\"inline bool is_career_fister() const {{ return (local_career == LocalCareerFister); }}\""
 		script = "Type.ad CRxStuff,\"inline bool is_career_mnz() const {{ return (local_career == LocalCareerMnz); }}\""
 		script = "Type.ad CRxStuff,\"inline bool is_career_lfl() const {{ return (local_career == LocalCareerLfl); }}\""
-		
+
 		script = "Type.ad CRxStuff,\"inline bool is_stone_full() const {{ return ((stuff_type == ST_SHELL && prop[1].value != 0) || (prop[_countof(prop) - 1].value != 0)); }}\""
-		
+		script = "Type.ad CRxStuff,\"inline bool is_durability() const {{ return (durability_type == 0x32); }} \""
 		script = "Type.ad CRxStuff,\"uint32_t get_stone_num() const;\""
 		script = "Type.ad CRxStuff,\"bool is_sortofstone() const;\""
 		script = "Type.ad CRxStuff,\"bool is_money() const;\""
+
 	condition:
 		true
 }
@@ -182,21 +183,22 @@ rule CRxStuff_s_disable
 rule CRxStuff_ss_begin
 {
 	meta:
-		script = "$result = [@pattern + 0x1b]"
+		script = "$result = [@pattern + 0x1e]"
 		script = "Type.am CRxStuff,uint32_t,ss_begin,0,$result"
 		script = "Type.mcomment CRxStuff,ss_begin,\"物品/技能状态起始时间\""
-		script = "$result = [@pattern + 0x41]"
+		script = "$result = [@pattern + 0x45]"
 		script = "Type.am CRxStuff,uint32_t,ss_end,0,$result"
 		script = "Type.mcomment CRxStuff,ss_end,\"物品/技能状态结束时间\""
-		
-		script = "$result = [@pattern + 0x47]"
+
+		script = "$result = [@pattern + 0x4b]"
 		script = "Type.am CRxStuff,uint32_t,ss_left,0,$result"
 		script = "Type.mcomment CRxStuff,ss_left,\"物品/技能状态剩余时间\""
-		script = "$result = [@pattern + 0x53]"
+		script = "$result = [@pattern + 0x57]"
 		script = "Type.am CRxStuff,uint32_t,ss_running,0,$result"
 		script = "Type.mcomment CRxStuff,ss_running,\"物品/快捷栏技能对象是否正在使用中\""
 	strings:
-		$pattern = { 83 F8 04 [2] B8 01 00 00 00 89 86 [4] FF 15 [7] 89 86 [4] 8B D0 [3] C7 86 [4] 00 00 00 00 8B BE [8] 89 BE [4] 5F 89 96 [4] 89 86 [4] 89 8E [4] C6 86 [4] 01 }
+		//$pattern = { 83 F8 04 [2] B8 01 00 00 00 89 86 [4] FF 15 [7] 89 86 [4] 8B D0 [3] C7 86 [4] 00 00 00 00 8B BE [8] 89 BE [4] 5F 89 96 [4] 89 86 [4] 89 8E [4] C6 86 [4] 01 }
+		$pattern = { 83 F8 04 [2] B8 01 00 00 00 57 89 86 [4] FF 15 [9] 89 86 }
 	condition:
 		#pattern == 1
 }
@@ -346,7 +348,7 @@ rule CRxStuff_propValue
 		#pattern == 1
 }
 
-//d38 uint16_t aditional;					
+//d38 uint16_t aditional;
 //d3a uint16_t ad_type;
 //d3c uint32_t ad_stage;
 rule CRxStuff_aditional
@@ -372,7 +374,7 @@ rule CRxStuff_prop
 {
 	meta:
 		script = "$result1 = byte:[@pattern + 0x15]"
-		script = "$result = [@pattern + 0x09]"		
+		script = "$result = [@pattern + 0x09]"
 		script = "Type.am CRxStuff,StuffProp,prop,4,$result"
 		script = "Type.mcomment CRxStuff,prop,\"合成的四个石头属性,每个结构长度为:0x{$result1}\""
 	strings:
@@ -411,7 +413,7 @@ rule CRxStuff_advflag
 		script = "Type.mcomment CRxStuff,soul,\"灵魂阶段 0-5\""
 	strings:
 		$pattern = { 81 ?? AD DF 14 3C [12] 81 ?? B0 DF 14 3C [6] 0f [17] f6 [5] 01 [17] 0f }
-		
+
 	condition:
 		#pattern == 1
 }
@@ -442,6 +444,24 @@ rule CRxStuff_lock_time
 		script = "Type.am CRxStuff,uint32_t,locked,0,$result"
 	strings:
 		$pattern = { 83 BF [4] 00 [20] 7B [4] 01 [4] 08 [4] 09 [4] 0D [3] 8A 00 00 00 [7] 3B [4] 3C [44] 03 b7 }
+	condition:
+		#pattern == 1
+}
+
+rule CRxStuff_durability
+{
+	meta:
+		script = "$result = [@pattern + 0x03]"
+		script = "Type.am CRxStuff,uint16_t,durability,0,$result"
+		script = "Type.mcomment CRxStuff,durability,\"武勋装备当前耐久度\""
+		script = "$result = [@pattern + 0x13]"
+		script = "Type.am CRxStuff,uint16_t,maxDurability,0,$result"
+		script = "Type.mcomment CRxStuff,maxDurability,\"武勋装备最大耐久度\""
+		script = "$result = [@pattern + 0x24]"
+		script = "Type.am CRxStuff,uint32_t,durability_type,0,$result"
+		script = "Type.mcomment CRxStuff,durability_type,\"该值为0x32代表耐久度\""
+	strings:
+		$pattern = { 66 8b 81 [4] c3 [8] 66 8B 81 [4] c3 [8] 33 c0 83 b9 [4] 32 0f 94 c0 c3 }
 	condition:
 		#pattern == 1
 }
