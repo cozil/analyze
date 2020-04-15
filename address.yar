@@ -709,7 +709,7 @@ rule NF_GOM
 		script = "lblset $result+0x04, GomapY"
 		script = "lblset $result+0x08, GomapZ"
 	strings:
-		$pattern = { 55 8B EC B8 [57] 83 3D [4] 00 74 ?? D9 05 [4] D9 5D 0C D9 05 [4] D9 5D 10 D9 05 [4] D9 5D 14 8B 0D [4] 8B 81 [4] 80 B8 [4] 00 }
+		$pattern = { 55 8B EC B8 [57] 83 3D [4] 00 74 ?? D9 05 [4] D9 5D 0C D9 05 [4] D9 5D 10 D9 05 [4] D9 5D 14 } // 8B 0D [4] 8B 81 [4] 80 B8 [4] 00 }
 	condition:
 		#pattern == 1	
 }
